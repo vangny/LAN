@@ -4,8 +4,9 @@
   "description": "Local Alert Network",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "react-dev": "webpack -d --watch"
+    "react-dev": "webpack -d --watch",
+    "start": "node server/index.js"
+  
   },
   "repository": {
     "type": "git",
