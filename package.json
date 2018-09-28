@@ -4,9 +4,8 @@
   "description": "Local Alert Network",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint",
     "react-dev": "webpack -d --watch",
-    "lint": "eslint './client/source/components/**/*.jsx' db server"
+    "start": "node server/index.js"
   
   },
   "repository": {
