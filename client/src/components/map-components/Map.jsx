@@ -9,7 +9,6 @@ const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // will need to do a get request in the future so the token isn't vulnerable
 const MAPBOX_TOKEN = 'pk.eyJ1IjoidmFuZ255IiwiYSI6ImNqbWltMncxbTA2ZHgzcHF6bzBjYmxqbHkifQ.iTJHeAl1MKNibdVNZU0MJQ';
 
-
 export default class Map extends Component {
   constructor(props) {
     super(props);
