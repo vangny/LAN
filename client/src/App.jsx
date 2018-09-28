@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, Router } from '@reach/router';
+import Dashboard from './components/Dashboard.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class App extends React.Component {
                 </div>
                 <Router>
                     <Dashboard path="/dashboard" />
-                    <Alert path="/alert" />
+                    {/* <Alert path="/alert" /> */}
                 </Router>
 
             
