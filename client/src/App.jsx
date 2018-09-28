@@ -10,13 +10,23 @@ class App extends React.Component {
     render() {
         return (
             <div className="header">
-            <h1>SEARCH</h1>
-            <h1>FEED</h1>
+                <h1 className="title">Local Alert Network </h1>
+                <div className="feed">
+                    <h1>SEARCH</h1>
+                    <h1>FEED</h1>
+                </div>
 
-            <nav>
-                <button>Dashboard View </button>
-                <button> Report an Alert </button>
-            </nav>
+                <div className="navigate">
+                    <nav className="nav-items">
+                        <button><Link to="/dashboard">Dashboard View </Link></button>
+                        <button><Link to="/alert"> Report an Alert </Link></button>
+                    </nav>
+                </div>
+                <Router>
+                    <Dashboard path="/dashboard" />
+                    <Alert path="/alert" />
+                </Router>
+
             
             </div>
         );
