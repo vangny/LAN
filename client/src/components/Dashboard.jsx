@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Map from 'Map.jsx';
+
 
 export default class Dashboard extends Component {
   constructor(props) {

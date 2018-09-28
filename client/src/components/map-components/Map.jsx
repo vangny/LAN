@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 
-import DeckGLOverlay from './deckgl-overlay';
+import DeckGLOverlay from './DeckGL';
 import sample from '../../sampleData.js'
 
 export default class Map extends Component {
