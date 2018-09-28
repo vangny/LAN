@@ -4,7 +4,7 @@ const bodyparser = require('body-parser');
 const app = express();
 
 app.use(bodyparser.json());
-app.use(static(`${__dirname}/../client/dist`));
+app.use(express.static(`${__dirname}/../client/dist`));
 
 var port = process.env.PORT || 9000
 
