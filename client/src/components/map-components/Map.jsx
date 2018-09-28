@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 
-import DeckGLOverlay from './DeckGL';
-// import sample from '../../sampleData.js'
+import DeckGL from './DeckGL';
+import sample from '../../sampleData.js'
 
 export default class Map extends Component {
   constructor(props) {
@@ -28,8 +28,8 @@ export default class Map extends Component {
 
   resizeMap() {
     this.onWindowChange({
-      width: window.innerWidth,
-      height: window.innerHeight
+      width: window.innerWidth * .50,
+      height: window.innerHeight * .50,
     });
   }
 
