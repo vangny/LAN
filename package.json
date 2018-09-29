@@ -6,7 +6,9 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "start": "node server/index.js",
-    "postinstall": "webpack --mode production"
+    "postinstall": "webpack --mode production",
+    "lint": "eslint './client/src/components/**/*.jsx' db server",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
