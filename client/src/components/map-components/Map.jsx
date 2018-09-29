@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
-
+import { LayerControls, HEXAGON_CONTROLS, SCATTERPLOT_CONTROLS } from './LayerControls.jsx';
 import DeckGL from './DeckGL';
 // import sample from '../../../sampleData.js';
 
@@ -21,17 +21,17 @@ export default class Map extends Component {
         zoom: 11,
         maxZoom: 16,
       },
-      // settings: {
-      //   ...Object.keys(SCATTERPLOT_CONTROL).reduce((accu, key) => ({
-      //     ...accu,
-      //     [key]: SCATTERPLOT_CONTROLS[key].value
-      //   }), {}),
+      settings: {
+        ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: SCATTERPLOT_CONTROLS[key].value
+        }), {}),
 
-      //   ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
-      //     ...accu,
-      //     [key]: HEXAGON_CONTROLS[key].value
-      //   }), {})
-      // },
+        ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: HEXAGON_CONTROLS[key].value
+        }), {})
+      },
     }
     this.resizeMap = this.resizeMap.bind(this);
   }
@@ -59,9 +59,18 @@ export default class Map extends Component {
     });
   }
 
+  updateLayerSettings(settings) {
+    this.setState({settings});
+  }
+
   render() {
     return (
       <div>
+        <LayerControls
+          setting={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this.updateLayerSettings(settings)}
+        />
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
