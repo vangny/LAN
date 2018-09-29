@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Map from './map-components/Map.jsx';
 
 
 export default class Dashboard extends Component {
@@ -8,6 +9,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div>
+        HELLO
         <div id='map'>
           <Map />
         </div>
