@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 
 import DeckGL from './DeckGL';
+import LayerControls from 'LayerControls.jsx';
 // import sample from '../../../sampleData.js';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
@@ -21,6 +22,17 @@ export default class Map extends Component {
         latitude: 37.7,
         zoom: 11,
         maxZoom: 16,
+      },
+      settings: {
+        ...Object.keys(SCATTERPLOT_CONTROL).reduce((accu, key) => ({
+          ...accu,
+          [key]: SCATTERPLOT_CONTROLS[key].value
+        }), {}),
+
+        ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: HEXAGON_CONTROLS[key].value
+        }), {})
       },
     }
     this.resizeMap = this.resizeMap.bind(this);
@@ -52,13 +64,21 @@ export default class Map extends Component {
   render() {
     return (
       <div>
+        <LayerControls 
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this.updateLayerSettings(settings)}
+        />
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={viewport => this.onWindowChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         >
-
+        <DeckGL 
+          viewport={this.state.viewport}
+          data
+        />
         </MapGL>
       </div>
     );
