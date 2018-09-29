@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Map from './map-components/Map.jsx';
 
-
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
