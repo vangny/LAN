@@ -11,6 +11,11 @@ const port = process.env.PORT || 9000;
 
 // db.addUser()
 
+app.post('/alert/api/alerts', (req, res) => {
+  console.log(req.body);
+  res.sendStatus(201);
+});
+
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
 });

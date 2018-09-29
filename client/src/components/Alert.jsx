@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Alert extends React.Component {
   constructor(props) {
@@ -6,9 +7,31 @@ class Alert extends React.Component {
     this.state = {
       notes: '',
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleSubmit() {
+    /* Insert emergency event type here */
+    /* Insert geolocation data here */
+    const { notes } = this.state;
+    const alertData = { notes };
+    axios.post('/alert/api/alerts', alertData)
+      .then((res) => {
+        console.log('alert sent to server', alertData);
+        console.log(res);
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
+    const { notes } = this.state;
     return (
       <div className="container">
         <div className="head">
@@ -21,10 +44,10 @@ class Alert extends React.Component {
           <button onClick={() => navigate('/')}>Capture Photo</button>
         </div>
         <div className="notes">
-          <button onClick={() => navigate('/')}>Notes</button>
+          <input type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
         </div>
         <div className="submit">
-          <button onClick={() => navigate('/')}>Submit</button>
+          <button type="button" onClick={this.handleSubmit}>Submit</button>
         </div>
       </div>
     );
