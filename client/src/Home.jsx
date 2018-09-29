@@ -9,6 +9,29 @@ class Home extends React.Component {
         super(props)
     }
 
+    // queryTest() {
+    //   var data = 'test passed!' 
+      
+    //   //top line (17) defines the type of argument your function will take in. the query field passes the argument into the function
+    //   var query = `query Hello($data: String!) {
+    //       hello(data: $data)
+    //     }`;
+
+    //   fetch('/graphql', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     query,
+    //     variables: { data }
+    //   })
+    //   })
+    //   .then(r => r.json())
+    //   .then(data => console.log('data returned:', data));
+    // }
+
     render() {
         return (
             <div className="header">
@@ -20,7 +43,7 @@ class Home extends React.Component {
                     <nav className="nav-items">
                     <ul>
                         <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                        <button onClick={() => navigate('/alert')}>Create Alert</button>
+                        <button onClick={() => navigate('/alertOptions')}>Create Alert</button>
                     </ul>
                     </nav>
                 </div>

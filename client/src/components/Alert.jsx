@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 class Alert extends React.Component {
   constructor(props) {
@@ -32,6 +33,8 @@ class Alert extends React.Component {
 
   render() {
     const { notes } = this.state;
+    const { latitude, longitude, category } = this.props;
+    console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="container">
         <div className="head">
