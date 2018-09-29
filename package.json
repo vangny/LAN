@@ -8,7 +8,7 @@
     "start": "node server/index.js",
     "postinstall": "webpack --mode production",
     "lint": "eslint './client/src/components/**/*.jsx' db server",
-    "test": "npm run lint"
+    "run-lint": "npm run lint"
   },
   "repository": {
     "type": "git",
