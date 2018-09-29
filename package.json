@@ -42,8 +42,11 @@
     "express": "^4.16.3",
     "html-webpack-plugin": "^3.2.0",
     "jquery": "^3.3.1",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-map-gl": "^3.3.5"
+    "react-map-gl": "^3.3.5",
+    "sequelize": "^4.39.0"
   }
 }
