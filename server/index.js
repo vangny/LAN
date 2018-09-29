@@ -7,10 +7,10 @@ const app = express();
 app.use(bodyparser.json());
 app.use(express.static(`${__dirname}/../client/dist`));
 
-var port = process.env.PORT || 9000;
+const port = process.env.PORT || 9000;
 
 // db.addUser()
 
 app.listen(port, () => {
-    console.log(`Listening on ${port}`);
+  console.log(`Listening on ${port}`);
 });

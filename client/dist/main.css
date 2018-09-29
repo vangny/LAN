@@ -69,3 +69,42 @@ button {
     font-size: 35px;
     text-align: center;
   }
+
+  /* ALERT Component */
+  .container {
+    display: grid;
+    grid-gap: 20px;
+    /* grid-template-columns: 1; */
+    grid-template-columns: repeat(1, minmax(400px, 1fr));
+    grid-template-rows: repeat(5, auto);
+    justify-items: center;
+    align-content: space-between;
+  }
+
+  .head {
+    grid-row: 1;
+    /* grid-column: 1 / 4; */
+    /* align-self: start; */
+    order: 0;
+  }
+
+  .location-info {
+    grid-row: 3;
+    order: 1;
+  }
+
+  .photo {
+    grid-row: 4;
+    order: 2;
+  }
+
+  .notes {
+    grid-row: 5;
+    order: 3;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .submit {
+    grid-row:6;
+    order: 4;
+  }
