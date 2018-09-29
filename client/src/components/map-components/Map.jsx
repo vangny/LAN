@@ -62,28 +62,12 @@ export default class Map extends Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
-        {/* <LayerControls 
-          settings={this.state.settings}
-          propTypes={HEXAGON_CONTROLS}
-          onChange={settings => this.updateLayerSettings(settings)}
-        /> */}
-=======
->>>>>>> Add map resizing functionality and resize map to 50 percent
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={viewport => this.onWindowChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         >
-<<<<<<< HEAD
-        {/* <DeckGL 
-          viewport={this.state.viewport}
-          data
-        /> */}
-=======
-
->>>>>>> Add map resizing functionality and resize map to 50 percent
         </MapGL>
       </div>
     );
