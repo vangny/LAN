@@ -32,6 +32,7 @@ export default class Map extends Component {
           [key]: HEXAGON_CONTROLS[key].value
         }), {})
       },
+      points: {},
     }
     this.resizeMap = this.resizeMap.bind(this);
   }
@@ -65,8 +66,10 @@ export default class Map extends Component {
   }
 
   getData() {
-    const points = sample;
-    console.log(points);
+    // console.log(points);
+    this.setState({
+      points: sample
+    })
   }
 
   render() {

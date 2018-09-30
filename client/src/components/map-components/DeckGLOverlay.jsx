@@ -3,6 +3,15 @@ import DeckGL, {ScatterplotLayer, HexagonLayer} from 'deck.gl';
 
 const FLOOD_COLOR = [0, 128, 255];
 
+const HEATMAP_COLORS = [
+  [213, 62, 79],
+  [252, 141, 89],
+  [254, 224, 139],
+  [230, 245, 152],
+  [153, 213, 148],
+  [50, 136, 189]
+].reverse();
+
 const LIGHT_SETTINGS = {
   lightsPosition: [-73.8, 40.5, 8000, -74.2, 40.9, 8000],
   ambientRatio: 0.4,
@@ -26,24 +35,24 @@ export default class DeckGLOverlay extends Component {
     }
 
     const layers = [
-      !this.props.showHexagon ? new ScatterplotLayer({
-        id: 'scatterplot',
-        getPosition: d => d.position,
-        getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
-        getRadius: d=> 5,
-        opacity: 0.5,
-        pickable: true,
-        radiusMinPixels: 0.25,
-        radiusMaxPixels: 30,
-        ...this.props,
-      }) : null,
+      // !this.props.showHexagon ? new ScatterplotLayer({
+      //   id: 'scatterplot',
+      //   getPosition: d => d.position,
+      //   getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
+      //   getRadius: d=> 5,
+      //   opacity: 0.5,
+      //   pickable: true,
+      //   radiusMinPixels: 0.25,
+      //   radiusMaxPixels: 30,
+      //   ...this.props,
+      // }) : null,
       this.props.showHexagon ? new HexagonLayer({
         id: 'heatmap',
         colorRange: HEATMAP_COLORS,
         elevationRange,
         elevationScale: 5,
         extruded: true,
-        getPosition: d => d.position,
+        getPosition: d => d.coordinates,
         lightSettings: LIGHT_SETTINGS,
         opacity: 1,
         pickable: true,
