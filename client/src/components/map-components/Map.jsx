@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
 import { LayerControls, HEXAGON_CONTROLS, SCATTERPLOT_CONTROLS } from './LayerControls.jsx';
-import DeckGL from './DeckGL';
-// import sample from '../../../sampleData.js';
+import DeckGLOverlay from './DeckGLOverlay';
+import sample from '../../../../sampleData';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // will need to do a get request in the future so the token isn't vulnerable
@@ -39,6 +39,7 @@ export default class Map extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
+    this.getData();
   }
 
   componentWillUnmount() {
@@ -63,20 +64,31 @@ export default class Map extends Component {
     this.setState({settings});
   }
 
+  getData() {
+    const points = sample;
+    console.log(points);
+  }
+
   render() {
     return (
       <div>
-        <LayerControls
+        {/* <LayerControls
           setting={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
           onChange={settings => this.updateLayerSettings(settings)}
-        />
+        /> */}
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={viewport => this.onWindowChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         >
+          <DeckGLOverlay
+            viewport={this.state.viewport}
+            data={this.state.points}
+            onHover={hover => this.onHover(hover)}
+            {...this.state.settings}
+          />
         </MapGL>
       </div>
     );

@@ -69,8 +69,10 @@ export class LayerControls extends Component {
   }
 
   render() {
+    const { title, settings, propTypes = {} } = this.props;
     return (
       <div>
+        {title && <h4>{title}</h4>}
         {Object.keys(settings).map(key =>
           <div key={key}>
             <label>{propTypes[key].displayName}</label>

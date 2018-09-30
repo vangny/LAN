@@ -108,3 +108,7 @@ button {
     grid-row:6;
     order: 4;
   }
+
+#map {
+  text-align: left;
+}
