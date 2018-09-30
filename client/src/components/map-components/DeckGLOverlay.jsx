@@ -13,6 +13,15 @@ const HEATMAP_COLORS = [
   [50, 136, 189]
 ].reverse();
 
+const HEATMAP_COLORS = [
+  [213, 62, 79],
+  [252, 141, 89],
+  [254, 224, 139],
+  [230, 245, 152],
+  [153, 213, 148],
+  [50, 136, 189]
+].reverse();
+
 const LIGHT_SETTINGS = {
   lightsPosition: [-73.8, 40.5, 8000, -74.2, 40.9, 8000],
   ambientRatio: 0.4,
