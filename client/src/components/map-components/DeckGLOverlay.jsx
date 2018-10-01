@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import DeckGL, {ScatterplotLayer, HexagonLayer} from 'deck.gl';
 
-const FLOOD_COLOR = [0, 128, 255];
+const PICKUP_COLOR = [0, 128, 255];
+const DROPOFF_COLOR = [255, 0, 128];
 
 const HEATMAP_COLORS = [
   [213, 62, 79],
@@ -30,24 +31,27 @@ export default class DeckGLOverlay extends Component {
   }
 
   render() {
+    // if there is data
     if (!this.props.data) {
       return null;
     }
 
     const layers = [
-      // !this.props.showHexagon ? new ScatterplotLayer({
-      //   id: 'scatterplot',
-      //   getPosition: d => d.position,
-      //   getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
-      //   getRadius: d=> 5,
-      //   opacity: 0.5,
-      //   pickable: true,
-      //   radiusMinPixels: 0.25,
-      //   radiusMaxPixels: 30,
-      //   ...this.props,
-      // }) : null,
+      // if showHexagon is false then return a scatterplot layer instead
+      !this.props.showHexagon ? new ScatterplotLayer({
+        id: 'alert-scatter',
+        getPosition: d => d.coordinates,
+        getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
+        getRadius: d=> 5,
+        opacity: 0.5,
+        pickable: true,
+        radiusMinPixels: 0.25,
+        radiusMaxPixels: 30,
+        ...this.props,
+      }) : null,
+      // if showHexagon is true then return a hexagon layer
       this.props.showHexagon ? new HexagonLayer({
-        id: 'heatmap',
+        id: 'alert',
         colorRange: HEATMAP_COLORS,
         elevationRange,
         elevationScale: 5,
@@ -63,7 +67,7 @@ export default class DeckGLOverlay extends Component {
     return (<DeckGL
       {...this.props.viewport}
       layers={layers}
-      onWebGLInitialized={this._initialize}
+      onWebGLInitialized={this.initialize}
     />);
   }
 }

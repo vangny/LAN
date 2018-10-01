@@ -9,10 +9,10 @@ export const HEXAGON_CONTROLS = {
   radius: {
     displayName: 'Hexagon Radius',
     type: 'range',
-    value: 250,
-    step: 50,
+    value: 50,
+    step: 10,
     min: 50,
-    max: 1000
+    max: 500
   },
   coverage: {
     displayName: 'Hexagon Coverage',
@@ -51,45 +51,6 @@ export const SCATTERPLOT_CONTROLS = {
   },
 }
 
-export class LayerControls extends Component {
-  constructor(props) {
-    super(props);
-    this.onValueChange = this.onValueChange.bind(this);
-  }
-
-  onValueChange(settingName, newValue) {
-    const { settings } = this.props;
-    if (settings[settingName] !== newValue) {
-      const newSettings = {
-        ...this.props.settings,
-        [settingName]: newValue,
-      };
-      this.props.onChange(newSettings);
-    }
-  }
-
-  render() {
-    const { title, settings, propTypes = {} } = this.props;
-    return (
-      <div>
-        {title && <h4>{title}</h4>}
-        {Object.keys(settings).map(key =>
-          <div key={key}>
-            <label>{propTypes[key].displayName}</label>
-            <div style={{display: 'inline-block', float: 'right'}}>
-              {settings[key]}</div>
-            <Setting
-              settingName={key}
-              value={settings[key]}
-              propType={propTypes[key]}
-              onChange={this._onValueChange.bind(this)}
-              />
-          </div>)}
-      </div>
-    );
-  }
-}
-
 const Setting = props => {
   const { propType } = props;
 
@@ -107,8 +68,8 @@ const Setting = props => {
 
 const Checkbox = ({ settingName, value, onChange }) => {
   return (
-    <div>
-      <div>
+    <div key={settingName}>
+      <div className='input-group'>
         <input
           type='checkbox'
           id={settingName}
@@ -124,8 +85,8 @@ const Slider = ({ settingName, value, propType, onChange }) => {
   const { max = 100 } = propType;
 
   return (
-    <div>
-      <div>
+    <div key={settingName}>
+      <div className='input-group'>
         <div>
           <input
             type='range'
@@ -134,10 +95,51 @@ const Slider = ({ settingName, value, propType, onChange }) => {
             max={max}
             step={max / 100}
             value={value}
-            onChange={e => onChange(settingNAme, Number(e.target.value))}
+            onChange={e => onChange(settingName, Number(e.target.value))}
           />
         </div>
       </div>
     </div>
   );
 };
+
+export class LayerControls extends Component {
+  constructor(props) {
+    super(props);
+    this.onValueChange = this.onValueChange.bind(this);
+  }
+
+  onValueChange(settingName, newValue) {
+    const { settings, onChange } = this.props;
+    if (settings[settingName] !== newValue) {
+      const newSettings = {
+        ...this.props.settings,
+        [settingName]: newValue,
+      };
+      onChange(newSettings);
+    }
+  }
+
+  render() {
+    const { title, settings, propTypes = {} } = this.props;
+    console.log(settings);
+    return (
+      <div className='layer-controls' id='layerControl'>
+        {title && <h4>{title}</h4>}
+        {Object.keys(settings).map(key =>
+          <div key={key}>
+            <label>{propTypes[key].displayName}</label>
+            <div style={{display: 'inline-block', float: 'right'}}>
+              {settings[key]}</div>
+            <Setting
+              settingName={key}
+              value={settings[key]}
+              propType={propTypes[key]}
+              onChange={this.onValueChange}
+              />
+          </div>)}
+      </div>
+    );
+  }
+}
+
