@@ -10,25 +10,38 @@ const schema = buildSchema(`
     sup: Int,
     rollDice(numDice: Int!, numSides: Int): [Int]
   }
+  type Mutation {
+    createPerson(name: String, age: Int) : Person!
+  }
+
+  type Person {
+    name: String!,
+    age: Int!
+  }
 `);
 
 const root = {
-    hello: ({ data }) => {
-      return ((data) => {
-        console.log(data);
-        return data;
-      })(data);
-    },
-    sup: () => {
-      return 1+1;
-    },
-    rollDice: function ({numDice, numSides}) {
-      var output = [];
-      for (var i = 0; i < numDice; i++) {
-        output.push(1 + Math.floor(Math.random() * (numSides || 6)));
-      }
-      return output;
+  hello: ({ data }) => {
+    return ((data) => {
+      console.log(data);
+      return data;
+    })(data);
+  },
+  sup: () => {
+    return 1 + 1;
+  },
+  rollDice: ({ numDice, numSides }) => {
+    const output = [];
+    for (let i = 0; i < numDice; i += 1) {
+      output.push(1 + Math.floor(Math.random() * (numSides || 6)));
     }
+    return output;
+  },
+  createPerson: ({ name, age }) => {
+    const person = new Person();
+    person.name = name;
+    person.age = age;
+  }
 };
 
 
@@ -45,6 +58,17 @@ app.use('/graphql', graphqlHTTP({
 const port = process.env.PORT || 9000;
 
 
+app.post('/alert/api/events', (req, res) => {
+  const { 
+    latitude,
+    longitude,
+    category,
+    timeStamp,
+  } = req.body;
+  console.log(latitude, longitude, category, timeStamp);
+  db.checkEvents(category, latitude, longitude);
+  res.sendStatus(201);
+});
 
 app.post('/alert/api/alerts', (req, res) => {
   console.log(req.body);

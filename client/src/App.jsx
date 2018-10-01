@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, Router, navigate } from '@reach/router';
+import axios from 'axios';
+
 import Dashboard from './components/Dashboard.jsx';
 import Alert from './components/Alert.jsx';
 import AlertOptions from './components/AlertOptions.jsx'
@@ -11,9 +13,10 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: null,
-      longitude: null,
+      latitude: 'Loading...',
+      longitude: 'Loading...',
       category: null,
+      timeStamp: null,
     };
     this.appHandler = this.appHandler.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -29,12 +32,16 @@ class App extends React.Component {
     });
   }
 
-  appHandler(category, latitude, longitude) {
+  appHandler(category, latitude, longitude, timeStamp) {
     this.setState({
       latitude,
       longitude,
       category,
+      timeStamp,
+    }, () => {
+      axios.post('/alert/api/events', this.state);
     });
+
     navigate('/alert');
   }
 
@@ -49,7 +56,7 @@ class App extends React.Component {
         <Router>
           <Home exact path="/" />
           <Dashboard path="/dashboard" />
-          <Alert path="/alert" category={category} latitude={latitude} longitude={longitude}/>
+          <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} />
           <AlertOptions path="/alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
         </Router>
       </div>
