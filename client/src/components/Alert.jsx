@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
 
-class Alert extends React.Component {
+class Alert extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +23,27 @@ class Alert extends React.Component {
     /* Insert geolocation data here */
     const { notes } = this.state;
     const alertData = { notes };
+
+    // const query = {
+    //   "query": "query aTest($arg1: String!) { test(who: $arg1) }",
+    //   "operationName": "aTest",
+    //   "variables": { "arg1": "me" }
+    // }
+    // fetch('/graphql', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     query,
+    //     variables: { alertData }
+    //   })
+    //   })
+    //   .then(r => r.json())
+    //   .then(data => console.log('data returned:', data));
+    // }
+
     axios.post('/alert/api/alerts', alertData)
       .then((res) => {
         console.log('alert sent to server', alertData);
