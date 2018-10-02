@@ -7,7 +7,7 @@ const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) =
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     }, () => {
-      console.log('Adjusted coordinates: ', position.coords.latitude, position.coords.longitude);
+      console.log('Updated coordinates: ', position.coords.latitude, position.coords.longitude);
     });
   });
   return (

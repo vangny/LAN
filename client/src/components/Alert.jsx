@@ -13,6 +13,7 @@ class Alert extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.waitForData = this.waitForData.bind(this);
   }
 
   handleChange(e) {
@@ -58,6 +59,17 @@ class Alert extends Component {
       .catch(err => console.log(err));
   }
 
+  waitForData() {
+    const { latitude, longitude } = this.props;
+    return latitude && longitude ? (
+      <button type="button" onClick={this.handleSubmit}>Submit</button>
+    ) : (
+      <p>
+        Still grabbing your location... Please wait
+      </p>
+    );
+  }
+
   render() {
     const { notes, photoTag } = this.state;
     const { category } = this.props;
@@ -81,7 +93,7 @@ class Alert extends Component {
           <input size="" type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
         </div>
         <div className="submit">
-          <button type="button" onClick={this.handleSubmit}>Submit</button>
+          {this.waitForData()}
         </div>
       </div>
     );

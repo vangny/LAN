@@ -33,12 +33,13 @@ const Alert = sequelize.define('Alert', {
 
 const Media = sequelize.define('Media', {
   url: { type: Sequelize.STRING },
+  photoTag: { type: Sequelize.STRING },
   // alert_id: { type: Sequelize.INTEGER }
 });
 
 Event.hasMany(Alert, { as: 'Alerts' });
 Alert.belongsTo(Event);
-// Alert.hasMany(Media);
+Alert.hasMany(Media, { as: 'Media' });
 Media.belongsTo(Alert);
 // Alert.hasOne(User); 
 User.hasMany(Alert, { as: 'Alerts' });
@@ -85,6 +86,29 @@ const checkEvents = (category, latitude, longitude, timeStamp) => {
       })
   );
 };
+
+const createAlert = (EventID, timeStamp, latitude, longitude, notes, photo, photoTag) => {
+  // Event.findById(EventID)
+  //   .then((event) => {
+  //     event.setAlerts({
+  //       latitude, longitude, notes,
+  //     });
+  //   })
+  //   .then((result) => { console.log('result from setAlerts: ', result); });
+  Alert.create({
+    EventID, latitude, longitude, notes,
+  }).then((alert) => {
+    alert.setMedia({
+      url: photo, photoTag,
+    });
+  }).then((result, err) => {
+    if (result) {
+      console.log('after setMedia invoked', result);
+    } else {
+      console.log(err);
+    }
+  });
+};
 // const addUser = (user) => {
 //     console.log('creating user');
 //     Users.upsert({ user })
@@ -101,4 +125,5 @@ exports.User = User;
 exports.Alert = Alert;
 exports.Media = Media;
 exports.checkEvents = checkEvents;
+exports.createAlert = createAlert;
 // exports.addUser = addUser;
