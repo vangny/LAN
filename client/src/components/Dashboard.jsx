@@ -6,10 +6,11 @@ export default class Dashboard extends Component {
     super(props);
   }
   render() {
+    const { latitude, longitude } = this.props;
     return (
-      <div id='dashboard'>
-        <div id='map'>
-          <Map />
+      <div className='dashboard'>
+        <div className='map-container'>
+          <Map latitude={latitude} longitude={longitude}/>
         </div>
         <div id='media'>
           {/* input media component */}

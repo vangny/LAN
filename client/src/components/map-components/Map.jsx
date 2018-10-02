@@ -16,8 +16,8 @@ export default class Map extends Component {
         width: window.innerWidth,
         height: window.innerHeight,
         //coordinates centralized to SF for now
-        longitude: -122.4194,
-        latitude: 37.7,
+        longitude: this.props.longitude,
+        latitude: this.props.latitude,
         zoom: 11,
         maxZoom: 16,
       },
@@ -56,8 +56,8 @@ export default class Map extends Component {
 
   resizeMap() {
     this.onWindowChange({
-      width: window.innerWidth * .50,
-      height: window.innerHeight * .50,
+      width: window.innerWidth,
+      height: window.innerHeight,
     });
   }
 
@@ -75,7 +75,6 @@ export default class Map extends Component {
   render() {
     return (
       <div>
-        
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
@@ -88,11 +87,11 @@ export default class Map extends Component {
             onHover={hover => this.onHover(hover)}
             {...this.state.settings}
           />
-          <LayerControls
+          {/* <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
           onChange={settings => this.updateLayerSettings(settings)}
-        />
+        /> */}
         </MapGL>
       </div>
     );

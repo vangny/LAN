@@ -87,7 +87,7 @@ class App extends React.Component {
         <div className="content">
           <Router>
             <Home exact path="/" alerts={alerts} />
-            <Dashboard path="/dashboard" />
+            <Dashboard path="/dashboard" latitude={latitude} longitude={longitude}/>
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
           </Router>
