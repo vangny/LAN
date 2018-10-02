@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, Router, navigate } from '@reach/router';
 import axios from 'axios';
+import moment from 'moment';
 
-import Dashboard from './components/Dashboard.jsx';
-import Alert from './components/Alert.jsx';
-import AlertOptions from './components/AlertOptions.jsx'
-import Home from './Home.jsx';
+import Dashboard from './components/Dashboard';
+import Alert from './components/Alert';
+import AlertOptions from './components/AlertOptions';
+import Home from './Home';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,8 +20,8 @@ class App extends React.Component {
       timeStamp: null,
       EventID: null,
     };
-    this.appHandler = this.appHandler.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleAlertOptions = this.handleAlertOptions.bind(this);
   }
 
   componentDidMount() {
@@ -28,15 +29,15 @@ class App extends React.Component {
       this.setState({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
+      }, () => {
+        console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
-      // console.log(position.coords.latitude, position.coords.longitude)
     });
   }
 
-  appHandler(category, latitude, longitude, timeStamp) {
+  handleAlertOptions(category) {
+    const timeStamp = moment().format();
     this.setState({
-      latitude,
-      longitude,
       category,
       timeStamp,
     }, () => {
@@ -68,7 +69,7 @@ class App extends React.Component {
         <Router>
           <Home exact path="/" />
           <Dashboard path="dashboard" />
-          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
           <Alert path="alert" category={category} latitude={latitude} longitude={longitude} timeStamp={timeStamp} EventID={EventID} />
         </Router>
       </div>
