@@ -135,3 +135,23 @@ Map Styling
   transformOrigin: '20px 20px',
   zIndex: 110
 } */
+
+/*
+====================
+ALERT COMPONENTS
+==================== 
+*/
+.button-alerts {
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    font-family: 'PT Serif', sans-serif;
+    color: #ECF0F1;
+    background-color: #E74C3C;
+    display: block;
+    padding: 30px 50px 0px 50px;
+    margin: 40px;
+    font-style: bold;
+    font-size: 35px;
+    text-align: center;
+  }

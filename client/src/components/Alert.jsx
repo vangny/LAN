@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
-// import Camera from './alert-components/TakePhoto.jsx';
+import AlertCamera from './alert-components/Camera.jsx';
+import Modal from './alert-components/modal.jsx';
+
 
 class Alert extends Component {
   constructor(props) {
@@ -10,6 +12,7 @@ class Alert extends Component {
       photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
       photoTag: '',
       notes: '',
+      modal: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,6 +73,24 @@ class Alert extends Component {
     );
   }
 
+  changeModal(view) {
+    this.setState({
+      modal: view,
+    });
+  }
+
+  renderModal() {
+    if (this.state.modal === "camera") {
+      return (
+        <Modal>
+          <AlertCamera
+            changeModal={this.changeModal.bind(this)}
+          />
+        </Modal>
+      );
+    }
+  }
+
   render() {
     const { notes, photoTag } = this.state;
     const { category } = this.props;
@@ -85,7 +106,8 @@ class Alert extends Component {
           </h1>
         </div>
         <div className="photo">
-          <button type="button" onClick={this.takePhoto}>Capture Photo</button>
+          <button className="button-alerts" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
+          <button type="button" onClick={() => this.changeModal("")}>Exit camera mode</button>
           <input type="text" name="photoTag" placeholder="Describe your photo" onChange={this.handleChange} value={photoTag} />
           <input type="file" onChange={this.fileHandler} />
         </div>
@@ -95,6 +117,7 @@ class Alert extends Component {
         <div className="submit">
           {this.waitForData()}
         </div>
+        <div>{this.renderModal()}</div>
       </div>
     );
   }
