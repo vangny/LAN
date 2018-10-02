@@ -62,16 +62,31 @@ class App extends React.Component {
     } = this.state;
     // console.log(this.state);
     return (
-      <div className="header">
-        <Link to="/">
-          <h1 className="title">Local Alert Network </h1>
+      <div className='container'>
+        {/* <Link to="/" className="menu"><span class="fas fa-bars"></span></Link> */}
+        <Link to="/" className="title nav-cell">
+          <h2>Local Alert Network</h2>
         </Link>
-        <Router>
-          <Home exact path="/" />
-          <Dashboard path="dashboard" />
-          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
-          <Alert path="alert" category={category} latitude={latitude} longitude={longitude} timeStamp={timeStamp} EventID={EventID} />
-        </Router>
+        <div className="content">
+          <Router>
+            <Home exact path="/" />
+            <Dashboard path="/dashboard" />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} />
+            <AlertOptions path="/alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+          </Router>
+        </div>
+        <Link to="/" className="home-grid nav-cell">
+          <span className="home-button">Home</span>
+        </Link>
+        <div className="search-grid nav-cell">
+          <span className="search-button">Search</span>
+        </div>
+        <Link to="/alertOptions" className="alert-grid nav-cell">
+          <span className="alert-button">Add Alert</span>
+        </Link>
+        <Link to="/dashboard" className="dash-grid nav-cell">
+          <span className="dash-button">Dashboard</span>
+        </Link>
       </div>
     );
   }

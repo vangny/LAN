@@ -75,11 +75,7 @@ export default class Map extends Component {
   render() {
     return (
       <div>
-        <LayerControls
-          settings={this.state.settings}
-          propTypes={HEXAGON_CONTROLS}
-          onChange={settings => this.updateLayerSettings(settings)}
-        />
+        
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
@@ -92,6 +88,11 @@ export default class Map extends Component {
             onHover={hover => this.onHover(hover)}
             {...this.state.settings}
           />
+          <LayerControls
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this.updateLayerSettings(settings)}
+        />
         </MapGL>
       </div>
     );

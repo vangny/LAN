@@ -7,8 +7,7 @@ export default class Dashboard extends Component {
   }
   render() {
     return (
-      <div>
-        HELLO
+      <div id='dashboard'>
         <div id='map'>
           <Map />
         </div>

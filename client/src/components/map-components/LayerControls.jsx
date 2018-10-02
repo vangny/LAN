@@ -124,7 +124,7 @@ export class LayerControls extends Component {
     const { title, settings, propTypes = {} } = this.props;
     console.log(settings);
     return (
-      <div className='layer-controls' id='layerControl'>
+      <div className='layer-controls'>
         {title && <h4>{title}</h4>}
         {Object.keys(settings).map(key =>
           <div key={key}>

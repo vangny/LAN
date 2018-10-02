@@ -1,113 +1,78 @@
 body {
-    background: #ffffff;
-    font-family: Amaranth, sans-serif;
-    font-size: 18px;
-    color: rgb(3, 0, 0);
-    text-align: center;
-  }
+  font-family: Century Gothic, Arial, sans-serif;
+  background: #eee;
+}
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin:auto;
-    height: 100%;
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 10% 83% 7%;
+  grid-template-areas: 'header header header header'
+                       'main main main main'
+                       'home search alert dashboard';
+}
+
+.menu {
+  grid-area: menu;
 }
 
 .title {
-    font-style: bold;
-    font-size: 56px;
-    text-align: center;
-    color:  hsl(2, 87%, 24%);
-    position: absolute;
-    top:0;
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.feed {
-    min-height: 350px;
-    margin: 40px;
-    list-style: none;
-    border: 1px solid #77777769;
-    background-color: #fdfdfd;
-    border-radius: 4px;
-    padding: 30px 50px 0px 50px;
-    box-shadow: 0 0 1em #80808066;
-    position: relative;
-    float: center;
-    width: 400px;
-    padding: 5px;
-    height: 150px;
+.content {
+  grid-area: main;
+  margin: 10px;
+  overflow: scroll;
+  align-items: stretch;
 }
 
-.navigate {
-    position:absolute;
-    width:100%;
-    bottom:0;
-    text-align:center;
-    align-items: baseline;
-    
+.nav-cell {
+  border-style: solid;
 }
 
-.nav-items {
-    display: block;
-    padding: 50px 70px 0px 570px;
-    margin: 40px;
-    margin-bottom: 50px;
+.home-grid {
+  grid-area: home;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button {
-    cursor: pointer;
-    border: none;
-    border-radius: 3px;
-    font-family: 'PT Serif', sans-serif;
-    color: #ECF0F1;
-    background-color: #E74C3C;
-    display: block;
-    padding: 30px 50px 0px 50px;
-    margin: 40px;
-    font-style: bold;
-    font-size: 35px;
-    text-align: center;
-  }
+.home-button {
+  text-align: center;
+  
+}
 
-  /* ALERT Component */
-  .container {
-    display: grid;
-    grid-gap: 20px;
-    /* grid-template-columns: 1; */
-    grid-template-columns: repeat(1, minmax(400px, 1fr));
-    grid-template-rows: repeat(5, auto);
-    justify-items: center;
-    align-content: space-between;
-  }
+.search-grid {
+  grid-area: search;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .head {
-    grid-row: 1;
-    /* grid-column: 1 / 4; */
-    /* align-self: start; */
-    order: 0;
-  }
+.alert-grid {
+  grid-area: alert;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .location-info {
-    grid-row: 3;
-    order: 1;
-  }
+.dash-grid {
+  grid-area: dashboard;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .photo {
-    grid-row: 4;
-    order: 2;
-  }
+/**************
+Dashboard Styling
+**************/
 
-  .notes {
-    grid-row: 5;
-    order: 3;
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .submit {
-    grid-row:6;
-    order: 4;
-  }
 /**************
 Map Styling
 **************/
@@ -115,31 +80,31 @@ Map Styling
   text-align: left;
 }
 
-#tooltipStyle {
-  position: 'absolute',
-  padding: '4px',
-  background: 'rgba(0, 0, 0, 0.8)',
-  color: '#fff',
-  maxWidth: '300px',
-  fontSize: '10px',
-  zIndex: 9,
-  pointerEvents: 'none'
-};
+/* #tooltipStyle {
+  position: absolute;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
+}; */
 
-#layerControl {
-  borderRadius: 3,
-  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
-  fontSize: '12px',
-  lineHeight: 1.833,
-  width: 200,
-  position: 'absolute',
-  top: '20px',
-  right: '20px',
-  padding: '20px',
-  zIndex: 100,
-  background: 'white'
-};
+.layer-controls {
+  border-radius: 3;
+  box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.1);
+  /* font-family: ff-clan-web-pro, Helvetica Neue, Helvetica, sans-serif !important; */
+  font-size: 12px;
+  line-height: 1.833;
+  width: 125;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  z-index: 100;
+  background: #ffffff;
+}
 
 /* charts {
   background: 'white',
