@@ -39,14 +39,6 @@ class Home extends React.Component {
                     <h1>SEARCH</h1>
                     <h1>FEED</h1>
                 </div>
-                <div className="navigate">
-                    <nav className="nav-items">
-                    <ul>
-                        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-                        <button onClick={() => navigate('/alertOptions')}>Create Alert</button>
-                    </ul>
-                    </nav>
-                </div>
             </div>
         );
     }

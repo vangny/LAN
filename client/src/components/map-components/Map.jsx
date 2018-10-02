@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
-
-import DeckGL from './DeckGL';
-// import sample from '../../../sampleData.js';
+import { LayerControls, HEXAGON_CONTROLS, SCATTERPLOT_CONTROLS } from './LayerControls.jsx';
+import DeckGLOverlay from './DeckGLOverlay';
+import sample from '../../../../sampleData';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // will need to do a get request in the future so the token isn't vulnerable
@@ -21,17 +21,18 @@ export default class Map extends Component {
         zoom: 11,
         maxZoom: 16,
       },
-      // settings: {
-      //   ...Object.keys(SCATTERPLOT_CONTROL).reduce((accu, key) => ({
-      //     ...accu,
-      //     [key]: SCATTERPLOT_CONTROLS[key].value
-      //   }), {}),
+      settings: {
+        ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: SCATTERPLOT_CONTROLS[key].value
+        }), {}),
 
-      //   ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
-      //     ...accu,
-      //     [key]: HEXAGON_CONTROLS[key].value
-      //   }), {})
-      // },
+        ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
+          ...accu,
+          [key]: HEXAGON_CONTROLS[key].value
+        }), {})
+      },
+      points: {},
     }
     this.resizeMap = this.resizeMap.bind(this);
   }
@@ -39,6 +40,7 @@ export default class Map extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
+    this.getData();
   }
 
   componentWillUnmount() {
@@ -59,15 +61,38 @@ export default class Map extends Component {
     });
   }
 
+  updateLayerSettings(settings) {
+    this.setState({settings});
+  }
+
+  getData() {
+    // console.log(points);
+    this.setState({
+      points: sample
+    })
+  }
+
   render() {
     return (
       <div>
+        
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
           onViewportChange={viewport => this.onWindowChange(viewport)}
           mapboxApiAccessToken={MAPBOX_TOKEN}
         >
+          <DeckGLOverlay
+            viewport={this.state.viewport}
+            data={this.state.points}
+            onHover={hover => this.onHover(hover)}
+            {...this.state.settings}
+          />
+          <LayerControls
+          settings={this.state.settings}
+          propTypes={HEXAGON_CONTROLS}
+          onChange={settings => this.updateLayerSettings(settings)}
+        />
         </MapGL>
       </div>
     );
