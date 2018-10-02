@@ -54,8 +54,8 @@ class Alert extends Component {
 
   render() {
     const { notes } = this.state;
-    const { latitude, longitude, category } = this.props;
-    console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
+    const { latitude, longitude, category, EventID } = this.props;
+    console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}\nEventID: ${EventID}`);
     return (
       <div className="container">
         <div className="head">

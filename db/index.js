@@ -71,13 +71,11 @@ const checkEvents = (category, latitude, longitude, timeStamp) => {
         if (results.length > 0) {
           for (let i = 0; i < results.length; i += 1) {
             const event = results[i].dataValues;
-            console.log('checking time difference...');
-            if (moment(timeStamp).subtract(24, 'hours') < moment(event.updatedAt)) {
-              console.log('checking distance...');
-              if (distance(event.latitude, event.longitude, latitude, longitude) < 10) {
-                console.log('Event within time frame and radius already exists!');
-                return event;
-              }
+            console.log('checking time difference & distance...');
+            if (moment(timeStamp).subtract(24, 'hours') < moment(event.updatedAt) // event within 24 hrs
+            && distance(event.latitude, event.longitude, latitude, longitude) < 10) { // coordinate distance < 10 mi
+              console.log('Event within time frame and radius already exists!');
+              return event;
             }
           }
         }

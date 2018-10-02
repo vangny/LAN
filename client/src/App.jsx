@@ -17,6 +17,7 @@ class App extends React.Component {
       longitude: 'Loading...',
       category: null,
       timeStamp: null,
+      EventID: null,
     };
     this.appHandler = this.appHandler.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -39,14 +40,19 @@ class App extends React.Component {
       category,
       timeStamp,
     }, () => {
-      axios.post('/alert/api/events', this.state);
+      axios.post('/alert/api/events', this.state)
+        .then((res) => {
+          console.log('receiving event data: ', res.data);
+          this.setState({ EventID: res.data.id },
+            () => {
+              navigate('/alert');
+            });
+        });
     });
-
-    navigate('/alert');
   }
 
   render() {
-    const { latitude, longitude, category } = this.state;
+    const { latitude, longitude, category, EventID } = this.state;
     // console.log(this.state);
     return (
       <div className="header">
@@ -55,9 +61,9 @@ class App extends React.Component {
         </Link>
         <Router>
           <Home exact path="/" />
-          <Dashboard path="/dashboard" />
-          <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} />
-          <AlertOptions path="/alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+          <Dashboard path="dashboard" />
+          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+          <Alert path="alert" category={category} latitude={latitude} longitude={longitude} EventID={EventID}/>
         </Router>
       </div>
     );
