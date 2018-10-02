@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
+// import Camera from './alert-components/TakePhoto.jsx';
 
 class Alert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photo: [],
+      photo: null,
       photoTag: '',
       notes: '',
     };
@@ -33,12 +34,16 @@ class Alert extends Component {
   }
 
   handleSubmit() {
-    const category = 'Flood';
-    const geolocation = [37.786831, -122.410488];
+    const { category } = this.props;
+    const { latitude } = this.props;
+    const { longitude } = this.props;
+    const { timeStamp } = this.props;
     const { notes, photo, photoTag } = this.state;
     const alertData = {
       category,
-      geolocation,
+      timeStamp,
+      latitude,
+      longitude,
       notes,
       photo,
       photoTag,
@@ -52,15 +57,18 @@ class Alert extends Component {
   }
 
   render() {
-    const { notes } = this.state;
-    const { latitude, longitude, category, EventID } = this.props;
-    console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}\nEventID: ${EventID}`);
+    const { notes, photoTag } = this.state;
+    const { latitude, longitude, category } = this.props;
+    // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="container">
         <div className="head" />
         <div className="location-info">
-          <h1>Location Data Here</h1>
-          <h1>Type of Emergency Here</h1>
+          <h1>
+            Disaster Type:
+            {' '}
+            {category.split(/\s+/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}
+          </h1>
         </div>
         <div className="photo">
           <button type="button" onClick={this.takePhoto}>Capture Photo</button>

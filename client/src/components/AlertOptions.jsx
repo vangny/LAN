@@ -12,7 +12,7 @@ class AlertOptions extends React.Component {
       longitude,
       category: null,
       timeStamp: moment().format(),
-    }
+    };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.sendDataToApp = this.sendDataToApp.bind(this);
     // this.clickHandler = this.clickHandler.bind(this);
@@ -60,7 +60,7 @@ class AlertOptions extends React.Component {
           <Alert path="/alert" latitude={latitude} longitude={longitude} category={category} test={test} />
         </Router>
       </div>
-      
+
     );
   }
 }

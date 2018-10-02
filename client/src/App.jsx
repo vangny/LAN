@@ -53,6 +53,12 @@ class App extends React.Component {
 
   render() {
     const { latitude, longitude, category, EventID } = this.state;
+    const {
+      latitude,
+      longitude,
+      category,
+      timeStamp,
+    } = this.state;
     // console.log(this.state);
     return (
       <div className="header">
