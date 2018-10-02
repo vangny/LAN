@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
+// import Camera from './alert-components/TakePhoto.jsx';
 
 class Alert extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
+      photoTag: '',
       notes: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -18,32 +21,35 @@ class Alert extends Component {
     });
   }
 
+  takePhoto() {
+    this.setState({
+      photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
+    });
+  }
+
+  fileHandler(e) {
+    this.setState({
+      photo: e.target.files[0],
+    });
+  }
+
   handleSubmit() {
-    /* Insert emergency event type here */
-    /* Insert geolocation data here */
-    const { notes } = this.state;
-    const alertData = { notes };
-
-    // const query = {
-    //   "query": "query aTest($arg1: String!) { test(who: $arg1) }",
-    //   "operationName": "aTest",
-    //   "variables": { "arg1": "me" }
-    // }
-    // fetch('/graphql', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     query,
-    //     variables: { alertData }
-    //   })
-    //   })
-    //   .then(r => r.json())
-    //   .then(data => console.log('data returned:', data));
-    // }
-
+    const {
+      latitude,
+      longitude,
+      EventID,
+      timeStamp,
+    } = this.props;
+    const { notes, photo, photoTag } = this.state;
+    const alertData = {
+      EventID,
+      timeStamp,
+      latitude,
+      longitude,
+      notes,
+      photo,
+      photoTag,
+    };
     axios.post('/alert/api/alerts', alertData)
       .then((res) => {
         console.log('alert sent to server', alertData);
@@ -53,22 +59,26 @@ class Alert extends Component {
   }
 
   render() {
-    const { notes } = this.state;
-    const { latitude, longitude, category, EventID } = this.props;
-    console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}\nEventID: ${EventID}`);
+    const { notes, photoTag } = this.state;
+    const { category } = this.props;
+    // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="container">
-        <div className="head">
-        </div>
+        <div className="head" />
         <div className="location-info">
-          <h1>Location Data Here</h1>
-          <h1>Type of Emergency Here</h1>
+          <h1>
+            Disaster Type:
+            {' '}
+            {category.split(/\s+/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}
+          </h1>
         </div>
         <div className="photo">
-          <button onClick={() => navigate('/')}>Capture Photo</button>
+          <button type="button" onClick={this.takePhoto}>Capture Photo</button>
+          <input type="text" name="photoTag" placeholder="Describe your photo" onChange={this.handleChange} value={photoTag} />
+          <input type="file" onChange={this.fileHandler} />
         </div>
         <div className="notes">
-          <input type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
+          <input size="" type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
         </div>
         <div className="submit">
           <button type="button" onClick={this.handleSubmit}>Submit</button>

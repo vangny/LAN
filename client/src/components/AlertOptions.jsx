@@ -12,7 +12,7 @@ class AlertOptions extends React.Component {
       longitude,
       category: null,
       timeStamp: moment().format(),
-    }
+    };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.sendDataToApp = this.sendDataToApp.bind(this);
     // this.clickHandler = this.clickHandler.bind(this);
@@ -52,15 +52,15 @@ class AlertOptions extends React.Component {
         <div>{`lat: ${latitude} long: ${longitude}`}</div>
         <Link to="alert" type="button">LINK TEST</Link>
         <button type="button" onClick={this.clickHandler}>test</button>
-        <button id="hurricane" type="button" value="hurricane" onClick={e => this.sendDataToApp(e.target.value)}>hurricane</button>
-        <button id="flood" type="button" value="flood" onClick={e => this.sendDataToApp(e.target.value)}>flood</button>
-        <button id="wildfire" type="button" value="wildfire" onClick={e => this.sendDataToApp(e.target.value)}>wildfire</button>
-        <button id="earthquake" type="button" value="earthquake" onClick={e => this.sendDataToApp(e.target.value)}>earthquake</button>
+        <button id="hurricane" type="button" value="hurricane" onClick={e => navigate('alert', this.sendDataToApp(e.target.value))}>hurricane</button>
+        <button id="flood" type="button" value="flood" onClick={e => navigate('alert', this.sendDataToApp(e.target.value))}>flood</button>
+        <button id="wildfire" type="button" value="wildfire" onClick={e => navigate('alert', this.sendDataToApp(e.target.value))}>wildfire</button>
+        <button id="earthquake" type="button" value="earthquake" onClick={e => navigate('alert', this.sendDataToApp(e.target.value))}>earthquake</button>
         <Router>
           <Alert path="/alert" latitude={latitude} longitude={longitude} category={category} test={test} />
         </Router>
       </div>
-      
+
     );
   }
 }
