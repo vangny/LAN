@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const db = require('../db/index.js');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
+const db = require('../db/index');
 
 const schema = buildSchema(`
   type Query {
@@ -27,9 +27,7 @@ const root = {
       return data;
     })(data);
   },
-  sup: () => {
-    return 1 + 1;
-  },
+  sup: () => 1 + 1,
   rollDice: ({ numDice, numSides }) => {
     const output = [];
     for (let i = 0; i < numDice; i += 1) {
@@ -41,7 +39,7 @@ const root = {
     const person = new Person();
     person.name = name;
     person.age = age;
-  }
+  },
 };
 
 
@@ -53,28 +51,30 @@ app.use('/graphql', graphqlHTTP({
   schema,
   rootValue: root,
   graphiql: true,
-}))
+}));
 
 const port = process.env.PORT || 9000;
 
 
 app.post('/alert/api/events', (req, res) => {
-  const { 
-    latitude,
-    longitude,
-    category,
-    timeStamp,
+  const {
+    latitude, longitude, category, timeStamp,
   } = req.body;
   // console.log(latitude, longitude, category, timeStamp);
   db.checkEvents(category, latitude, longitude, timeStamp)
     .then((result) => {
       console.log('server returns: ', result);
-      res.send(result)
+      res.send(result);
     });
   // res.sendStatus(201);
 });
 
 app.post('/alert/api/alerts', (req, res) => {
+  const {
+    EventID, timeStamp, latitude, longitude, notes, photo, photoTag,
+  } = req.body;
+
+  db.createAlert(EventID, timeStamp, latitude, longitude, notes, photo, photoTag);
   console.log(req.body);
   res.sendStatus(201);
 });
