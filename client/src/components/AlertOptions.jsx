@@ -2,7 +2,6 @@ import React from 'react';
 
 
 const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) => {
-
   navigator.geolocation.watchPosition((position) => {
     appContext.setState({
       latitude: position.coords.latitude,

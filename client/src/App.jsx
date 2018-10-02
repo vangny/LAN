@@ -4,10 +4,10 @@ import { Link, Router, navigate } from '@reach/router';
 import axios from 'axios';
 import moment from 'moment';
 
-import Dashboard from './components/Dashboard.jsx';
-import Alert from './components/Alert.jsx';
-import AlertOptions from './components/AlertOptions.jsx'
-import Home from './Home.jsx';
+import Dashboard from './components/Dashboard';
+import Alert from './components/Alert';
+import AlertOptions from './components/AlertOptions';
+import Home from './Home';
 
 class App extends React.Component {
   constructor(props) {
