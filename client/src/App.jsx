@@ -52,12 +52,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { latitude, longitude, category, EventID } = this.state;
     const {
       latitude,
       longitude,
       category,
       timeStamp,
+      EventID,
     } = this.state;
     // console.log(this.state);
     return (
@@ -69,7 +69,7 @@ class App extends React.Component {
           <Home exact path="/" />
           <Dashboard path="dashboard" />
           <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
-          <Alert path="alert" category={category} latitude={latitude} longitude={longitude} EventID={EventID}/>
+          <Alert path="alert" category={category} latitude={latitude} longitude={longitude} timeStamp={timeStamp} EventID={EventID} />
         </Router>
       </div>
     );

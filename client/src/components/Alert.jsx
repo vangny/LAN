@@ -7,7 +7,7 @@ class Alert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photo: null,
+      photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
       photoTag: '',
       notes: '',
     };
@@ -34,13 +34,15 @@ class Alert extends Component {
   }
 
   handleSubmit() {
-    const { category } = this.props;
-    const { latitude } = this.props;
-    const { longitude } = this.props;
-    const { timeStamp } = this.props;
+    const {
+      latitude,
+      longitude,
+      EventID,
+      timeStamp,
+    } = this.props;
     const { notes, photo, photoTag } = this.state;
     const alertData = {
-      category,
+      EventID,
       timeStamp,
       latitude,
       longitude,
@@ -58,7 +60,7 @@ class Alert extends Component {
 
   render() {
     const { notes, photoTag } = this.state;
-    const { latitude, longitude, category } = this.props;
+    const { category } = this.props;
     // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="container">
