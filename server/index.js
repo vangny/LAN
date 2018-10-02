@@ -69,8 +69,9 @@ app.post('/alert/api/events', (req, res) => {
   db.checkEvents(category, latitude, longitude, timeStamp)
     .then((result) => {
       console.log('server returns: ', result);
+      res.send(result)
     });
-  res.sendStatus(201);
+  // res.sendStatus(201);
 });
 
 app.post('/alert/api/alerts', (req, res) => {
