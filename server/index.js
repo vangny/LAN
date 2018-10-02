@@ -71,10 +71,10 @@ app.post('/alert/api/events', (req, res) => {
 
 app.post('/alert/api/alerts', (req, res) => {
   const {
-    EventID, timeStamp, latitude, longitude, notes, photo, photoTag,
+    EventId, timeStamp, latitude, longitude, notes, photo, photoTag,
   } = req.body;
 
-  db.createAlert(EventID, timeStamp, latitude, longitude, notes, photo, photoTag);
+  // db.createAlert(EventId, timeStamp, latitude, longitude, notes, photo, photoTag);
   console.log(req.body);
   res.sendStatus(201);
 });

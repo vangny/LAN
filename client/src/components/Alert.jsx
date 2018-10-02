@@ -38,12 +38,12 @@ class Alert extends Component {
     const {
       latitude,
       longitude,
-      EventID,
+      EventId,
       timeStamp,
     } = this.props;
     const { notes, photo, photoTag } = this.state;
     const alertData = {
-      EventID,
+      EventId,
       timeStamp,
       latitude,
       longitude,

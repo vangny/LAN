@@ -87,7 +87,7 @@ const checkEvents = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventID, timeStamp, latitude, longitude, notes, photo, photoTag) => {
+const createAlert = (EventId, timeStamp, latitude, longitude, notes, photo, photoTag) => {
   // Event.findById(EventID)
   //   .then((event) => {
   //     event.setAlerts({
@@ -95,19 +95,27 @@ const createAlert = (EventID, timeStamp, latitude, longitude, notes, photo, phot
   //     });
   //   })
   //   .then((result) => { console.log('result from setAlerts: ', result); });
-  Alert.create({
-    EventID, latitude, longitude, notes,
-  }).then((alert) => {
-    alert.setMedia({
-      url: photo, photoTag,
+
+  Alert.create({ latitude, longitude })
+    .then(alert => (
+      Media.create({
+        url: photo,
+        photoTag,
+        AlertId: alert.get('id'),
+      })
+    )).then((login) => {
+      console.log('successfully stored both alert and media! ', login);
     });
-  }).then((result, err) => {
-    if (result) {
-      console.log('after setMedia invoked', result);
-    } else {
-      console.log(err);
-    }
-  });
+  // sequelize.transaction((t) => {
+  //   return Alert.create({ latitude, longitude })
+  //     .then((alert) => {
+  //       return alert.setMedia({ url: photo, photoTag }, { transaction: t });
+  //     }).then((result) => {
+  //       console.log('successfully linked media to alert!: ', result);
+  //     }).catch((err) => {
+  //       console.log(err);
+  //     });
+  // });
 };
 // const addUser = (user) => {
 //     console.log('creating user');

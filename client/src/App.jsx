@@ -18,7 +18,7 @@ class App extends React.Component {
       longitude: 'Loading...',
       category: null,
       timeStamp: null,
-      EventID: null,
+      EventId: null,
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
@@ -44,7 +44,7 @@ class App extends React.Component {
       axios.post('/alert/api/events', this.state)
         .then((res) => {
           console.log('receiving event data: ', res.data);
-          this.setState({ EventID: res.data.id },
+          this.setState({ EventId: res.data.id },
             () => {
               navigate('/alert');
             });
@@ -58,7 +58,7 @@ class App extends React.Component {
       longitude,
       category,
       timeStamp,
-      EventID,
+      EventId,
     } = this.state;
     // console.log(this.state);
     return (
@@ -71,8 +71,8 @@ class App extends React.Component {
           <Router>
             <Home exact path="/" />
             <Dashboard path="/dashboard" />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} />
-            <AlertOptions path="/alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp}/>
+            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
           </Router>
         </div>
         <Link to="/" className="home-grid nav-cell">
