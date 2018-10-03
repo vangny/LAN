@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import MapGL from 'react-map-gl';
+import axios from 'axios';
+
 import { LayerControls, HEXAGON_CONTROLS, SCATTERPLOT_CONTROLS } from './LayerControls.jsx';
 import DeckGLOverlay from './DeckGLOverlay';
-import sample from '../../../../sampleData';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // will need to do a get request in the future so the token isn't vulnerable
@@ -40,7 +41,6 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.alerts);
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
     this.getData();
@@ -58,10 +58,13 @@ export default class Map extends Component {
   }
 
   getData() {
-    // console.log(points);
-    this.setState({
-      points: sample
-    })
+    axios.get('/coordinates')
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          points: res.data,
+        });
+      });
   }
 
   resizeMap() {

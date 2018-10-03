@@ -114,6 +114,10 @@ const getAlerts = () => (
 //         })
 // }
 
+const getCoordinates = () => (
+  Alert.findAll({ attributes: ['latitude', 'longitude'] })
+);
+
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
@@ -121,4 +125,5 @@ exports.Media = Media;
 exports.checkEvents = checkEvents;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
+exports.getCoordinates = getCoordinates;
 // exports.addUser = addUser;

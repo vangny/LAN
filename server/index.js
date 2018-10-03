@@ -56,9 +56,16 @@ app.use('/graphql', graphqlHTTP({
 const port = process.env.PORT || 9000;
 
 app.get('/home', (req, res) => {
-  console.log('PINGED!')
+  console.log('PINGED!');
   db.getAlerts().then((alerts) => {
     res.status(201).send(alerts.map(alert => alert.dataValues));
+  });
+});
+
+app.get('/coordinates', (req, res) => {
+  console.log('grabbing coordinates...');
+  db.getCoordinates().then((coordinates) => {
+    res.status(201).send(coordinates.map(data => data.dataValues));
   });
 });
 
