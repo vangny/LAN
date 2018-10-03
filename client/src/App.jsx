@@ -7,7 +7,7 @@ import moment from 'moment';
 import Dashboard from './components/Dashboard';
 import Alert from './components/Alert';
 import AlertOptions from './components/AlertOptions';
-import Home from './Home';
+import AlertFeed from './AlertFeed';
 
 class App extends React.Component {
   constructor(props) {
@@ -85,10 +85,10 @@ class App extends React.Component {
           <h2>Local Alert Network</h2>
         </Link>     
         <Router className='content'>
-          <Home exact path="/" />
-          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude}/>
+          <AlertFeed exact path="/" alerts={alerts} />
+          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} alerts={alerts} />
           <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
-          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
+          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
         </Router>
         <div className="nav-bar">
           <Link to="/" className="home-grid nav-cell">

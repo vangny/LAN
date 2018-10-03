@@ -12,6 +12,7 @@ body {
   grid-template-areas: 'header'
                        'content'
                        'navbar';
+  grid-row-gap: 5px;
 }
 
 .title {
@@ -22,17 +23,16 @@ body {
 }
 
 .content {
-  height: 100%;
-  width: 100%;
+  /* height: 97%; */
+  /* width: 100%; */
   grid-area: content;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  /* align-items: stretch; */
+  overflow: scroll;
 }
 
 .nav-bar {
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
+  /* margin-top: 5px; */
   grid-area: navbar;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
@@ -104,6 +104,7 @@ Dashboard Styling
 
 .dashboard .feed {
   grid-area: alerts-feed;
+  overflow: scroll;
 }
 
 .alerts-feed {

@@ -40,6 +40,7 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.alerts);
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
     this.getData();
