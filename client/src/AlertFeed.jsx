@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const Home = ({ alerts }) => {
+const AlertFeed = ({ alerts }) => {
   const alertFeed = () => {
     return alerts ? alerts.map(alert => (
       <div className="alert" key={alert.id}>
@@ -21,4 +21,4 @@ const Home = ({ alerts }) => {
   );
 };
 
-export default Home;
+export default AlertFeed;
