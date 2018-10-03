@@ -101,7 +101,7 @@ const createAlert = (EventId, category, latitude, longitude, notes, photo, photo
 );
 
 const getAlerts = () => (
-  Alert.findAll()
+  Alert.findAll({ order: [['createdAt', 'DESC']] })
 );
 // const addUser = (user) => {
 //     console.log('creating user');

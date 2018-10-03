@@ -54,8 +54,6 @@ class Alert extends Component {
     };
     axios.post('/alert/api/alerts', alertData)
       .then((res) => {
-        // console.log('alert sent to server', alertData);
-        console.log('Alerts returned from the db: ', res.data);
         sendAlertsToApp(res.data);
       })
       .catch((err) => { console.log(err); });
