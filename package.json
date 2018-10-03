@@ -28,18 +28,21 @@
     "@babel/preset-react": "^7.0.0",
     "apollo-fetch": "^0.7.0",
     "babel-loader": "^8.0.4",
-    "eslint": "^5.6.0",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "html-loader": "^0.5.5",
+    "style-loader": "^0.23.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
     "axios": "^0.18.0",
+    "babel-eslint": "^10.0.1",
     "body-parser": "^1.18.3",
     "deck.gl": "^6.1.1",
     "dotenv": "^6.0.0",
@@ -53,6 +56,8 @@
     "mysql2": "^1.6.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-dropzone": "^6.0.0",
+    "react-html5-camera-photo": "^1.2.8-beta.0",
     "react-map-gl": "^3.3.5",
     "sequelize": "^4.39.0"
   }
