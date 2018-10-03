@@ -13,9 +13,8 @@ export default class Map extends Component {
     super(props);
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        //coordinates centralized to SF for now
+        width: 0,
+        height: 0,
         longitude: this.props.longitude,
         latitude: this.props.latitude,
         zoom: 11,
@@ -56,8 +55,8 @@ export default class Map extends Component {
 
   resizeMap() {
     this.onWindowChange({
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: document.getElementById('map-container').getBoundingClientRect().width,
+      height: document.getElementById('map-container').getBoundingClientRect().height,
     });
   }
 

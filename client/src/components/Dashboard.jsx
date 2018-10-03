@@ -9,14 +9,16 @@ export default class Dashboard extends Component {
     const { latitude, longitude } = this.props;
     return (
       <div className='dashboard'>
-        <div className='map-container'>
+        <div className='map-container' id='map-container'>
           <Map latitude={latitude} longitude={longitude}/>
         </div>
-        <div id='media'>
-          {/* input media component */}
-        </div>
-        <div id='alerts'>
+        <div className='alerts-container'>
+            alerts
           {/* input alerts component */}
+        </div>
+        <div className='media-container'>
+          media
+          {/* input media component */}
         </div>
       </div>
     );

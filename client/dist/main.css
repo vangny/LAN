@@ -7,15 +7,11 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
   grid-template-rows: 10% 83% 7%;
-  grid-template-areas: 'header header header header'
-                       'main main main main'
-                       'home search alert dashboard';
-}
-
-.menu {
-  grid-area: menu;
+  grid-template-areas: 'header'
+                       'main'
+                       'navbar';
 }
 
 .title {
@@ -26,10 +22,21 @@ body {
 }
 
 .content {
+  height: 100%;
+  width: 100%
   grid-area: main;
-  margin: 10px;
-  overflow: scroll;
-  align-items: stretch;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /* align-items: stretch; */
+}
+
+.nav-bar {
+  height: 100%;
+  width: 100%;
+  grid-area: navbar;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 'home search alert dashboard';
 }
 
 .nav-cell {
@@ -41,11 +48,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.home-button {
-  text-align: center;
-  
 }
 
 .search-grid {
@@ -72,29 +74,36 @@ body {
 /**************
 Dashboard Styling
 **************/
+.dashboard {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 60% 40%;
+  grid-template-areas: 'map feed'
+                       'media media'
+}
 
+.map-container {
+  grid-area: map;
+}
+
+.alerts-container {
+  grid-area: feed;
+}
+
+.media-container {
+  grid-area: media;
+}
 /**************
 Map Styling
 **************/
-#map {
-  text-align: left;
-}
 
-/* #tooltipStyle {
-  position: absolute;
-  padding: 4px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #ffffff;
-  max-width: 300px;
-  font-size: 10px;
-  z-index: 9;
-  pointer-events: none;
-}; */
 
-.layer-controls {
+/* .layer-controls {
   border-radius: 3;
   box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.1);
-  /* font-family: ff-clan-web-pro, Helvetica Neue, Helvetica, sans-serif !important; */
+  font-family: ff-clan-web-pro, Helvetica Neue, Helvetica, sans-serif !important;
   font-size: 12px;
   line-height: 1.833;
   width: 125;
@@ -104,38 +113,7 @@ Map Styling
   padding: 20px;
   z-index: 100;
   background: #ffffff;
-}
-
-/* charts {
-  background: 'white',
-  borderRadius: 3,
-  boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-  fontFamily: 'ff-clan-web-pro, "Helvetica Neue", Helvetica, sans-serif !important',
-  fontSize: '12px',
-  lineHeight: 1.833,
-  height: 210,
-  padding: '10px',
-  position: 'absolute',
-  left: 20,
-  top: 20,
-  width: 500,
-  zIndex: 100
-}; */
-
-/* #spinner{
-  animation: 'linear 2s infinite',
-  background: '#1EACC7',
-  borderRadius: '50%',
-  height: 10,
-  width: 10,
-  opacity: 0.4,
-  position: 'absolute',
-  top: 70,
-  left: 60,
-  transformOrigin: '20px 20px',
-  zIndex: 110
 } */
-
 /*
 ====================
 ALERT COMPONENTS
