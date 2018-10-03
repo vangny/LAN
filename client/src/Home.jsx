@@ -1,47 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { navigate, Link, Router } from '@reach/router';
+import moment from 'moment';
+import axios from 'axios';
 import Dashboard from './components/Dashboard.jsx';
 import Alert from './components/Alert.jsx';
 
-class Home extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+const Home = ({ alerts }) => {
+  const alertFeed = () => {
+    return alerts ? alerts.map(alert => (
+      <div className="alert" key={alert.id}>
+        {`Category: ${alert.category}`}
+        <br/>
+        {moment(alert.createdAt).fromNow()}
+      </div>
+    )) : (<p>Loading feed...</p>);
+  }
 
-    // queryTest() {
-    //   var data = 'test passed!' 
-      
-    //   //top line (17) defines the type of argument your function will take in. the query field passes the argument into the function
-    //   var query = `query Hello($data: String!) {
-    //       hello(data: $data)
-    //     }`;
-
-    //   fetch('/graphql', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     query,
-    //     variables: { data }
-    //   })
-    //   })
-    //   .then(r => r.json())
-    //   .then(data => console.log('data returned:', data));
-    // }
-
-    render() {
-        return (
-            <div className="header">
-                <div className="feed">
-                    <h1>SEARCH</h1>
-                    <h1>FEED</h1>
-                </div>
-            </div>
-        );
-    }
+  return (
+    <div className="header">
+      <div className="feed">
+        <h1>SEARCH</h1>
+        <h1>FEED</h1>
+        <div id="alertFeed">
+          {alertFeed()}
+        </div>
+      </div>
+    </div>
+  );
 }
+
+
 
 export default Home;

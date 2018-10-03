@@ -26,7 +26,8 @@ const Event = sequelize.define('Event', {
 const Alert = sequelize.define('Alert', {
   latitude: { type: Sequelize.DECIMAL(25, 20) },
   longitude: { type: Sequelize.DECIMAL(25, 20) },
-  // events_category: { type: Sequelize.STRING },
+  notes: { type: Sequelize.STRING },
+  category: { type: Sequelize.STRING },
   // event_id: { type: Sequelize.NUMBER },
   // user_id: { type: Sequelize.NUMBER }
 });
@@ -87,28 +88,21 @@ const checkEvents = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventID, timeStamp, latitude, longitude, notes, photo, photoTag) => {
-  // Event.findById(EventID)
-  //   .then((event) => {
-  //     event.setAlerts({
-  //       latitude, longitude, notes,
-  //     });
-  //   })
-  //   .then((result) => { console.log('result from setAlerts: ', result); });
+const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => (
   Alert.create({
-    EventID, latitude, longitude, notes,
-  }).then((alert) => {
-    alert.setMedia({
-      url: photo, photoTag,
-    });
-  }).then((result, err) => {
-    if (result) {
-      console.log('after setMedia invoked', result);
-    } else {
-      console.log(err);
-    }
-  });
-};
+    EventId, category, latitude, longitude, notes,
+  }).then(alert => (
+    Media.create({
+      url: photo,
+      photoTag,
+      AlertId: alert.get('id'),
+    })
+  ))
+);
+
+const getAlerts = () => (
+  Alert.findAll({ order: [['createdAt', 'DESC']] })
+);
 // const addUser = (user) => {
 //     console.log('creating user');
 //     Users.upsert({ user })
@@ -126,4 +120,5 @@ exports.Alert = Alert;
 exports.Media = Media;
 exports.checkEvents = checkEvents;
 exports.createAlert = createAlert;
+exports.getAlerts = getAlerts;
 // exports.addUser = addUser;

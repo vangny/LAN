@@ -18,13 +18,22 @@ class App extends React.Component {
       longitude: 'Loading...',
       category: null,
       timeStamp: null,
-      EventID: null,
+      EventId: null,
+      alerts: null,
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
+    this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
 
   componentDidMount() {
+    axios.get('/home')
+      .then((res) => {
+        this.setState({
+          alerts: res.data,
+        });
+      });
+
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         latitude: position.coords.latitude,
@@ -33,6 +42,7 @@ class App extends React.Component {
         console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
     });
+
   }
 
   handleAlertOptions(category) {
@@ -44,11 +54,17 @@ class App extends React.Component {
       axios.post('/alert/api/events', this.state)
         .then((res) => {
           console.log('receiving event data: ', res.data);
-          this.setState({ EventID: res.data.id },
+          this.setState({ EventId: res.data.id },
             () => {
               navigate('/alert');
             });
         });
+    });
+  }
+
+  sendAlertsToApp(alerts) {
+    this.setState({ alerts }, () => {
+      navigate('/');
     });
   }
 
@@ -58,7 +74,8 @@ class App extends React.Component {
       longitude,
       category,
       timeStamp,
-      EventID,
+      EventId,
+      alerts,
     } = this.state;
     // console.log(this.state);
     return (
@@ -69,10 +86,10 @@ class App extends React.Component {
         </Link>
         <div className="content">
           <Router>
-            <Home exact path="/" />
+            <Home exact path="/" alerts={alerts} />
             <Dashboard path="/dashboard" />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} />
-            <AlertOptions path="/alertOptions" latitude={latitude} longitude={longitude} appHandler={this.appHandler} />
+            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
+            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
           </Router>
         </div>
         <Link to="/" className="home-grid nav-cell">
