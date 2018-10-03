@@ -1,3 +1,8 @@
+const iconv = require('iconv-lite');
+const encodings = require('iconv-lite/encodings');
+
+iconv.encodings = encodings;
+
 const express = require('express');
 const bodyparser = require('body-parser');
 const graphqlHTTP = require('express-graphql');
