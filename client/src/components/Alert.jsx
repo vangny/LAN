@@ -39,12 +39,13 @@ class Alert extends Component {
       latitude,
       longitude,
       EventId,
-      timeStamp,
+      category,
+      sendAlertsToApp,
     } = this.props;
     const { notes, photo, photoTag } = this.state;
     const alertData = {
       EventId,
-      timeStamp,
+      category,
       latitude,
       longitude,
       notes,
@@ -53,15 +54,16 @@ class Alert extends Component {
     };
     axios.post('/alert/api/alerts', alertData)
       .then((res) => {
-        console.log('alert sent to server', alertData);
-        console.log(res);
+        // console.log('alert sent to server', alertData);
+        console.log('Alerts returned from the db: ', res.data);
+        sendAlertsToApp(res.data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => { console.log(err); });
   }
 
   waitForData() {
-    const { latitude, longitude } = this.props;
-    return latitude && longitude ? (
+    const { latitude } = this.props;
+    return latitude !== 'Loading...' ? (
       <button type="button" onClick={this.handleSubmit}>Submit</button>
     ) : (
       <p>

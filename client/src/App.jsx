@@ -19,12 +19,21 @@ class App extends React.Component {
       category: null,
       timeStamp: null,
       EventId: null,
+      alerts: null,
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
+    this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
 
   componentDidMount() {
+    axios.get('/home')
+      .then((res) => {
+        this.setState({
+          alerts: res.data,
+        });
+      });
+
     navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         latitude: position.coords.latitude,
@@ -33,6 +42,7 @@ class App extends React.Component {
         console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
     });
+
   }
 
   handleAlertOptions(category) {
@@ -52,6 +62,12 @@ class App extends React.Component {
     });
   }
 
+  sendAlertsToApp(alerts) {
+    this.setState({ alerts }, () => {
+      navigate('/');
+    });
+  }
+
   render() {
     const {
       latitude,
@@ -59,6 +75,7 @@ class App extends React.Component {
       category,
       timeStamp,
       EventId,
+      alerts,
     } = this.state;
     // console.log(this.state);
     return (
@@ -69,9 +86,9 @@ class App extends React.Component {
         </Link>
         <div className="content">
           <Router>
-            <Home exact path="/" />
+            <Home exact path="/" alerts={alerts} />
             <Dashboard path="/dashboard" />
-            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp}/>
+            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
           </Router>
         </div>

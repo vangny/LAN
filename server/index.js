@@ -55,6 +55,12 @@ app.use('/graphql', graphqlHTTP({
 
 const port = process.env.PORT || 9000;
 
+app.get('/home', (req, res) => {
+  console.log('PINGED!')
+  db.getAlerts().then((alerts) => {
+    res.status(201).send(alerts.map(alert => alert.dataValues));
+  });
+});
 
 app.post('/alert/api/events', (req, res) => {
   const {
@@ -62,7 +68,7 @@ app.post('/alert/api/events', (req, res) => {
   } = req.body;
   // console.log(latitude, longitude, category, timeStamp);
   db.checkEvents(category, latitude, longitude, timeStamp)
-    .then((result) => {
+    .then((result) => { // the result will be the event object that was just created
       console.log('server returns: ', result);
       res.send(result);
     });
@@ -71,12 +77,20 @@ app.post('/alert/api/events', (req, res) => {
 
 app.post('/alert/api/alerts', (req, res) => {
   const {
-    EventId, timeStamp, latitude, longitude, notes, photo, photoTag,
+    EventId, category, latitude, longitude, notes, photo, photoTag,
   } = req.body;
 
-  // db.createAlert(EventId, timeStamp, latitude, longitude, notes, photo, photoTag);
-  console.log(req.body);
-  res.sendStatus(201);
+  db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
+    .then(() => { // the result will be the media object that was just created
+      // console.log('Do this after saving alert/media to db');
+      // console.log(`AlertId: ${result.dataValues.AlertId}`);
+      // console.log('retrieved alerts: ', db.getAlerts());
+      db.getAlerts().then((alerts) => {
+        // console.log(alerts.map(alert => alert.dataValues));
+        // res.end(JSON.stringify(alerts.map(alert => alert.dataValues)));
+        res.status(201).send(alerts.map(alert => alert.dataValues));
+      });
+    });
 });
 
 app.listen(port, () => {
