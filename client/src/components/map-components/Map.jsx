@@ -11,25 +11,28 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoidmFuZ255IiwiYSI6ImNqbWltMncxbTA2ZHgzcHF6bzBjYmx
 export default class Map extends Component {
   constructor(props) {
     super(props);
+
+    const { latitude, longitude } = this.props;
+
     this.state = {
       viewport: {
         width: 0,
         height: 0,
-        longitude: this.props.longitude,
-        latitude: this.props.latitude,
+        longitude,
+        latitude,
         zoom: 11,
         maxZoom: 16,
       },
       settings: {
         ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
           ...accu,
-          [key]: SCATTERPLOT_CONTROLS[key].value
+          [key]: SCATTERPLOT_CONTROLS[key].value,
         }), {}),
 
         ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
           ...accu,
-          [key]: HEXAGON_CONTROLS[key].value
-        }), {})
+          [key]: HEXAGON_CONTROLS[key].value,
+        }), {}),
       },
       points: {},
     }
@@ -49,8 +52,15 @@ export default class Map extends Component {
   onWindowChange(viewport) {
     const { width, height } = viewport;
     this.setState({
-      viewport: {...this.state.viewport, ...viewport}
+      viewport: {...this.state.viewport, ...viewport},
     });
+  }
+
+  getData() {
+    // console.log(points);
+    this.setState({
+      points: sample
+    })
   }
 
   resizeMap() {
@@ -61,14 +71,7 @@ export default class Map extends Component {
   }
 
   updateLayerSettings(settings) {
-    this.setState({settings});
-  }
-
-  getData() {
-    // console.log(points);
-    this.setState({
-      points: sample
-    })
+    this.setState({ settings });
   }
 
   render() {

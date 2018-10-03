@@ -18,18 +18,12 @@ const Home = ({ alerts }) => {
   }
 
   return (
-    <div className="header">
-      <div className="feed">
-        <h1>SEARCH</h1>
-        <h1>FEED</h1>
-        <div id="alertFeed">
-          {alertFeed()}
-        </div>
+    <div className="feed">
+      <div id="alertFeed">
+        {alertFeed()}
       </div>
     </div>
   );
-}
-
-
+};
 
 export default Home;
