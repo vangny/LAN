@@ -7,7 +7,7 @@ import moment from 'moment';
 import Dashboard from './components/Dashboard';
 import Alert from './components/Alert';
 import AlertOptions from './components/AlertOptions';
-import Home from './Home';
+import AlertFeed from './AlertFeed';
 
 class App extends React.Component {
   constructor(props) {
@@ -83,27 +83,27 @@ class App extends React.Component {
         {/* <Link to="/" className="menu"><span class="fas fa-bars"></span></Link> */}
         <Link to="/" className="title nav-cell">
           <h2>Local Alert Network</h2>
-        </Link>
-        <div className="content">
-          <Router>
-            <Home exact path="/" alerts={alerts} />
-            <Dashboard path="/dashboard" />
-            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
-            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions}/>
-          </Router>
+        </Link>     
+        <Router className='content'>
+          <AlertFeed exact path="/" alerts={alerts} />
+          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} alerts={alerts} />
+          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
+          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
+        </Router>
+        <div className="nav-bar">
+          <Link to="/" className="home-grid nav-cell">
+            <span className="home-button">Home</span>
+          </Link>
+          <div className="search-grid nav-cell">
+            <span className="search-button">Search</span>
+          </div>
+          <Link to="/alertOptions" className="alert-grid nav-cell">
+            <span className="alert-button">Add Alert</span>
+          </Link>
+          <Link to="/dashboard" className="dash-grid nav-cell">
+            <span className="dash-button">Dashboard</span>
+          </Link>
         </div>
-        <Link to="/" className="home-grid nav-cell">
-          <span className="home-button">Home</span>
-        </Link>
-        <div className="search-grid nav-cell">
-          <span className="search-button">Search</span>
-        </div>
-        <Link to="/alertOptions" className="alert-grid nav-cell">
-          <span className="alert-button">Add Alert</span>
-        </Link>
-        <Link to="/dashboard" className="dash-grid nav-cell">
-          <span className="dash-button">Dashboard</span>
-        </Link>
       </div>
     );
   }

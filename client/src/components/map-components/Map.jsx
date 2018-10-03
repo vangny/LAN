@@ -11,26 +11,28 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoidmFuZ255IiwiYSI6ImNqbWltMncxbTA2ZHgzcHF6bzBjYmx
 export default class Map extends Component {
   constructor(props) {
     super(props);
+
+    const { latitude, longitude } = this.props;
+
     this.state = {
       viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        //coordinates centralized to SF for now
-        longitude: -122.4194,
-        latitude: 37.7,
+        width: 0,
+        height: 0,
+        longitude,
+        latitude,
         zoom: 11,
         maxZoom: 16,
       },
       settings: {
         ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
           ...accu,
-          [key]: SCATTERPLOT_CONTROLS[key].value
+          [key]: SCATTERPLOT_CONTROLS[key].value,
         }), {}),
 
         ...Object.keys(HEXAGON_CONTROLS).reduce((accu, key) => ({
           ...accu,
-          [key]: HEXAGON_CONTROLS[key].value
-        }), {})
+          [key]: HEXAGON_CONTROLS[key].value,
+        }), {}),
       },
       points: {},
     }
@@ -38,6 +40,7 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.alerts);
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
     this.getData();
@@ -50,19 +53,8 @@ export default class Map extends Component {
   onWindowChange(viewport) {
     const { width, height } = viewport;
     this.setState({
-      viewport: {...this.state.viewport, ...viewport}
+      viewport: {...this.state.viewport, ...viewport},
     });
-  }
-
-  resizeMap() {
-    this.onWindowChange({
-      width: window.innerWidth * .50,
-      height: window.innerHeight * .50,
-    });
-  }
-
-  updateLayerSettings(settings) {
-    this.setState({settings});
   }
 
   getData() {
@@ -72,10 +64,20 @@ export default class Map extends Component {
     })
   }
 
+  resizeMap() {
+    this.onWindowChange({
+      width: document.getElementById('map-container').getBoundingClientRect().width,
+      height: document.getElementById('map-container').getBoundingClientRect().height,
+    });
+  }
+
+  updateLayerSettings(settings) {
+    this.setState({ settings });
+  }
+
   render() {
     return (
       <div>
-        
         <MapGL
           {...this.state.viewport}
           mapStyle={MAPBOX_STYLE}
@@ -88,11 +90,11 @@ export default class Map extends Component {
             onHover={hover => this.onHover(hover)}
             {...this.state.settings}
           />
-          <LayerControls
+          {/* <LayerControls
           settings={this.state.settings}
           propTypes={HEXAGON_CONTROLS}
           onChange={settings => this.updateLayerSettings(settings)}
-        />
+        /> */}
         </MapGL>
       </div>
     );
