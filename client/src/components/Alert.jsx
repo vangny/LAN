@@ -83,9 +83,12 @@ class Alert extends Component {
     if (this.state.modal === "camera") {
       return (
         <Modal>
-          <AlertCamera
-            changeModal={this.changeModal.bind(this)}
-          />
+          <div className="modal-container">
+            <AlertCamera
+              changeModal={this.changeModal.bind(this)}
+            />
+            <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
+          </div>
         </Modal>
       );
     }
@@ -99,6 +102,7 @@ class Alert extends Component {
       <div className="container">
         <div className="head" />
         <div className="location-info">
+          {this.renderModal()}
           <h1>
             Disaster Type:
             {' '}
@@ -106,8 +110,7 @@ class Alert extends Component {
           </h1>
         </div>
         <div className="photo">
-          <button className="button-alerts" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
-          <button type="button" onClick={() => this.changeModal("")}>Exit camera mode</button>
+          <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
           <input type="text" name="photoTag" placeholder="Describe your photo" onChange={this.handleChange} value={photoTag} />
           <input type="file" onChange={this.fileHandler} />
         </div>
@@ -117,8 +120,8 @@ class Alert extends Component {
         <div className="submit">
           {this.waitForData()}
         </div>
-        <div>{this.renderModal()}</div>
       </div>
+
     );
   }
 }

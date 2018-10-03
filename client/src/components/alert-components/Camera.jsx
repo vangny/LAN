@@ -7,13 +7,11 @@ class AlertCamera extends Component {
     super(props);
     this.imageNumber = 0;
     this.state = {
-      constraints: { audio: false, video: { width: 400, height: 300 } },
+    //   constraints: { audio: false, video: { width: 400, height: 300 } },
     };
   }
 
   onTakePhoto(dataUri) {
-    // downloadImageFile(dataUri, this.imageNumber);
-    // this.imageNumber += 1;
     console.log('photo snapped!');
   }
 
@@ -22,11 +20,11 @@ class AlertCamera extends Component {
   }
 
   onCameraStart(stream) {
-    console.log('onCameraStart');
+    console.log('onCameraStart', stream);
   }
 
   onCameraStop() {
-    console.log('onCameraStop');
+    console.log('Camera stream has ended');
   }
 
   render() {
