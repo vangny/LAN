@@ -40,7 +40,7 @@ export default class DeckGLOverlay extends Component {
       // if showHexagon is false then return a scatterplot layer instead
       !this.props.showHexagon ? new ScatterplotLayer({
         id: 'alert-scatter',
-        getPosition: d => d.coordinates,
+        getPosition: d => [d.longitude, d.latitude],
         getColor: d => d.pickup ? PICKUP_COLOR : DROPOFF_COLOR,
         getRadius: d=> 5,
         opacity: 0.5,
@@ -56,7 +56,7 @@ export default class DeckGLOverlay extends Component {
         elevationRange,
         elevationScale: 5,
         extruded: true,
-        getPosition: d => d.coordinates,
+        getPosition: d => [d.longitude, d.latitude],
         lightSettings: LIGHT_SETTINGS,
         opacity: 1,
         pickable: true,
