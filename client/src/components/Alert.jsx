@@ -9,15 +9,16 @@ class Alert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
+      photo: '',
       photoTag: '',
       notes: '',
       modal: '',
+      fileURL: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.waitForData = this.waitForData.bind(this);
-    // this.handleDrop = this.handleDrop.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
   handleChange(e) {
@@ -26,30 +27,52 @@ class Alert extends Component {
     });
   }
 
-  takePhoto() {
-    this.setState({
-      photo: 'http://www.publicadjustersassociates.com/images/tornado-damages.jpg',
-    });
-  }
+  /* eslint-disable */
+    handleDrop(files) {
+        const { photoTag } = this.state;
+        const upload = files.map((file) => {
+          let formData = new FormData();
+          formData.append('file', file);
+          formData.append('tags', `${photoTag}`);
+          formData.append('upload_preset', 'pnqbmmuw'); // cloud name
+          formData.append('api_key', '491544247472459') // api key
+          formData.append('timestamp', (Date.now() / 1000) | 0);
+              // Cloudinary upload request
+          return axios.post('https://api.cloudinary.com/v1_1/n3/image/upload', formData, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            
+          }).then((res) => {
+            const { photo } = this.state;
+            const data = res.data;
+            const photoURL = data.secure_url;
 
-  fileHandler(e) {
-    this.setState({
-      photo: e.target.files[0],
-    });
-  }
+            this.setState({
+                photo: `${photoURL}`,
+            }, () => {
+                console.log('photo url updated', photo);
+            })
+            console.log(data);
+          })
+        });
+          // After all files uploaded
+          axios.all(upload).then(() => {
+              console.log('All photos successfully uploaded');
+          });
+      }
+      /* eslint-enable */
 
   handleSubmit() {
     const {
+      category,
+      EventId,
       latitude,
       longitude,
-      EventId,
-      category,
       sendAlertsToApp,
     } = this.props;
     const { notes, photo, photoTag } = this.state;
     const alertData = {
-      EventId,
       category,
+      EventId,
       latitude,
       longitude,
       notes,
@@ -59,6 +82,7 @@ class Alert extends Component {
     axios.post('/alert/api/alerts', alertData)
       .then((res) => {
         sendAlertsToApp(res.data);
+        console.log('alert sent', alertData);
       })
       .catch((err) => { console.log(err); });
   }
@@ -73,34 +97,6 @@ class Alert extends Component {
       </p>
     );
   }
-  /* eslint-disable */
-  handleDrop(files) {
-    const upload = files.map((file) => {
-      let formData = new FormData();
-      formData.append('file', file);
-      formData.append('tags', 'test');
-      formData.append('upload_preset', 'pnqbmmuw'); // cloud name
-      formData.append('api_key', '491544247472459') // api key
-      formData.append('timestamp', (Date.now() / 1000) | 0);
-          // Cloudinary upload request
-      
-      return axios.post('https://api.cloudinary.com/v1_1/n3/image/upload', formData, {
-        headers: { "X-Requested-With": "XMLHttpRequest" },
-        
-      }).then((res) => {
-        console.log('trying to send this:', formData)
-        const data = res.data;
-        const fileURL = data.secure_url
-        console.log(data);
-      })
-    });
-
-      // After all files uploaded
-      axios.all(upload).then(() => {
-          console.log('All photos successfully uploaded');
-      });
-  }
-  /* eslint-enable */
 
   changeModal(view) {
     this.setState({
@@ -128,8 +124,7 @@ class Alert extends Component {
     const { category } = this.props;
     // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
-      <div className="container">
-        <div className="head" />
+      <div className="alert-layout">
         <div className="location-info">
           {this.renderModal()}
           <h1>
@@ -140,8 +135,7 @@ class Alert extends Component {
         </div>
         <div className="photo">
           <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
-          <input type="text" name="photoTag" placeholder="Describe your photo" onChange={this.handleChange} value={photoTag} />
-          <input type="file" onChange={this.fileHandler} />
+          <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
         </div>
         <div className="notes">
           <input size="" type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
