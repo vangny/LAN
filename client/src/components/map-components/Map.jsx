@@ -58,9 +58,9 @@ export default class Map extends Component {
   }
 
   getData() {
-    axios.get('/coordinates')
+    axios.get('/api/coordinates')
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
           points: res.data,
         });

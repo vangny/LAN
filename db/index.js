@@ -123,6 +123,10 @@ const getCoordinates = () => (
   Alert.findAll({ attributes: ['latitude', 'longitude'] })
 );
 
+const getMedia = () => (
+  Media.findAll({ order: [['createdAt', 'DESC']] })
+);
+
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
@@ -131,5 +135,5 @@ exports.checkEvents = checkEvents;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;
-exports.removeLastAlert = removeLastAlert;
+exports.getMedia = getMedia;
 // exports.addUser = addUser;

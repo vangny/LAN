@@ -7,7 +7,7 @@ import moment from 'moment';
 import Dashboard from './components/Dashboard';
 import Alert from './components/Alert';
 import AlertOptions from './components/AlertOptions';
-import AlertFeed from './AlertFeed';
+import AlertFeed from './components/AlertFeed';
 
 class App extends React.Component {
   constructor(props) {

@@ -120,6 +120,15 @@ Dashboard Styling
   grid-template-areas: 'search-media'
                        'media-feed';
 }
+
+.media-feed {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.media-feed > img {
+  display: inline-block;
+}
 /**************
 Map Styling
 **************/
