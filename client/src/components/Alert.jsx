@@ -13,7 +13,6 @@ class Alert extends Component {
       photoTag: '',
       notes: '',
       modal: '',
-      fileURL: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -126,7 +125,7 @@ class Alert extends Component {
     return (
       <div className="alert-layout">
         <div className="location-info">
-          {this.renderModal()}
+          
           <h1>
             Disaster Type:
             {' '}
@@ -134,6 +133,7 @@ class Alert extends Component {
           </h1>
         </div>
         <div className="photo">
+        {this.renderModal()}
           <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
           <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
         </div>
