@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import { navigate } from '@reach/router';
-import AlertCamera from './alert-components/Camera.jsx';
-import Modal from './alert-components/modal.jsx';
+import AlertCamera from './Camera';
+import Modal from './modal';
 
 class Alert extends Component {
   constructor(props) {
@@ -78,7 +78,7 @@ class Alert extends Component {
       photo,
       photoTag,
     };
-    axios.post('/alert/api/alerts', alertData)
+    axios.post('/api/alerts', alertData)
       .then((res) => {
         sendAlertsToApp(res.data);
         console.log('alert sent', alertData);

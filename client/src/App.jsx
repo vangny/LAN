@@ -5,9 +5,9 @@ import axios from 'axios';
 import moment from 'moment';
 
 import Dashboard from './components/Dashboard';
-import Alert from './components/Alert';
-import AlertOptions from './components/AlertOptions';
-import AlertFeed from './AlertFeed';
+import Alert from './components/alert/Alert';
+import AlertOptions from './components/alert/AlertOptions';
+import AlertFeed from './components/alert/AlertFeed';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/home')
+    axios.get('/api/feed')
       .then((res) => {
         this.setState({
           alerts: res.data,
@@ -51,7 +51,7 @@ class App extends React.Component {
       category,
       timeStamp,
     }, () => {
-      axios.post('/alert/api/events', this.state)
+      axios.post('/api/events', this.state)
         .then((res) => {
           console.log('receiving event data: ', res.data);
           this.setState({ EventId: res.data.id },

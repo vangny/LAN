@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Map from './map-components/Map';
-import AlertFeed from '../AlertFeed';
+import Map from './map/Map';
+import AlertFeed from './alert/AlertFeed';
+import Media from './Media';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class Dashboard extends Component {
         <div className="map-container" id="map-container">
           <Map latitude={latitude} longitude={longitude} />
         </div>
-        
+
         <div className="alerts-container">
           <div className="search-alerts">
             <form>
@@ -28,7 +29,6 @@ export default class Dashboard extends Component {
             </form>
           </div>
           <AlertFeed alerts={alerts} />
-          {/* input alerts component */}
         </div>
         <div className="media-container">
           <div className="search-media">
@@ -37,8 +37,9 @@ export default class Dashboard extends Component {
               <button type="button">Search Media</button>
             </form>
           </div>
-          <div className="media-feed">Media</div>
-          {/* input media component */}
+          <div className="media-feed">
+            <Media />
+          </div>
         </div>
       </div>
     );

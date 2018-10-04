@@ -15,7 +15,7 @@ const AlertFeed = ({ alerts }) => {
   return (
     <div className="feed">
       {/* <div id="alertFeed"> */}
-        {alertFeed()}
+      {alertFeed()}
       {/* </div> */}
     </div>
   );

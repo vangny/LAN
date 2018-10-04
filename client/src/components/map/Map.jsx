@@ -21,8 +21,8 @@ export default class Map extends Component {
         height: 0,
         longitude,
         latitude,
-        zoom: 11,
-        maxZoom: 16,
+        zoom: 14,
+        maxZoom: 18,
       },
       settings: {
         ...Object.keys(SCATTERPLOT_CONTROLS).reduce((accu, key) => ({
@@ -58,9 +58,9 @@ export default class Map extends Component {
   }
 
   getData() {
-    axios.get('/coordinates')
+    axios.get('/api/coordinates')
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
           points: res.data,
         });

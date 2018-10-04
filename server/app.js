@@ -58,13 +58,27 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.get('/home', (req, res) => {
+app.get('/api/feed', (req, res) => {
   db.getAlerts().then((alerts) => {
     res.status(200).send(alerts.map(alert => alert.dataValues));
   });
 });
 
-app.post('/alert/api/events', (req, res) => {
+app.get('/api/coordinates', (req, res) => {
+  console.log('grabbing coordinates...');
+  db.getCoordinates().then((coordinates) => {
+    res.status(201).send(coordinates.map(data => data.dataValues));
+  });
+});
+
+app.get('/api/media', (req, res) => {
+  console.log('grabbing media files...');
+  db.getMedia().then((files) => {
+    res.status(201).send(files.map(data => data.dataValues));
+  });
+});
+
+app.post('/api/events', (req, res) => {
   const {
     latitude, longitude, category, timeStamp,
   } = req.body;
@@ -76,7 +90,7 @@ app.post('/alert/api/events', (req, res) => {
     });
 });
 
-app.post('/alert/api/alerts', (req, res) => {
+app.post('/api/alerts', (req, res) => {
 //   console.log(req.body);
   const {
     EventId, category, latitude, longitude, notes, photo, photoTag,
