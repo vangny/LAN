@@ -83,7 +83,7 @@ app.post('/alert/api/events', (req, res) => {
 });
 
 app.post('/alert/api/alerts', (req, res) => {
-//   console.log(req.body);
+//   console.log('alert received by server', req.body);
   const {
     EventId, category, latitude, longitude, notes, photo, photoTag,
   } = req.body;

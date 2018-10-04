@@ -45,7 +45,7 @@ class Alert extends Component {
             const { photo } = this.state;
             const data = res.data;
             const photoURL = data.secure_url;
-        
+
             this.setState({
                 photo: `${photoURL}`,
             }, () => {
@@ -124,8 +124,7 @@ class Alert extends Component {
     const { category } = this.props;
     // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
-      <div className="container">
-        <div className="head" />
+      <div className="alert-layout">
         <div className="location-info">
           {this.renderModal()}
           <h1>
