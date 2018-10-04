@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "Local Alert Network",
   "main": "index.js",
+  "jest": {
+    "bail": true,
+    "verbose": true
+  },
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
     "start": "node server/index.js",
     "postinstall": "webpack --mode production",
     "lint": "eslint './client/src/components/**/*.jsx' db server",
-    "run-lint": "npm run lint"
+    "run-lint": "npm run lint",
+    "jest:test": "NODE_ENV=test jest --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -23,10 +28,12 @@
   },
   "homepage": "https://github.com/vangny/LAN#readme",
   "devDependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "apollo-fetch": "^0.7.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.1",
@@ -35,7 +42,12 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "html-loader": "^0.5.5",
+    "iconv-lite": "^0.4.24",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1",
     "style-loader": "^0.23.0",
+    "superagent": "^4.0.0-beta.5",
+    "supertest": "^3.3.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1"
   },
@@ -43,6 +55,7 @@
     "@reach/router": "^1.2.1",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "body-parser": "^1.18.3",
     "deck.gl": "^6.1.1",
     "dotenv": "^6.0.0",
