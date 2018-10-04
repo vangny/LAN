@@ -27,7 +27,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/home')
+    axios.get('/api/feed')
       .then((res) => {
         this.setState({
           alerts: res.data,
@@ -51,7 +51,7 @@ class App extends React.Component {
       category,
       timeStamp,
     }, () => {
-      axios.post('/alert/api/events', this.state)
+      axios.post('/api/events', this.state)
         .then((res) => {
           console.log('receiving event data: ', res.data);
           this.setState({ EventId: res.data.id },

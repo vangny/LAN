@@ -78,7 +78,7 @@ class Alert extends Component {
       photo,
       photoTag,
     };
-    axios.post('/alert/api/alerts', alertData)
+    axios.post('/api/alerts', alertData)
       .then((res) => {
         sendAlertsToApp(res.data);
         console.log('alert sent', alertData);
