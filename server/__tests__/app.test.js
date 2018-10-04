@@ -44,7 +44,7 @@ const sum = require('../sum');
 
 describe('Test the home path', () => {
   test('It should response the GET method', () => (
-    request(app).get('/home').expect(200)));
+    request(app).get('/api/feed').expect(200)));
 });
 
 // describe('Test the events path', () => {
