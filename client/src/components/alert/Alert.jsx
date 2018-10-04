@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import { navigate } from '@reach/router';
-import AlertCamera from './alert-components/Camera.jsx';
-import Modal from './alert-components/modal.jsx';
+import AlertCamera from './Camera';
+import Modal from './modal';
 
 class Alert extends Component {
   constructor(props) {

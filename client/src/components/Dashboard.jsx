@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Map from './map-components/Map';
-import AlertFeed from './AlertFeed';
+import Map from './map/Map';
+import AlertFeed from './alert/AlertFeed';
 import Media from './Media';
 
 export default class Dashboard extends Component {

@@ -5,9 +5,9 @@ import axios from 'axios';
 import moment from 'moment';
 
 import Dashboard from './components/Dashboard';
-import Alert from './components/Alert';
-import AlertOptions from './components/AlertOptions';
-import AlertFeed from './components/AlertFeed';
+import Alert from './components/alert/Alert';
+import AlertOptions from './components/alert/AlertOptions';
+import AlertFeed from './components/alert/AlertFeed';
 
 class App extends React.Component {
   constructor(props) {
