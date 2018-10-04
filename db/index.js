@@ -2,7 +2,6 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 require('dotenv').config();
 
-console.log(process.env.DB_URL);
 const sequelize = new Sequelize(`${process.env.DB_URL}`);
 
 sequelize.authenticate()
@@ -103,6 +102,12 @@ const createAlert = (EventId, category, latitude, longitude, notes, photo, photo
 const getAlerts = () => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
 );
+
+const removeLastAlert = () => {
+  console.log('removing last alert');
+  console.log(Alert.findAll())
+  console.log('something else');
+};
 // const addUser = (user) => {
 //     console.log('creating user');
 //     Users.upsert({ user })
@@ -126,4 +131,5 @@ exports.checkEvents = checkEvents;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;
+exports.removeLastAlert = removeLastAlert;
 // exports.addUser = addUser;

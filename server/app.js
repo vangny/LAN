@@ -59,9 +59,8 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.get('/home', (req, res) => {
-  console.log('PINGED!')
   db.getAlerts().then((alerts) => {
-    res.status(201).send(alerts.map(alert => alert.dataValues));
+    res.status(200).send(alerts.map(alert => alert.dataValues));
   });
 });
 
@@ -75,7 +74,6 @@ app.post('/alert/api/events', (req, res) => {
       console.log('server returns: ', result);
       res.send(result);
     });
-  // res.sendStatus(201);
 });
 
 app.post('/alert/api/alerts', (req, res) => {
@@ -85,13 +83,8 @@ app.post('/alert/api/alerts', (req, res) => {
   } = req.body;
 
   db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
-    .then(() => { // the result will be the media object that was just created
-      // console.log('Do this after saving alert/media to db');
-      // console.log(`AlertId: ${result.dataValues.AlertId}`);
-      // console.log('retrieved alerts: ', db.getAlerts());
+    .then(() => {
       db.getAlerts().then((alerts) => {
-        // console.log(alerts.map(alert => alert.dataValues));
-        // res.end(JSON.stringify(alerts.map(alert => alert.dataValues)));
         res.status(201).send(alerts.map(alert => alert.dataValues));
       });
     });
