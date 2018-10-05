@@ -27,10 +27,30 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/feed')
-      .then((res) => {
+    // axios.get('/api/feed')
+    //   .then((res) => {
+    //     this.setState({
+    //       alerts: res.data,
+    //     });
+    //   });
+    const query = `
+    {
+      getAlerts
+    }
+    `;
+
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    })
+      .then(response => response.json())
+      .then((data) => {
         this.setState({
-          alerts: res.data,
+          alerts: JSON.parse(data.data.getAlerts),
         });
       });
 

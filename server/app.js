@@ -13,7 +13,8 @@ const schema = buildSchema(`
   type Query {
     hello(data: String!): String,
     sup: Int,
-    rollDice(numDice: Int!, numSides: Int): [Int]
+    rollDice(numDice: Int!, numSides: Int): [Int],
+    getAlerts: String
   }
   type Mutation {
     createPerson(name: String, age: Int) : Person!
@@ -45,6 +46,11 @@ const root = {
     person.name = name;
     person.age = age;
   },
+  getAlerts: () => {
+    return db.getAlerts().then((alerts) => {
+      return JSON.stringify((alerts.map(alert => alert.dataValues)));
+    });
+  },
 };
 
 
@@ -58,11 +64,11 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.get('/api/feed', (req, res) => {
-  db.getAlerts().then((alerts) => {
-    res.status(200).send(alerts.map(alert => alert.dataValues));
-  });
-});
+// app.get('/api/feed', (req, res) => {
+//   db.getAlerts().then((alerts) => {
+//     res.status(200).send(alerts.map(alert => alert.dataValues));
+//   });
+// });
 
 app.get('/api/coordinates', (req, res) => {
   console.log('grabbing coordinates...');
