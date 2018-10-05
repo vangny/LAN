@@ -64,11 +64,10 @@ class Alert extends Component {
     const { photo } = this.state;
     return photo === null ? <p>{' '}</p>
       : (
-        <div>
-          <img src={photo} alt="uploaded" />
+        <div className="user-photo">
+          <img src={photo} alt="uploaded" width="200" height="150" />
           <p>
-            Thanks for uploading your photo!
-            {`Photo URL:${photo}`}
+            Thanks for sharing your photo!
           </p>
         </div>);
   }
@@ -163,7 +162,7 @@ class Alert extends Component {
         >
           <p>Drop files or click here to upload</p>
         </Dropzone>
-        <div className="user-photo">
+        <div>
           {this.showUploaded()}
         </div>
         <div className="submit">
