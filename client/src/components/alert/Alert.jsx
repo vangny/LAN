@@ -67,7 +67,7 @@ class Alert extends Component {
         <div className="user-photo">
           <img src={photo} alt="uploaded" width="200" height="150" />
           <p>
-            Thanks for sharing your photo!
+            Photo successfully uploaded!
           </p>
         </div>);
   }
