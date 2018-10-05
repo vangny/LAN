@@ -220,6 +220,13 @@ ALERT COMPONENTS
     order: 4;
 }
 
+.user-photo {
+    grid-row: 4;
+    order: 4;
+    text-align: center;
+    font-style: bold;
+}
+
 .submit {
     grid-row: 5;
     order: 5;
