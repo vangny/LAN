@@ -83,10 +83,10 @@ app.post('/api/events', (req, res) => {
     latitude, longitude, category, timeStamp,
   } = req.body;
   // console.log(latitude, longitude, category, timeStamp);
-  db.checkEvents(category, latitude, longitude, timeStamp)
-    .then((result) => { // the result will be the event object that was just created
-      console.log('server returns: ', result);
-      res.send(result);
+  db.findOrCreateEvent(category, latitude, longitude, timeStamp)
+    .then((event) => { // the result will be the event object that was just created
+      console.log('server returns: ', event);
+      res.send(event);
     });
 });
 

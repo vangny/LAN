@@ -62,7 +62,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
   return dist;
 };
 
-const checkEvents = (category, latitude, longitude, timeStamp) => {
+const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   const addEvent = () => Event.create({ category, latitude, longitude });
 
   return (
@@ -131,7 +131,7 @@ exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
 exports.Media = Media;
-exports.checkEvents = checkEvents;
+exports.findOrCreateEvent = findOrCreateEvent;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;
