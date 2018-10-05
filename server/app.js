@@ -97,10 +97,9 @@ app.post('/api/alerts', (req, res) => {
   } = req.body;
 
   db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
-    .then(() => {
-      db.getAlerts().then((alerts) => {
-        res.status(201).send(alerts.map(alert => alert.dataValues));
-      });
+    .then(db.getAlerts)
+    .then((alerts) => {
+      res.status(201).send(alerts.map(alert => alert.dataValues));
     });
 });
 
