@@ -102,8 +102,12 @@ const createAlert = (EventId, category, latitude, longitude, notes, photo, photo
 };
 
 
-const getAlerts = () => (
+const getAlerts = (srcLat, srcLong, range) => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
+    .then(alerts => ( alerts.filter(alert => distance(
+      srcLat, srcLong, alert.dataValues.latitude, alert.dataValues.longitude,
+    ) <= range)
+    ))
 );
 
 // const addUser = (user) => {

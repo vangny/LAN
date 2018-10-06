@@ -14,28 +14,53 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: 'Loading...',
-      longitude: 'Loading...',
+      latitude: localStorage.getItem('latitude') || 'Loading...',
+      longitude: localStorage.getItem('longitude') || 'Loading...',
       category: null,
       timeStamp: null,
       EventId: null,
       alerts: null,
     };
+    this.componentWillMount = this.componentWillMount.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // axios.get('/api/feed')
     //   .then((res) => {
     //     this.setState({
     //       alerts: res.data,
     //     });
     //   });
+    navigator.geolocation.getCurrentPosition((position) => {
+      localStorage.setItem('latitude', position.coords.latitude);
+      localStorage.setItem('longitude', position.coords.longitude);
+      this.setState({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      }, () => {
+        console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
+      });
+    });
+  }
+
+  componentDidMount() {
+    const { latitude, longitude } = this.state;
+    const range = '10'
+
+    // axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.setState({
+    //       alerts: res.data,
+    //     });
+    //   });
+    
     const query = `
-    {
-      getAlerts {
+    query GetAlerts($latitude: String, $longitude: String, $range: String) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
         id
         category
         createdAt
@@ -49,23 +74,18 @@ class App extends React.Component {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
     })
       .then(response => response.json())
       .then((data) => {
+        console.log(data);
         this.setState({
           alerts: data.data.getAlerts,
         });
       });
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }, () => {
-        console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
-      });
-    });
   }
 
   handleAlertOptions(category) {

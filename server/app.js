@@ -20,7 +20,9 @@ const db = require('../db/index');
 const schema = buildSchema(`
   type Query {
     alerts: [Alert]
-    getAlerts: [Alert]
+    getAlerts(latitude: String,
+      longitude: String,
+      range: String): [Alert]
   }
 
   type Mutation {
@@ -110,10 +112,12 @@ const root = {
     //   res.status(201).send(alerts.map(alert => alert.dataValues));
     // });
   },
-  getAlerts: () => (
-    db.getAlerts().then(alerts => (
-      alerts.map(alert => alert.dataValues)
-    ))),
+  getAlerts: ({ latitude, longitude, range }) => (
+    db.getAlerts(Number(latitude), Number(longitude), Number(range))
+      .then(alerts => (
+        alerts.map(alert => alert.dataValues)
+      ))
+  ),
 };
 
 const app = express();
@@ -125,6 +129,15 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+
+// app.get('/api/feed/', (req, res) => {
+//   console.log(Number(req.query.latitude));
+//   console.log(Number(req.query.longitude));
+//   db.getAlerts(Number(req.query.latitude), Number(req.query.longitude), Number(req.query.range)).then((alerts) => {
+//     console.log(alerts);
+//     res.status(200).send(alerts.map(alert => alert.dataValues));
+//   });
+// });
 
 app.get('/api/coordinates', (req, res) => {
   console.log('grabbing coordinates...');

@@ -33,7 +33,7 @@ export default class Media extends Component {
       <div>
         {media.map((file) => {
           if (file.url) {
-            console.log(file.url);
+            // console.log(file.url);
             return <img src={file.url} hspace="5" width='200' height='150' />;
           }
         }
