@@ -22,7 +22,6 @@ class App extends React.Component {
       alerts: null,
     };
     this.componentWillMount = this.componentWillMount.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
@@ -44,16 +43,8 @@ class App extends React.Component {
   componentDidMount() {
     const { latitude, longitude } = this.state;
 
-    const range = '10'
+    const range = '10';
 
-    // axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     this.setState({
-    //       alerts: res.data,
-    //     });
-    //   });
-    
     const query = `
     query GetAlerts($latitude: String, $longitude: String, $range: String) {
        getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
@@ -115,18 +106,16 @@ class App extends React.Component {
       category,
       timeStamp,
       EventId,
-      alerts,
     } = this.state;
     // console.log(this.state);
     return (
       <div className='container'>
-        {/* <Link to="/" className="menu"><span class="fas fa-bars"></span></Link> */}
         <Link to="/" className="title nav-cell">
           <h2>Local Alert Network</h2>
         </Link>     
         <Router className='content'>
-          <AlertFeed exact path="/" alerts={alerts} />
-          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} alerts={alerts} />
+          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
           <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
           <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
         </Router>

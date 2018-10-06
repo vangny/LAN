@@ -3,19 +3,9 @@ import Map from './map/Map';
 import AlertFeed from './alert/AlertFeed';
 import Media from './Media';
 
-export default class Dashboard extends Component {
-  constructor(props) {
-    super(props);
+const Dashboard = ({ latitude, longitude }) => {
 
-    this.state = {
-      searchAlerts: '',
-    };
-  }
-
-  render() {
-    const { latitude, longitude, alerts } = this.props;
-
-    return (
+  return (
       <div className="dashboard">
         <div className="map-container" id="map-container">
           <Map latitude={latitude} longitude={longitude} />
@@ -28,7 +18,7 @@ export default class Dashboard extends Component {
               <button type="button">Search Alerts</button>
             </form>
           </div>
-          <AlertFeed alerts={alerts} />
+          <AlertFeed latitude={latitude} longitude={longitude} />
         </div>
         <div className="media-container">
           <div className="search-media">
@@ -42,6 +32,8 @@ export default class Dashboard extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
+  );
+  // }
+};
+
+export default Dashboard;
