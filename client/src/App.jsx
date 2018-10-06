@@ -14,21 +14,19 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: localStorage.getItem('latitude') || 'Loading...',
-      longitude: localStorage.getItem('longitude') || 'Loading...',
+      latitude: Number(localStorage.getItem('latitude')) || 'Loading...',
+      longitude: Number(localStorage.getItem('longitude')) || 'Loading...',
       category: null,
       timeStamp: null,
       EventId: null,
       alerts: null,
     };
     this.componentWillMount = this.componentWillMount.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
 
   componentWillMount() {
-
     navigator.geolocation.getCurrentPosition((position) => {
       localStorage.setItem('latitude', position.coords.latitude);
       localStorage.setItem('longitude', position.coords.longitude);
@@ -39,49 +37,6 @@ class App extends React.Component {
         console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
     });
-  }
-
-  componentDidMount() {
-    const { latitude, longitude } = this.state;
-
-    const range = '10'
-
-    // axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     this.setState({
-    //       alerts: res.data,
-    //     });
-    //   });
-    
-    const query = `
-    query GetAlerts($latitude: String, $longitude: String, $range: String) {
-       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-        id
-        category
-        createdAt
-      }
-    }
-    `;
-
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { latitude, longitude, range },
-      }),
-    })
-      .then(response => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          alerts: data.data.getAlerts,
-        });
-      });
   }
 
   handleAlertOptions(category) {
@@ -115,18 +70,16 @@ class App extends React.Component {
       category,
       timeStamp,
       EventId,
-      alerts,
     } = this.state;
     // console.log(this.state);
     return (
       <div className='container'>
-        {/* <Link to="/" className="menu"><span class="fas fa-bars"></span></Link> */}
         <Link to="/" className="title nav-cell">
           <h2>Local Alert Network</h2>
         </Link>     
         <Router className='content'>
-          <AlertFeed exact path="/" alerts={alerts} />
-          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} alerts={alerts} />
+          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
           <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
           <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
         </Router>

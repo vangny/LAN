@@ -20,9 +20,9 @@ const db = require('../db/index');
 const schema = buildSchema(`
   type Query {
     alerts: [Alert]
-    getAlerts(latitude: String,
-      longitude: String,
-      range: String): [Alert]
+    getAlerts(latitude: Float,
+      longitude: Float,
+      range: Float): [Alert]
   }
 
   type Mutation {
@@ -113,7 +113,7 @@ const root = {
     // });
   },
   getAlerts: ({ latitude, longitude, range }) => (
-    db.getAlerts(Number(latitude), Number(longitude), Number(range))
+    db.getAlerts(latitude, longitude, range)
       .then(alerts => (
         alerts.map(alert => alert.dataValues)
       ))
