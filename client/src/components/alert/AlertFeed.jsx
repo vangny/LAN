@@ -2,26 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
-// const AlertFeed = ({ alerts }) => {
-//   const alertFeed = () => {
-//     return alerts ? alerts.map(alert => (
-//       <div className="alert" key={alert.id}>
-//         {`Category: ${alert.category}`}
-//         <br/>
-//         {moment(alert.createdAt).fromNow()}
-//       </div>
-//     )) : (<p>Loading feed...</p>);
-//   }
-
-//   return (
-//     <div className="feed">
-//       {/* <div id="alertFeed"> */}
-//       {alertFeed()}
-//       {/* </div> */}
-//     </div>
-//   );
-// };
-
 class AlertFeed extends Component {
   constructor(props) {
     super(props);
@@ -34,11 +14,34 @@ class AlertFeed extends Component {
   componentDidMount() {
     const { latitude, longitude } = this.props;
 
-    axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
-      .then((res) => {
-        console.log(res.data);
+    const range = 10;
+
+    const query = `
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+        id
+        category
+        createdAt
+      }
+    }
+    `;
+
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
         this.setState({
-          alerts: res.data,
+          alerts: data.data.getAlerts,
         });
       });
   }

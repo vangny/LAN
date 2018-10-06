@@ -14,8 +14,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: localStorage.getItem('latitude') || 'Loading...',
-      longitude: localStorage.getItem('longitude') || 'Loading...',
+      latitude: Number(localStorage.getItem('latitude')) || 'Loading...',
+      longitude: Number(localStorage.getItem('longitude')) || 'Loading...',
       category: null,
       timeStamp: null,
       EventId: null,
@@ -27,7 +27,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-
     navigator.geolocation.getCurrentPosition((position) => {
       localStorage.setItem('latitude', position.coords.latitude);
       localStorage.setItem('longitude', position.coords.longitude);
@@ -38,41 +37,6 @@ class App extends React.Component {
         console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
     });
-  }
-
-  componentDidMount() {
-    const { latitude, longitude } = this.state;
-
-    const range = '10';
-
-    const query = `
-    query GetAlerts($latitude: String, $longitude: String, $range: String) {
-       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-        id
-        category
-        createdAt
-      }
-    }
-    `;
-
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { latitude, longitude, range },
-      }),
-    })
-      .then(response => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({
-          alerts: data.data.getAlerts,
-        });
-      });
   }
 
   handleAlertOptions(category) {
