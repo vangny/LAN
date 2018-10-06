@@ -114,9 +114,9 @@ class Alert extends Component {
       }),
     })
       .then(response => response.json())
-      .then((data) => {
-        console.log('After mutation attempt: ', data);
-        sendAlertsToApp(data.data.createAlert);
+      .then((newAlert) => {
+        console.log('Data returned after mutation ', newAlert);
+        sendAlertsToApp(newAlert.data.createAlert);
       });
 
     // axios.post('/api/alerts', alertData)

@@ -110,11 +110,10 @@ const root = {
     //   res.status(201).send(alerts.map(alert => alert.dataValues));
     // });
   },
-  getAlerts: () => {
-    return db.getAlerts().then((alerts) => {
-      return (alerts.map(alert => alert.dataValues));
-    });
-  },
+  getAlerts: () => (
+    db.getAlerts().then(alerts => (
+      alerts.map(alert => alert.dataValues)
+    ))),
 };
 
 const app = express();
@@ -126,22 +125,6 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
-
-// app.use('/api/graphql', graphqlHTTP({
-//   query: new GraphQLSchema({
-//     mutations: new GraphQLObjectType({
-//       createAlert,
-//     }),
-//   }),
-// }));
-
-
-
-// app.get('/api/feed', (req, res) => {
-//   db.getAlerts().then((alerts) => {
-//     res.status(200).send(alerts.map(alert => alert.dataValues));
-//   });
-// });
 
 app.get('/api/coordinates', (req, res) => {
   console.log('grabbing coordinates...');
@@ -168,18 +151,5 @@ app.post('/api/events', (req, res) => {
       res.send(event);
     });
 });
-
-// app.post('/api/alerts', (req, res) => {
-// //   console.log(req.body);
-//   const {
-//     EventId, category, latitude, longitude, notes, photo, photoTag,
-//   } = req.body;
-
-//   db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
-//     .then(db.getAlerts)
-//     .then((alerts) => {
-//       res.status(201).send(alerts.map(alert => alert.dataValues));
-//     });
-// });
 
 module.exports = app;

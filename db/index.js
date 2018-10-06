@@ -106,11 +106,6 @@ const getAlerts = () => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
 );
 
-const removeLastAlert = () => {
-  console.log('removing last alert');
-  console.log(Alert.findAll())
-  console.log('something else');
-};
 // const addUser = (user) => {
 //     console.log('creating user');
 //     Users.upsert({ user })
