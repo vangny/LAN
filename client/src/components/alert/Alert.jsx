@@ -90,12 +90,41 @@ class Alert extends Component {
       photo,
       photoTag,
     };
-    axios.post('/api/alerts', alertData)
-      .then((res) => {
-        sendAlertsToApp(res.data);
-        console.log('alert sent', alertData);
-      })
-      .catch((err) => { console.log(err); });
+
+    const query = `
+    mutation CreateAlert($category: String!, $EventId: Int!, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
+      createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
+        id
+        category
+        createdAt
+      }
+    }
+    `;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          EventId, category, latitude, longitude, notes, photo, photoTag,
+        },
+      }),
+    })
+      .then(response => response.json())
+      .then((newAlert) => {
+        console.log('Data returned after mutation ', newAlert);
+        sendAlertsToApp(newAlert.data.createAlert);
+      });
+
+    // axios.post('/api/alerts', alertData)
+    //   .then((res) => {
+    //     sendAlertsToApp(res.data);
+    //     console.log('alert sent', alertData);
+    //   })
+    //   .catch((err) => { console.log(err); });
   }
 
   waitForData() {

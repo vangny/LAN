@@ -62,7 +62,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
   return dist;
 };
 
-const checkEvents = (category, latitude, longitude, timeStamp) => {
+const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   const addEvent = () => Event.create({ category, latitude, longitude });
 
   return (
@@ -87,17 +87,20 @@ const checkEvents = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => (
-  Alert.create({
+const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => {
+  let createdAlert;
+  return Alert.create({
     EventId, category, latitude, longitude, notes,
-  }).then(alert => (
+  }).then((alert) => {
+    createdAlert = alert;
     Media.create({
       url: photo,
       photoTag,
       AlertId: alert.get('id'),
-    })
-  ))
-);
+    });
+  }).then(() => createdAlert);
+};
+
 
 const getAlerts = (srcLat, srcLong, range) => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
@@ -107,12 +110,6 @@ const getAlerts = (srcLat, srcLong, range) => (
     ))
 );
 
-
-const removeLastAlert = () => {
-  console.log('removing last alert');
-  console.log(Alert.findAll());
-  console.log('something else');
-};
 // const addUser = (user) => {
 //     console.log('creating user');
 //     Users.upsert({ user })
@@ -136,7 +133,7 @@ exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
 exports.Media = Media;
-exports.checkEvents = checkEvents;
+exports.findOrCreateEvent = findOrCreateEvent;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;

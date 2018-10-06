@@ -28,6 +28,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+
     navigator.geolocation.getCurrentPosition((position) => {
       localStorage.setItem('latitude', position.coords.latitude);
       localStorage.setItem('longitude', position.coords.longitude);
@@ -43,11 +44,42 @@ class App extends React.Component {
   componentDidMount() {
     const { latitude, longitude } = this.state;
 
-    axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
-      .then((res) => {
-        console.log(res.data);
+    const range = '10'
+
+    // axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.setState({
+    //       alerts: res.data,
+    //     });
+    //   });
+    
+    const query = `
+    query GetAlerts($latitude: String, $longitude: String, $range: String) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+        id
+        category
+        createdAt
+      }
+    }
+    `;
+
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
         this.setState({
-          alerts: res.data,
+          alerts: data.data.getAlerts,
         });
       });
   }
@@ -69,8 +101,9 @@ class App extends React.Component {
     });
   }
 
-  sendAlertsToApp(alerts) {
-    this.setState({ alerts }, () => {
+  sendAlertsToApp(alert) {
+    const { alerts } = this.state;
+    this.setState({ alerts: [alert].concat(alerts) }, () => {
       navigate('/');
     });
   }
