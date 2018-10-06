@@ -3,27 +3,19 @@ const bodyparser = require('body-parser');
 const graphqlHTTP = require('express-graphql');
 const {
   buildSchema,
-  GraphQLSchema,
-  GraphQLObjectType,
+  GraphQLScalarType,
 } = require('graphql');
-
-const { GraphQLServer } = require('graphql-yoga');
-const fetch = require('node-fetch');
-
-// const {
-//   GraphQLObjectType,
-//   GraphQLSchema,
-//   GraphQLInt,
-//   GraphQLString,
-// } = require('graphql/type');
+const { PubSub } = require('graphql-subscriptions');
+const { Kind } = require('graphql/language');
 
 const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 
 iconv.encodings = encodings;
 
-
 const db = require('../db/index');
+
+// const pubsub = new PubSub();
 
 const schema = buildSchema(`
   type Query {
@@ -43,6 +35,10 @@ const schema = buildSchema(`
     ): Alert
   }
 
+  type Subscription {
+    newAlert: Alert
+  }
+
   type Event {
     id: ID
     latitude: Int
@@ -57,6 +53,7 @@ const schema = buildSchema(`
     longitude: Float
     EventId: Int
     media: [Media]
+    createdAt: Date
   }
 
   type Media {
@@ -65,20 +62,53 @@ const schema = buildSchema(`
     photoTag: String
     AlertId: Alert
   }
+
+  scalar Date
+
+  type MyType {
+    created: Date
+  }
+
 `);
 
+const NEW_ALERT = 'NEW_ALERT';
+
 const root = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value);
+    },
+    serialize(value) {
+      value.getTime();
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return new Date(ast.value);
+      }
+      return null;
+    },
+  }),
+  Subscription: {
+    newAlert: {
+      subscribe: () => pubsub.asyncIterator(NEW_ALERT),
+    },
+  },
   createAlert: (alertData) => {
+    // pubsub.publish(NEW_ALERT, { newAlert: alertData });
     const {
       EventId, category, latitude, longitude, notes, photo, photoTag,
     } = alertData;
 
-    db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag);
+    return db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
+      .then((alert) => {
+        return alert;
+      });
     // .then(db.getAlerts)
     // .then((alerts) => {
     //   res.status(201).send(alerts.map(alert => alert.dataValues));
     // });
-    return alertData;
   },
   getAlerts: () => {
     return db.getAlerts().then((alerts) => {
@@ -86,22 +116,6 @@ const root = {
     });
   },
 };
-
-
-// const resolvers = {
-//   Query: {
-//     alerts: () => {
-//       return fetch(`${baseURL}/api/feed`)
-//       .then(res => res.json());
-//     },
-//   },
-// }
-
-// const app = new GraphQLServer({
-//   typeDefs: `${__dirname}/schema.graphql`,
-//   resolvers,
-// })
-
 
 const app = express();
 
@@ -112,8 +126,6 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
-
-
 
 // app.use('/api/graphql', graphqlHTTP({
 //   query: new GraphQLSchema({
@@ -157,17 +169,17 @@ app.post('/api/events', (req, res) => {
     });
 });
 
-app.post('/api/alerts', (req, res) => {
-//   console.log(req.body);
-  const {
-    EventId, category, latitude, longitude, notes, photo, photoTag,
-  } = req.body;
+// app.post('/api/alerts', (req, res) => {
+// //   console.log(req.body);
+//   const {
+//     EventId, category, latitude, longitude, notes, photo, photoTag,
+//   } = req.body;
 
-  db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
-    .then(db.getAlerts)
-    .then((alerts) => {
-      res.status(201).send(alerts.map(alert => alert.dataValues));
-    });
-});
+//   db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
+//     .then(db.getAlerts)
+//     .then((alerts) => {
+//       res.status(201).send(alerts.map(alert => alert.dataValues));
+//     });
+// });
 
 module.exports = app;

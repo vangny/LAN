@@ -35,7 +35,11 @@ class App extends React.Component {
     //   });
     const query = `
     {
-      getAlerts
+      getAlerts {
+        id
+        category
+        createdAt
+      }
     }
     `;
 
@@ -49,8 +53,9 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then((data) => {
+        
         this.setState({
-          alerts: JSON.parse(data.data.getAlerts),
+          alerts: data.data.getAlerts,
         });
       });
 
@@ -81,8 +86,9 @@ class App extends React.Component {
     });
   }
 
-  sendAlertsToApp(alerts) {
-    this.setState({ alerts }, () => {
+  sendAlertsToApp(alert) {
+    const { alerts } = this.state;
+    this.setState({ alerts: [alert].concat(alerts) }, () => {
       navigate('/');
     });
   }

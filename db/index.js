@@ -87,17 +87,20 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => (
-  Alert.create({
+const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => {
+  let createdAlert;
+  return Alert.create({
     EventId, category, latitude, longitude, notes,
-  }).then(alert => (
+  }).then((alert) => {
+    createdAlert = alert;
     Media.create({
       url: photo,
       photoTag,
       AlertId: alert.get('id'),
-    })
-  ))
-);
+    });
+  }).then(() => createdAlert);
+};
+
 
 const getAlerts = () => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
