@@ -112,13 +112,12 @@ const root = {
       subscribe: () => pubsub.asyncIterator(NEW_ALERT),
     },
   },
-  createAlert: (alertData) => {
+  createAlert: ({
+    EventId, category, latitude, longitude, notes, url, photoTag,
+  }) => {
     // pubsub.publish(NEW_ALERT, { newAlert: alertData });
-    const {
-      EventId, category, latitude, longitude, notes, photo, photoTag,
-    } = alertData;
 
-    return db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
+    return db.createAlert(EventId, category, latitude, longitude, notes, url, photoTag)
       .then(alert => alert);
   },
   getAlerts: ({ latitude, longitude, range }) => (
@@ -191,5 +190,3 @@ module.exports = app;
 //       res.send(event);
 //     });
 // });
-
-
