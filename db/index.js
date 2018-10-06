@@ -64,7 +64,6 @@ const distance = (lat1, lon1, lat2, lon2) => {
 
 const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   const addEvent = () => Event.create({ category, latitude, longitude });
-
   return (
     Event.findAll({ where: { category } })
       .then((results) => {
@@ -75,12 +74,12 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
             console.log('checking time difference & distance...');
             if (moment(timeStamp).subtract(24, 'hours') < moment(event.updatedAt) // event within 24 hrs
             && distance(event.latitude, event.longitude, latitude, longitude) < 10) { // coordinate distance < 10 mi
-              console.log('Event within time frame and radius already exists!');
+              console.log('****Event within time frame and radius already exists!*******');
               return event;
             }
           }
         }
-        console.log('adding new event!');
+        console.log('******adding new event!********');
         return (addEvent()
           .then(result => result.dataValues));
       })

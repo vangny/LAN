@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
+import { navigate } from '@reach/router';
 import AlertCamera from './Camera';
 import Modal from './modal';
 
@@ -81,15 +82,15 @@ class Alert extends Component {
       sendAlertsToApp,
     } = this.props;
     const { notes, photo, photoTag } = this.state;
-    const alertData = {
-      category,
-      EventId,
-      latitude,
-      longitude,
-      notes,
-      photo,
-      photoTag,
-    };
+    // const alertData = {
+    //   category,
+    //   EventId,
+    //   latitude,
+    //   longitude,
+    //   notes,
+    //   photo,
+    //   photoTag,
+    // };
 
     const query = `
     mutation CreateAlert($category: String!, $EventId: Int!, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
@@ -116,7 +117,7 @@ class Alert extends Component {
       .then(response => response.json())
       .then((newAlert) => {
         console.log('Data returned after mutation ', newAlert);
-        sendAlertsToApp(newAlert.data.createAlert);
+        navigate('/');
       });
 
     // axios.post('/api/alerts', alertData)

@@ -23,7 +23,6 @@ class App extends React.Component {
     };
     this.componentWillMount = this.componentWillMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
-    this.sendAlertsToApp = this.sendAlertsToApp.bind(this);
   }
 
   componentWillMount() {
@@ -39,61 +38,40 @@ class App extends React.Component {
     });
   }
 
-  componentDidMount() {
-    const { latitude, longitude } = this.state;
-    const range = 10;
-    
-    const query = `
-    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
-       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-        id
-        category
-        createdAt
-      }
-    }
-    `;
-
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { latitude, longitude, range },
-      }),
-    })
-      .then(response => response.json())
-      .then((feed) => {
-        console.log(feed);
-        this.setState({
-          alerts: feed.data.getAlerts,
-        });
-      });
-  }
-
   handleAlertOptions(category) {
-    const timeStamp = moment().format();
+    const { latitude, longitude } = this.state;
     this.setState({
       category,
-      timeStamp,
+      timeStamp: moment().format(),
     }, () => {
-      axios.post('/api/events', this.state)
-        .then((res) => {
-          console.log('receiving event data: ', res.data);
-          this.setState({ EventId: res.data.id },
-            () => {
-              navigate('/alert');
-            });
-        });
-    });
-  }
+      const { timeStamp } = this.state;
 
-  sendAlertsToApp(alert) {
-    const { alerts } = this.state;
-    this.setState({ alerts: [alert].concat(alerts) }, () => {
-      navigate('/');
+      const query = `
+      mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
+        findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
+          id
+          category
+        }
+      }`;
+      fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            latitude, longitude, category, timeStamp,
+          },
+        }),
+      })
+        .then(response => response.json())
+        .then((event) => {
+          console.log('Alert will be attached to this event: ', event.data.findOrCreateEvent);
+          this.setState({ EventId: Number(event.data.findOrCreateEvent.id) });
+          navigate('/alert');
+        });
     });
   }
 
@@ -114,7 +92,7 @@ class App extends React.Component {
         <Router className='content'>
           <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
           <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
-          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} sendAlertsToApp={this.sendAlertsToApp} />
+          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
           <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
         </Router>
         <div className="nav-bar">
