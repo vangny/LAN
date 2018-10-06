@@ -58,11 +58,33 @@ export default class Map extends Component {
   }
 
   getData() {
-    axios.get('/api/coordinates')
-      .then((res) => {
-        // console.log(res.data);
+    // axios.get('/api/coordinates')
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     this.setState({
+    //       points: res.data,
+    //     });
+    //   });
+    const query = `
+    {
+      getCoords {
+        latitude
+        longitude
+      }
+    }`;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ query })
+    })
+      .then(response => response.json())
+      .then((coordinates) => {
+        console.log('returning coordinates: ', coordinates);
         this.setState({
-          points: res.data,
+          points: coordinates.data.getCoords,
         });
       });
   }

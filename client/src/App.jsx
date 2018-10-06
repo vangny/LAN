@@ -39,6 +39,40 @@ class App extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const { latitude, longitude } = this.state;
+    const range = 10;
+    
+    const query = `
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+        id
+        category
+        createdAt
+      }
+    }
+    `;
+
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
+    })
+      .then(response => response.json())
+      .then((feed) => {
+        console.log(feed);
+        this.setState({
+          alerts: feed.data.getAlerts,
+        });
+      });
+  }
+
   handleAlertOptions(category) {
     const timeStamp = moment().format();
     this.setState({

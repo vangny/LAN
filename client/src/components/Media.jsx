@@ -17,11 +17,33 @@ export default class Media extends Component {
   }
 
   getMedia() {
-    axios.get('/api/media')
-      .then((res) => {
-        // console.log(res.data);
+    // axios.get('/api/media')
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     this.setState({
+    //       media: res.data,
+    //     });
+    //   });
+    const query = `
+    {
+      getMedia {
+        id
+        url
+      }
+    }`;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ query })
+    })
+      .then(response => response.json())
+      .then((mediaFeed) => {
+        console.log('returning media feed: ', mediaFeed)
         this.setState({
-          media: res.data,
+          media: mediaFeed.data.getMedia,
         });
       });
   }

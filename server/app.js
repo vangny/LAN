@@ -19,10 +19,18 @@ const db = require('../db/index');
 
 const schema = buildSchema(`
   type Query {
+<<<<<<< HEAD
     alerts: [Alert]
     getAlerts(latitude: Float,
       longitude: Float,
       range: Float): [Alert]
+=======
+    getAlerts(latitude: Float,
+      longitude: Float,
+      range: Float): [Alert]
+    getMedia: [Media]
+    getCoords: [Coordinates]
+>>>>>>> Refactor /media and /coordinates endpoints for graphQL
   }
 
   type Mutation {
@@ -63,6 +71,11 @@ const schema = buildSchema(`
     url: String
     photoTag: String
     AlertId: Alert
+  }
+
+  type Coordinates {
+    latitude: String
+    longitude: String
   }
 
   scalar Date
@@ -118,6 +131,16 @@ const root = {
         alerts.map(alert => alert.dataValues)
       ))
   ),
+  getCoords: () => {
+    console.log('grabbing coordinates...');
+    return db.getCoordinates()
+      .then(data => data.map(coordinate => coordinate.dataValues));
+  },
+  getMedia: () => {
+    console.log('grabbing media files...');
+    return db.getMedia()
+      .then(data => data.map(file => file.dataValues));
+  },
 };
 
 const app = express();
@@ -139,6 +162,7 @@ app.use('/graphql', graphqlHTTP({
 //   });
 // });
 
+<<<<<<< HEAD
 
 app.get('/api/coordinates', (req, res) => {
   console.log('grabbing coordinates...');
@@ -146,13 +170,21 @@ app.get('/api/coordinates', (req, res) => {
     res.status(201).send(coordinates.map(data => data.dataValues));
   });
 });
+=======
+// app.get('/api/coordinates', (req, res) => {
+//   console.log('grabbing coordinates...');
+//   db.getCoordinates().then((coordinates) => {
+//     res.status(201).send(coordinates.map(data => data.dataValues));
+//   });
+// });
+>>>>>>> Refactor /media and /coordinates endpoints for graphQL
 
-app.get('/api/media', (req, res) => {
-  console.log('grabbing media files...');
-  db.getMedia().then((files) => {
-    res.status(201).send(files.map(data => data.dataValues));
-  });
-});
+// app.get('/api/media', (req, res) => {
+//   console.log('grabbing media files...');
+//   db.getMedia().then((files) => {
+//     res.status(201).send(files.map(data => data.dataValues));
+//   });
+// });
 
 app.post('/api/events', (req, res) => {
   const {
