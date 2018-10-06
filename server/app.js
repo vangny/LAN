@@ -1,57 +1,106 @@
+const express = require('express');
+const bodyparser = require('body-parser');
+const graphqlHTTP = require('express-graphql');
+const {
+  buildSchema,
+  GraphQLSchema,
+  GraphQLObjectType,
+} = require('graphql');
+
+const { GraphQLServer } = require('graphql-yoga');
+const fetch = require('node-fetch');
+
+// const {
+//   GraphQLObjectType,
+//   GraphQLSchema,
+//   GraphQLInt,
+//   GraphQLString,
+// } = require('graphql/type');
+
 const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 
 iconv.encodings = encodings;
 
-const express = require('express');
-const bodyparser = require('body-parser');
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
+
 const db = require('../db/index');
 
 const schema = buildSchema(`
   type Query {
-    hello(data: String!): String,
-    sup: Int,
-    rollDice(numDice: Int!, numSides: Int): [Int],
-    getAlerts: String
-  }
-  type Mutation {
-    createPerson(name: String, age: Int) : Person!
+    alerts: [Alert]
+    getAlerts: [Alert]
   }
 
-  type Person {
-    name: String!,
-    age: Int!
+  type Mutation {
+    createAlert(
+      EventId: Int
+      category: String
+      latitude: Float
+      longitude: Float
+      notes: String
+      url: String
+      photoTag: String
+    ): Alert
+  }
+
+  type Event {
+    id: ID
+    latitude: Int
+    longitude: Int
+    alerts: [Alert]
+  }
+
+  type Alert {
+    id: ID
+    category: String
+    latitude: Float
+    longitude: Float
+    EventId: Int
+    media: [Media]
+  }
+
+  type Media {
+    id: ID
+    url: String
+    photoTag: String
+    AlertId: Alert
   }
 `);
 
 const root = {
-  hello: ({ data }) => {
-    return ((data) => {
-      console.log(data);
-      return data;
-    })(data);
-  },
-  sup: () => 1 + 1,
-  rollDice: ({ numDice, numSides }) => {
-    const output = [];
-    for (let i = 0; i < numDice; i += 1) {
-      output.push(1 + Math.floor(Math.random() * (numSides || 6)));
-    }
-    return output;
-  },
-  createPerson: ({ name, age }) => {
-    const person = new Person();
-    person.name = name;
-    person.age = age;
+  createAlert: (alertData) => {
+    const {
+      EventId, category, latitude, longitude, notes, photo, photoTag,
+    } = alertData;
+
+    db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag);
+    // .then(db.getAlerts)
+    // .then((alerts) => {
+    //   res.status(201).send(alerts.map(alert => alert.dataValues));
+    // });
+    return alertData;
   },
   getAlerts: () => {
     return db.getAlerts().then((alerts) => {
-      return JSON.stringify((alerts.map(alert => alert.dataValues)));
+      return (alerts.map(alert => alert.dataValues));
     });
   },
 };
+
+
+// const resolvers = {
+//   Query: {
+//     alerts: () => {
+//       return fetch(`${baseURL}/api/feed`)
+//       .then(res => res.json());
+//     },
+//   },
+// }
+
+// const app = new GraphQLServer({
+//   typeDefs: `${__dirname}/schema.graphql`,
+//   resolvers,
+// })
 
 
 const app = express();
@@ -63,6 +112,18 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+
+
+
+// app.use('/api/graphql', graphqlHTTP({
+//   query: new GraphQLSchema({
+//     mutations: new GraphQLObjectType({
+//       createAlert,
+//     }),
+//   }),
+// }));
+
+
 
 // app.get('/api/feed', (req, res) => {
 //   db.getAlerts().then((alerts) => {

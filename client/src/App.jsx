@@ -43,7 +43,7 @@ class App extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({ query }),
     })
@@ -62,7 +62,6 @@ class App extends React.Component {
         console.log('Initial coordinates: ', position.coords.latitude, position.coords.longitude);
       });
     });
-
   }
 
   handleAlertOptions(category) {
