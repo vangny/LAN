@@ -58,8 +58,11 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.get('/api/feed', (req, res) => {
-  db.getAlerts().then((alerts) => {
+app.get('/api/feed/', (req, res) => {
+  console.log(Number(req.query.latitude));
+  console.log(Number(req.query.longitude));
+  db.getAlerts(Number(req.query.latitude), Number(req.query.longitude), Number(req.query.range)).then((alerts) => {
+    console.log(alerts);
     res.status(200).send(alerts.map(alert => alert.dataValues));
   });
 });
