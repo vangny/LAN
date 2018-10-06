@@ -139,6 +139,7 @@ app.use('/graphql', graphqlHTTP({
 //   });
 // });
 
+
 app.get('/api/coordinates', (req, res) => {
   console.log('grabbing coordinates...');
   db.getCoordinates().then((coordinates) => {

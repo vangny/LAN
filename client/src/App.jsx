@@ -28,12 +28,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // axios.get('/api/feed')
-    //   .then((res) => {
-    //     this.setState({
-    //       alerts: res.data,
-    //     });
-    //   });
+
     navigator.geolocation.getCurrentPosition((position) => {
       localStorage.setItem('latitude', position.coords.latitude);
       localStorage.setItem('longitude', position.coords.longitude);
@@ -48,6 +43,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { latitude, longitude } = this.state;
+
     const range = '10'
 
     // axios.get(`/api/feed?latitude=${latitude}&longitude=${longitude}&range=10`)
