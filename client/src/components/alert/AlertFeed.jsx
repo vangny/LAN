@@ -39,7 +39,7 @@ class AlertFeed extends Component {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data);
+        console.log('Alert feed: ', data);
         this.setState({
           alerts: data.data.getAlerts,
         });

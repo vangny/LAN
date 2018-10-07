@@ -19,10 +19,11 @@ const db = require('../db/index');
 
 const schema = buildSchema(`
   type Query {
-    alerts: [Alert]
     getAlerts(latitude: Float,
       longitude: Float,
       range: Float): [Alert]
+    getMedia: [Media]
+    getCoords: [Coordinates]
   }
 
   type Mutation {
@@ -35,6 +36,13 @@ const schema = buildSchema(`
       url: String
       photoTag: String
     ): Alert
+
+    findOrCreateEvent(
+      latitude: Float
+      longitude: Float
+      timeStamp: Date
+      category: String
+    ): Event
   }
 
   type Subscription {
@@ -43,9 +51,11 @@ const schema = buildSchema(`
 
   type Event {
     id: ID
-    latitude: Int
-    longitude: Int
+    latitude: Float
+    longitude: Float
     alerts: [Alert]
+    timeStamp: Date
+    category: String
   }
 
   type Alert {
@@ -63,6 +73,11 @@ const schema = buildSchema(`
     url: String
     photoTag: String
     AlertId: Alert
+  }
+
+  type Coordinates {
+    latitude: String
+    longitude: String
   }
 
   scalar Date
@@ -97,20 +112,13 @@ const root = {
       subscribe: () => pubsub.asyncIterator(NEW_ALERT),
     },
   },
-  createAlert: (alertData) => {
+  createAlert: ({
+    EventId, category, latitude, longitude, notes, url, photoTag,
+  }) => {
     // pubsub.publish(NEW_ALERT, { newAlert: alertData });
-    const {
-      EventId, category, latitude, longitude, notes, photo, photoTag,
-    } = alertData;
 
-    return db.createAlert(EventId, category, latitude, longitude, notes, photo, photoTag)
-      .then((alert) => {
-        return alert;
-      });
-    // .then(db.getAlerts)
-    // .then((alerts) => {
-    //   res.status(201).send(alerts.map(alert => alert.dataValues));
-    // });
+    return db.createAlert(EventId, category, latitude, longitude, notes, url, photoTag)
+      .then(alert => alert);
   },
   getAlerts: ({ latitude, longitude, range }) => (
     db.getAlerts(latitude, longitude, range)
@@ -118,6 +126,23 @@ const root = {
         alerts.map(alert => alert.dataValues)
       ))
   ),
+  getCoords: () => {
+    console.log('grabbing coordinates...');
+    return db.getCoordinates()
+      .then(data => data.map(coordinate => coordinate.dataValues));
+  },
+  getMedia: () => {
+    console.log('grabbing media files...');
+    return db.getMedia()
+      .then(data => data.map(file => file.dataValues));
+  },
+  findOrCreateEvent: ({
+    category, latitude, longitude, timeStamp,
+  }) => {
+    console.log('searching for existing event...');
+    return db.findOrCreateEvent(category, latitude, longitude, timeStamp)
+      .then(event => event); // the result will be the event object that was just created
+  },
 };
 
 const app = express();
@@ -130,6 +155,7 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
+module.exports = app;
 // app.get('/api/feed/', (req, res) => {
 //   console.log(Number(req.query.latitude));
 //   console.log(Number(req.query.longitude));
@@ -139,31 +165,28 @@ app.use('/graphql', graphqlHTTP({
 //   });
 // });
 
+// app.get('/api/coordinates', (req, res) => {
+//   console.log('grabbing coordinates...');
+//   db.getCoordinates().then((coordinates) => {
+//     res.status(201).send(coordinates.map(data => data.dataValues));
+//   });
+// });
 
-app.get('/api/coordinates', (req, res) => {
-  console.log('grabbing coordinates...');
-  db.getCoordinates().then((coordinates) => {
-    res.status(201).send(coordinates.map(data => data.dataValues));
-  });
-});
+// app.get('/api/media', (req, res) => {
+//   console.log('grabbing media files...');
+//   db.getMedia().then((files) => {
+//     res.status(201).send(files.map(data => data.dataValues));
+//   });
+// });
 
-app.get('/api/media', (req, res) => {
-  console.log('grabbing media files...');
-  db.getMedia().then((files) => {
-    res.status(201).send(files.map(data => data.dataValues));
-  });
-});
-
-app.post('/api/events', (req, res) => {
-  const {
-    latitude, longitude, category, timeStamp,
-  } = req.body;
-  // console.log(latitude, longitude, category, timeStamp);
-  db.findOrCreateEvent(category, latitude, longitude, timeStamp)
-    .then((event) => { // the result will be the event object that was just created
-      console.log('server returns: ', event);
-      res.send(event);
-    });
-});
-
-module.exports = app;
+// app.post('/api/events', (req, res) => {
+//   const {
+//     latitude, longitude, category, timeStamp,
+//   } = req.body;
+//   // console.log(latitude, longitude, category, timeStamp);
+//   db.findOrCreateEvent(category, latitude, longitude, timeStamp)
+//     .then((event) => { // the result will be the event object that was just created
+//       console.log('server returns: ', event);
+//       res.send(event);
+//     });
+// });
