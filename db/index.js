@@ -9,10 +9,20 @@ sequelize.authenticate()
     console.log('DB successfully established');
   });
 
-
+/* =======User Authentication=========== */
 const User = sequelize.define('User', {
   name: { type: Sequelize.STRING },
+  username: { type: Sequelize.STRING },
+  password: { type: Sequelize.STRING },
 });
+
+// const checkUserName = (username, password) => {
+//   return User.find({ where: { username } })
+//     .then((data) => {
+//       if (data === null) return createNewUser({ username, password });
+//     })
+//     .catch(err => console.log(err));
+// };
 
 const Event = sequelize.define('Event', {
   latitude: { type: Sequelize.DECIMAL(25, 20) },
