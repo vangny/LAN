@@ -1,6 +1,7 @@
 body {
   font-family: Century Gothic, Arial, sans-serif;
   background: #eee;
+  margin: 0;
 }
 
 .container {
@@ -24,14 +25,14 @@ body {
 
 .content {
   height: 100%;
-  width: 100%;
+  margin-left: 5px;
   grid-area: content;
   overflow: scroll;
 }
 
 .nav-bar {
-  /* height: 100%;
-  width: 100%; */
+  height: 74%;
+  width:100%;
   /* margin-top: 5px; */
   grid-area: navbar;
   display: grid;
@@ -40,6 +41,8 @@ body {
 }
 
 .nav-cell {
+  /* height: 100%; */
+  /* width: 100%; */
   border-style: solid;
 }
 
