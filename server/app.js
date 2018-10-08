@@ -177,8 +177,6 @@ const root = {
 
 const app = express();
 
-app.use(bodyparser.json());
-app.use(express.static(`${__dirname}/../client/dist`));
 // app.use(express.static(`${__dirname}, "jsx"`));
 app.use('/graphql', graphqlHTTP({
   schema,

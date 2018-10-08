@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
@@ -15,6 +16,12 @@ import { ApolloProvider, InMemoryCache, HttpLink, ApolloClient, createNetworkInt
 // const client = new ApolloClient({
 //   uri: "http://localhost:3000/graphql"
 // });
+=======
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link, Router, navigate } from '@reach/router';
+import moment from 'moment';
+>>>>>>> Clean up commented out code
 
 import Dashboard from "./components/Dashboard";
 import Alert from "./components/alert/Alert";
@@ -32,10 +39,13 @@ class App extends React.Component {
       category: null,
       timeStamp: null,
       EventId: null,
+<<<<<<< HEAD
       alerts: null,
       isLoggedIn: false,
       name: '',
       picture: '',
+=======
+>>>>>>> Clean up commented out code
     };
     this.componentWillMount = this.componentWillMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
@@ -161,12 +171,29 @@ class App extends React.Component {
       )
       : (
     // console.log(this.state);
+<<<<<<< HEAD
     
       <ApolloProvider client={client}>
       
         <div className="container">
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
+=======
+    return (
+      <div className="container">
+        <Link to="/" className="title nav-cell">
+          <h2>Local Alert Network</h2>
+        </Link>
+        <Router className="content">
+          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
+          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
+        </Router>
+        <div className="nav-bar">
+          <Link to="/" className="home-grid nav-cell">
+            <span className="home-button">Home</span>
+>>>>>>> Clean up commented out code
           </Link>
           <Router className="content">
             <Redirect noThrow from="/login" to="/" />
