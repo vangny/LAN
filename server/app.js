@@ -6,6 +6,7 @@ const {
   GraphQLScalarType,
 } = require('graphql');
 const { PubSub } = require('graphql-subscriptions');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { Kind } = require('graphql/language');
 
 const iconv = require('iconv-lite');
@@ -137,7 +138,7 @@ const root = {
   createAlert: ({
     EventId, category, latitude, longitude, notes, url, photoTag,
   }) => {
-    pubsub.publish(NEW_ALERT, { newAlert: { latitude, longitude } });
+    pubsub.publish(NEW_ALERT, { newAlert: { category } });
     return db.createAlert(EventId, category, latitude, longitude, notes, url, photoTag)
       .then(alert => alert);
   },
