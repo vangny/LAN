@@ -39,7 +39,7 @@ class Login extends Component {
       email: res.email,
       picture: res.imageUrl,
     }, () => {
-      this.props.login()
+      this.props.login();
     })
 
   }

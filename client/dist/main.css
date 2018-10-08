@@ -8,7 +8,7 @@ body {
   display: grid;
   grid-gap: 10px;
   justify-items: center;
-  background-image: linear-gradient(130deg, #ad1d0a, #d38901);
+  background-image: linear-gradient(130deg, #ad1d0a, #0f01d3);
   height: 100%;
   margin-left: 5px;
   grid-area: content;

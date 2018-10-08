@@ -25,6 +25,8 @@ class App extends React.Component {
     };
     this.componentWillMount = this.componentWillMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
+    this.setLoginState = this.setLoginState.bind(this);
+    this.renderLogin = this.renderLogin.bind(this);
   }
 
   componentWillMount() {
@@ -74,74 +76,61 @@ class App extends React.Component {
     });
   }
 
-  // renderLogin() {
-  //   const {
-  //     latitude,
-  //     longitude,
-  //     category,
-  //     timeStamp,
-  //     EventId,
-  //     alerts,
-  //     isLoggedIn,
-  //   } = this.state;
-    // return (!isLoggedIn)
-    //   ? (
-    //     <div>
-    //       <Router>
-    //         <Redirect noThrow from="/" to="/login" />
-    //         <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-    //         <Login path="/login" login={this.setLoginState} />
-    //       </Router>
-    //     </div>
-    //   )
-    //   :
-
-  // }
+  setLoginState() {
+    const { isLoggedIn } = this.state;
+    this.setState({
+      isLoggedIn: true,
+    });
+  }
 
   renderLogin() {
-        const {
+    const {
       latitude,
       longitude,
       category,
       timeStamp,
       EventId,
-      alerts,
       isLoggedIn,
     } = this.state;
 
     return (!isLoggedIn)
-    ? (
-      <div>
-        <Router>
-          <Redirect noThrow from="/" to="/login" />
-          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-          <Login path="/login" login={this.setLoginState} />
-        </Router>
-      </div>
-    )
-    :
-      <div>
-        <Router className="content">
-          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
-          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
-          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-        </Router>
-         <div className="nav-bar">
-         <Link to="/" className="home-grid nav-cell">
-           <span className="home-button">Home</span>
-         </Link>
-         <Link to="/login" className="search-grid nav-cell">
-           <span className="search-button">Login</span>
-         </Link>
-         <Link to="/alertOptions" className="alert-grid nav-cell">
-           <span className="alert-button">Add Alert</span>
-         </Link>
-         <Link to="/dashboard" className="dash-grid nav-cell">
-           <span className="dash-button">Dashboard</span>
-         </Link>
-         </div>
-      </div>
+      ? (
+        <div>
+          <Router>
+            <Redirect noThrow from="/" to="/login" />
+            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+            <Login path="/login" login={this.setLoginState} />
+          </Router>
+        </div>
+      )
+      : (
+        <div className="container">
+          <Link to="/" className="title nav-cell">
+            <h2>Local Alert Network</h2>
+          </Link>
+          <Router className="content">
+            <Redirect noThrow from="/login" to="/" />
+            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+            <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
+            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
+          </Router>
+          <div className="nav-bar">
+            <Link to="/" className="home-grid nav-cell">
+              <span className="home-button">Home</span>
+            </Link>
+            <Link to="/login" className="search-grid nav-cell">
+              <span className="search-button">Login</span>
+            </Link>
+            <Link to="/alertOptions" className="alert-grid nav-cell">
+              <span className="alert-button">Add Alert</span>
+            </Link>
+            <Link to="/dashboard" className="dash-grid nav-cell">
+              <span className="dash-button">Dashboard</span>
+            </Link>
+          </div>
+        </div>
+      );
   }
 
   render() {
@@ -155,31 +144,8 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      <div className="container">
-        <Link to="/" className="title nav-cell">
-          <h2>Local Alert Network</h2>
-        </Link>
+      <div>
         {this.renderLogin()}
-        {/* <Router className="content">
-          <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-          <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
-          <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
-          <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-        </Router>
-        <div className="nav-bar">
-          <Link to="/" className="home-grid nav-cell">
-            <span className="home-button">Home</span>
-          </Link>
-          <Link to="/login" className="search-grid nav-cell">
-            <span className="search-button">Login</span>
-          </Link>
-          <Link to="/alertOptions" className="alert-grid nav-cell">
-            <span className="alert-button">Add Alert</span>
-          </Link>
-          <Link to="/dashboard" className="dash-grid nav-cell">
-            <span className="dash-button">Dashboard</span>
-          </Link>
-        </div> */}
       </div>
     );
   }
