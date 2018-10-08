@@ -14,7 +14,8 @@
     "postinstall": "webpack --mode production",
     "lint": "eslint './client/src/components/**/*.jsx' db server",
     "run-lint": "npm run lint",
-    "jest:test": "NODE_ENV=test jest --detectOpenHandles --forceExit"
+    "jest:test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "echo running test..."
   },
   "repository": {
     "type": "git",
