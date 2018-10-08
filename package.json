@@ -8,9 +8,9 @@
     "verbose": true
   },
   "scripts": {
-    "react-dev": "webpack -d --watch",
+    "react-dev": "HTTPS=true webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "start": "node server/index.js",
+    "start": "HTTPS=true node server/index.js",
     "postinstall": "webpack --mode production",
     "lint": "eslint './client/src/components/**/*.jsx' db server",
     "run-lint": "npm run lint",
@@ -61,6 +61,7 @@
     "body-parser": "^1.18.3",
     "deck.gl": "^6.1.1",
     "dotenv": "^6.0.0",
+    "dotenv-webpack": "^1.5.7",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
     "graphql": "^14.0.2",
@@ -76,6 +77,8 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-dropzone": "^6.0.0",
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^3.2.1",
     "react-html5-camera-photo": "^1.2.8-beta.0",
     "react-map-gl": "^3.3.5",
     "sequelize": "^4.39.0"
