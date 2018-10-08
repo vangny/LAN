@@ -47,7 +47,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login-home">
-        <p> HELLO </p>
+        <h1>Welcome! Please login below</h1>
         <FacebookLogin
           appId="319558131933866"
           fields="name, email, picture"
@@ -60,7 +60,6 @@ class Login extends Component {
           onSuccess={this.responseGoogle}
           onFailure={this.responseGoogle}
         />
-
       </div>
 
     );
