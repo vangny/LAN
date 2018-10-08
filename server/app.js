@@ -15,7 +15,11 @@ iconv.encodings = encodings;
 
 const db = require('../db/index');
 
-// const pubsub = new PubSub();
+const pubsub = new PubSub();
+const app = express();
+
+app.use(bodyparser.json());
+app.use(express.static(`${__dirname}/../client/dist`));
 
 const schema = buildSchema(`
   type Query {
@@ -25,7 +29,7 @@ const schema = buildSchema(`
     getMedia: [Media]
     getCoords: [Coordinates]
   }
-
+  
   type Mutation {
     createAlert(
       EventId: Int
@@ -35,7 +39,7 @@ const schema = buildSchema(`
       notes: String
       url: String
       photoTag: String
-    ): Alert
+      ): Alert
 
     findOrCreateEvent(
       latitude: Float
@@ -53,11 +57,11 @@ const schema = buildSchema(`
       token: Int
     ): User
   }
-
+  
   type Subscription {
     newAlert: Alert
   }
-
+  
   type Event {
     id: ID
     latitude: Float
@@ -66,7 +70,7 @@ const schema = buildSchema(`
     timeStamp: Date
     category: String
   }
-
+  
   type Alert {
     id: ID
     category: String
@@ -76,18 +80,19 @@ const schema = buildSchema(`
     media: [Media]
     createdAt: Date
   }
-
+  
   type Media {
     id: ID
     url: String
     photoTag: String
     AlertId: Alert
   }
-
+  
   type Coordinates {
     latitude: String
     longitude: String
   }
+<<<<<<< HEAD
 
   type User {
     id: ID
@@ -99,16 +104,18 @@ const schema = buildSchema(`
     token: Int
   }
 
+=======
+  
+>>>>>>> Clean up commented out code
   scalar Date
-
+  
   type MyType {
     created: Date
   }
-
-`);
+  
+  `);
 
 const NEW_ALERT = 'NEW_ALERT';
-
 const root = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -134,8 +141,7 @@ const root = {
   createAlert: ({
     EventId, category, latitude, longitude, notes, url, photoTag,
   }) => {
-    // pubsub.publish(NEW_ALERT, { newAlert: alertData });
-
+    pubsub.publish(NEW_ALERT, { newAlert: { latitude, longitude } });
     return db.createAlert(EventId, category, latitude, longitude, notes, url, photoTag)
       .then(alert => alert);
   },
@@ -173,11 +179,14 @@ const root = {
   },
 };
 
+<<<<<<< HEAD
 const app = express();
 
 app.use(bodyparser.json());
 app.use(express.static(`${__dirname}/../client/dist`));
 // app.use(express.static(`${__dirname}, "jsx"`));
+=======
+>>>>>>> Clean up commented out code
 app.use('/graphql', graphqlHTTP({
   schema,
   rootValue: root,
@@ -231,37 +240,3 @@ app.post('/api/user', (req, res) => {
 // });
 
 module.exports = app;
-// app.get('/api/feed/', (req, res) => {
-//   console.log(Number(req.query.latitude));
-//   console.log(Number(req.query.longitude));
-//   db.getAlerts(Number(req.query.latitude), Number(req.query.longitude), Number(req.query.range)).then((alerts) => {
-//     console.log(alerts);
-//     res.status(200).send(alerts.map(alert => alert.dataValues));
-//   });
-// });
-
-// app.get('/api/coordinates', (req, res) => {
-//   console.log('grabbing coordinates...');
-//   db.getCoordinates().then((coordinates) => {
-//     res.status(201).send(coordinates.map(data => data.dataValues));
-//   });
-// });
-
-// app.get('/api/media', (req, res) => {
-//   console.log('grabbing media files...');
-//   db.getMedia().then((files) => {
-//     res.status(201).send(files.map(data => data.dataValues));
-//   });
-// });
-
-// app.post('/api/events', (req, res) => {
-//   const {
-//     latitude, longitude, category, timeStamp,
-//   } = req.body;
-//   // console.log(latitude, longitude, category, timeStamp);
-//   db.findOrCreateEvent(category, latitude, longitude, timeStamp)
-//     .then((event) => { // the result will be the event object that was just created
-//       console.log('server returns: ', event);
-//       res.send(event);
-//     });
-// });

@@ -79,7 +79,6 @@ class Alert extends Component {
       EventId,
       latitude,
       longitude,
-      sendAlertsToApp,
     } = this.props;
     const { notes, photo, photoTag } = this.state;
     // const alertData = {
