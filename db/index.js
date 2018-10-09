@@ -12,17 +12,18 @@ sequelize.authenticate()
 /* =======User Authentication=========== */
 const User = sequelize.define('User', {
   name: { type: Sequelize.STRING },
-  username: { type: Sequelize.STRING },
-  password: { type: Sequelize.STRING },
+  email: { type: Sequelize.STRING },
+  provider: { type: Sequelize.STRING },
+  provider_id: { type: Sequelize.INTEGER },
+  picture: { type: Sequelize.STRING },
+  token: { type: Sequelize.INTEGER },
 });
 
-// const checkUserName = (username, password) => {
-//   return User.find({ where: { username } })
-//     .then((data) => {
-//       if (data === null) return createNewUser({ username, password });
-//     })
-//     .catch(err => console.log(err));
-// };
+const doesUserExist = (name) => {
+  return User.find({ where: { name } })
+    .then(data => data ? true : false)
+    .catch(err => console.log(err));
+};
 
 const Event = sequelize.define('Event', {
   latitude: { type: Sequelize.DECIMAL(25, 20) },
@@ -147,4 +148,5 @@ exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;
 exports.getMedia = getMedia;
+exports.doesUserExist = doesUserExist;
 // exports.addUser = addUser;

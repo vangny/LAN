@@ -22,6 +22,8 @@ class App extends React.Component {
       EventId: null,
       alerts: null,
       isLoggedIn: false,
+      name: '',
+      picture: '',
     };
     this.componentWillMount = this.componentWillMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
@@ -34,7 +36,7 @@ class App extends React.Component {
       localStorage.setItem('latitude', position.coords.latitude);
       localStorage.setItem('longitude', position.coords.longitude);
       this.setState({
-        alerts: res.data
+        alerts: res.data,
       });
     });
   }
@@ -75,6 +77,17 @@ class App extends React.Component {
         });
     });
   }
+
+  // Optional- Grab user data from local storage after login
+
+  // componentDidMount() {
+  //   const { name, picture } = this.state;
+  //   let user = JSON.parse(sessionStorage.getItem('userData'));
+  //   this.setState({
+  //     name: user.name,
+  //     picture: user.picture,
+  //   });
+  // }
 
   setLoginState() {
     const { isLoggedIn } = this.state;
@@ -134,15 +147,6 @@ class App extends React.Component {
   }
 
   render() {
-    const {
-      latitude,
-      longitude,
-      category,
-      timeStamp,
-      EventId,
-      isLoggedIn,
-    } = this.state;
-
     return (
       <div>
         {this.renderLogin()}

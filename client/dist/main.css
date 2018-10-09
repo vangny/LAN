@@ -4,15 +4,45 @@ body {
   margin: 0;
 }
 
+/*===LOGIN===*/
 .login-home {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 5px;
   justify-items: center;
-  background-image: linear-gradient(130deg, #ad1d0a, #0f01d3);
+  background-image: linear-gradient(130deg, #537895 , #09203f
+  );
   height: 100%;
   margin-left: 5px;
-  grid-area: content;
-  overflow: scroll;
+  grid-template-rows: 20% 40% 15% 15% 10%;
+  grid-template-areas: 'header'
+                       'logo'
+                       'button1'
+                       'button2'
+                       'footer'                  
+}
+
+.header {
+  grid-area: header;
+  order: 0;
+  color: rgb(216, 53, 24);
+}
+
+.login-google {
+  grid-area: button1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 2;
+}
+
+.login-face {
+  grid-area: button2;
+  display: flex;
+  position: inherit;
+  align-items: center;
+  justify-content: center;
+  /* display: inline-block; */
+  order: 3;
 }
 
 .container {
