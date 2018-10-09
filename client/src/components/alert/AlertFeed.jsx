@@ -10,40 +10,40 @@ class AlertFeed extends Component {
     };
   }
 
-  componentDidMount() {
-    const { latitude, longitude } = this.props;
+  // componentWillMount() {
+  //   const { latitude, longitude } = this.props;
 
-    const range = 10;
+  //   const range = 10;
 
-    const query = `
-    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
-       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-        id
-        category
-        createdAt
-      }
-    }
-    `;
+  //   const query = `
+  //   query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+  //      getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+  //       id
+  //       category
+  //       createdAt
+  //     }
+  //   }
+  //   `;
 
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { latitude, longitude, range },
-      }),
-    })
-      .then(response => response.json())
-      .then((data) => {
-        console.log('Alert feed: ', data);
-        this.setState({
-          alerts: data.data.getAlerts,
-        });
-      });
-  }
+  //   fetch('/graphql', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       query,
+  //       variables: { latitude, longitude, range },
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       console.log('Alert feed: ', data);
+  //       this.setState({
+  //         alerts: data.data.getAlerts,
+  //       });
+  //     });
+  // }
 
   renderAlerts() {
     const { alerts } = this.state;
@@ -58,9 +58,16 @@ class AlertFeed extends Component {
   }
 
   render() {
+    const { alerts } = this.props;
     return (
       <div className="feed">
-        {this.renderAlerts()}
+        {alerts.map(alert => (
+      <div className="alert" key="alert.id">
+        {`Category: ${alert.category}`}
+        <br/>
+        {moment(alert.createdAt).fromNow()}
+      </div>
+    ))}
       </div>
     );
   }

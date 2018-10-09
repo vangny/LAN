@@ -1,10 +1,27 @@
 body {
   font-family: Century Gothic, Arial, sans-serif;
-  background: #eee;
+  background: #ffffff;
   margin: 0;
 }
 
-/*===LOGIN===*/
+/*
+====================
+Blinking Animation
+==================== 
+*/
+
+@keyframes blink {
+  0% {
+    opacity: .2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .2;
+  }
+}
+
 .login-home {
   display: grid;
   grid-gap: 5px;
@@ -72,7 +89,7 @@ body {
 }
 
 .nav-bar {
-  height: 74%;
+  height: 80%;
   width:100%;
   /* margin-top: 5px; */
   grid-area: navbar;
@@ -193,6 +210,7 @@ Map Styling
   z-index: 100;
   background: #ffffff;
 } */
+
 /*
 ====================
 ALERT COMPONENTS
@@ -277,3 +295,58 @@ ALERT COMPONENTS
     order: 5;
 }
 
+/*
+====================
+Loading Page
+==================== 
+*/
+
+.loading-container {
+  grid-template-rows: 30% 70%;
+  grid-template-areas: 'logo'
+                       'loading';
+  text-align: center;
+}
+
+.logo {
+  grid-area: logo;
+}
+
+.loading-page-name {
+  grid-area: logo;
+}
+
+.loading-page-loading {
+  grid-area: loading;
+}
+
+.loading-dot {
+  font-size: 48px;
+  color: red;
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.loading-dot:nth-child(4) {
+  animation-delay: .6s;
+}
+
+.loading-dot:nth-child(5) {
+  animation-delay: .8s;
+}
+
+/* .loading-page-loading div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
