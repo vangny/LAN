@@ -2,6 +2,9 @@ const {
   buildSchema,
 } = require('graphql');
 
+// const { GraphQLSchema, GraphQLObjectType } = require
+// const { gql } = require('apollo-server-express');
+
 const schema = buildSchema(`
   type Query {
     getAlerts(latitude: Float,
@@ -69,6 +72,12 @@ const schema = buildSchema(`
   
   type MyType {
     created: Date
+  }
+  
+  schema {
+    query: Query,
+    mutation: Mutation,
+    subscription: Subscription
   }
   
   `);
