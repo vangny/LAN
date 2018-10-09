@@ -43,6 +43,15 @@ const schema = buildSchema(`
       timeStamp: Date
       category: String
     ): Event
+
+    findOrCreateUser(
+      name: String
+      email: String
+      provider: String
+      provider_id: Int
+      picture: String
+      token: Int
+    ): User
   }
 
   type Subscription {
@@ -78,6 +87,16 @@ const schema = buildSchema(`
   type Coordinates {
     latitude: String
     longitude: String
+  }
+
+  type User {
+    id: ID
+    name: String
+    email: String
+    provider: String
+    provider_id: Int
+    picture: String
+    token: Int
   }
 
   scalar Date
@@ -143,6 +162,15 @@ const root = {
     return db.findOrCreateEvent(category, latitude, longitude, timeStamp)
       .then(event => event); // the result will be the event object that was just created
   },
+  findOrCreateUser: ({
+    name, email, provider, provider_id, picture, token,
+  }) => {
+    console.log('searching for existing user...');
+    // return db.findOrCreateUser(name, email, provider,
+    //   provider_id, picture, token)
+    //   .then(User => User);
+    return 'testing 123';
+  },
 };
 
 const app = express();
@@ -155,6 +183,52 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root,
   graphiql: true,
 }));
+
+app.post('/api/user', (req, res) => {
+  console.log('user data received!', req.body);
+  const { 
+    name,
+    email,
+    provider,
+    provider_id,
+    picture,
+    token,
+  } = req.body;
+  res.send(name, picture, token);
+});
+
+// app.post('/api/user', (req, res) => {
+//   console.log('user data received!', req.body);
+//   const { 
+//     name,
+//     email,
+//     provider,
+//     provider_id,
+//     picture,
+//     token,
+//   } = req.body;
+//   db.doesUserExist(name)
+//     .then((result) => {
+//       if (result) {
+//         console.log('user exists!');
+//       } else {
+//         return db.User.create({
+//           name,
+//           email,
+//           provider,
+//           provider_id,
+//           picture,
+//           token,
+//         })
+//           .then(() => {
+//             res.status(200).send(token);
+//           },
+//           () => {
+//             console.log('token sent to client', token);
+//           });
+//       }
+//     });
+// });
 
 module.exports = app;
 // app.get('/api/feed/', (req, res) => {
