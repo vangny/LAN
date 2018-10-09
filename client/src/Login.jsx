@@ -43,19 +43,54 @@ class Login extends Component {
     }
 
     if (userData) {
+      const { name, email, provider, provider_id, picture, token} = userData;
       const { newLogin } = this.state;
-      axios.post('/api/user', userData).then((response) => {
-        let resJSON = response;
-        console.log('local', resJSON);
-        sessionStorage.setItem('userData', JSON.stringify(resJSON));
-        this.setState({ newLogin: true });
-        this.props.login();
-      });
+      const query = `
+    mutation FindOrCreateUser($name: String!, $email: String!, $provider: String!!, $provider_id: Int!, $picture: String!, $token: String!) {
+      findOrCreateUser(name: $name, email: $email, provider: $provider, provider_id: $provider_id, picture: $picture, token: $token ) {
+        name
+        picture
+        token
+      }
     }
+    `;
+      fetch('/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            name, email, provider, provider_id, picture, token,
+          },
+        }),
+      })
+        .then(res => res.json())
+        .then((userData) => {
+          console.log('User data received from server!', userData);
+          let resJSON = userData;
+          console.log('local', resJSON);
+          sessionStorage.setItem('userData', JSON.stringify(resJSON));
+          this.setState({ newLogin: true });
+          this.props.login();
+        });
+    }
+
+    // if (userData) {
+    //   const { newLogin } = this.state;
+    //   axios.post('/api/user', userData).then((response) => {
+    //     let resJSON = response;
+    //     console.log('local', resJSON);
+    //     sessionStorage.setItem('userData', JSON.stringify(resJSON));
+    //     this.setState({ newLogin: true });
+    //     this.props.login();
+    //   });
+    // }
   }
 
   responseFacebook(res) {
-    const { login } = this.props;
     console.log(res);
     this.loginUser(res, 'facebook');
   }
