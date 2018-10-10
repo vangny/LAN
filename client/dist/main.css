@@ -44,6 +44,14 @@ Blinking Animation
   color: rgb(216, 53, 24);
 }
 
+.login-logo {
+  grid-area: logo;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order:1;
+}
+
 .login-google {
   grid-area: button1;
   display: flex;

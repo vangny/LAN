@@ -101,6 +101,9 @@ class Login extends Component {
         <div className="header">
           <h1>Local Alert Network</h1>
         </div>
+        <div className="login-logo">
+          <img src={require('../../icons/icon-512x512.png')} alt="" />
+        </div>
         <div className="login-google">
           <GoogleLogin
             clientId="681417979790-t30qgb7rckeutkq0nu4t9vagskmncffk.apps.googleusercontent.com"
