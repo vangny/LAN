@@ -97,9 +97,7 @@ class Alert extends Component {
         id
         category
         createdAt
-        media {
-          url
-        }
+        url
       }
     }
     `;

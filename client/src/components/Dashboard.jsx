@@ -9,7 +9,7 @@ const Dashboard = ({ latitude, longitude, alerts }) => ( window.innerWidth >= 12
     <div className="search-alerts">
       <form>
         <input className="search-bar" placeholder="Search alerts" type="text" name="searchAlert" />
-        <button className="search-button" title="Search" value="" type="submit" >
+        <button className="search-button" title="Search" value="" type="submit">
           <span className="fas fa-search" />
         </button>
       </form>

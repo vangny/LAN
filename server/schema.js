@@ -86,6 +86,12 @@ const typeDefs = `
   type MyType {
     created: Date
   }
+
+  schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+  }
 `;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
