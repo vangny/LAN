@@ -4,11 +4,12 @@ import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
 
-import Dashboard from "./components/Dashboard";
-import Alert from "./components/alert/Alert";
-import AlertOptions from "./components/alert/AlertOptions";
-import AlertFeed from "./components/alert/AlertFeed";
+import Dashboard from './components/Dashboard';
+import Alert from './components/create-alert/Alert';
+import AlertOptions from './components/create-alert/AlertOptions';
+import AlertFeed from './components/AlertFeed';
 import Login from './Login';
+import LoadingPage from './components/LoadingPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,21 +25,105 @@ class App extends React.Component {
       isLoggedIn: false,
       name: '',
       picture: '',
+      isLoaded: false,
     };
-    this.componentWillMount = this.componentWillMount.bind(this);
+    // this.componentWillMount = this.componentWillMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
-    this.renderLogin = this.renderLogin.bind(this);
+    this.setCoordinates = this.setCoordinates.bind(this);
+    this.setLoadedState = this.setLoadedState.bind(this);
+    this.fetchAlerts = this.fetchAlerts.bind(this);
+    this.handleInitialStartup = this.handleInitialStartup.bind(this);
   }
 
-  componentWillMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      localStorage.setItem('latitude', position.coords.latitude);
-      localStorage.setItem('longitude', position.coords.longitude);
-      this.setState({
-        alerts: res.data,
-      });
+  // componentWillMount() {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     localStorage.setItem('latitude', position.coords.latitude);
+  //     localStorage.setItem('longitude', position.coords.longitude);
+  //     this.setState({ isLoaded: true }, () => (console.log('loaded')));
+  //   });
+  // }
+
+  setLoginState() {
+    this.setState({
+      isLoggedIn: true,
     });
+  }
+
+  setCoordinates() {
+    this.setState({
+      latitude: Number(localStorage.getItem('latitude')),
+      longitude: Number(localStorage.getItem('longitude')),
+    }, () => this.fetchAlerts());
+  }
+
+  setLoadedState() {
+    this.setState({
+      isLoaded: true,
+    });
+  }
+
+  fetchAlerts() {
+    const { latitude, longitude } = this.state;
+    const range = 10;
+    const query = `
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+        id
+        category
+        createdAt
+      }
+    }
+    `;
+
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log('Alert feed: ', data);
+        this.setState({
+          alerts: data.data.getAlerts,
+        }, () => this.setLoadedState());
+      });
+  }
+
+  handleInitialStartup() {
+    const { isLoggedIn, isLoaded } = this.state;
+
+    if (!isLoggedIn) {
+      return (
+        <div>
+          <Router>
+            <Redirect noThrow from="/" to="/login" />
+            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
+            <LoadingPage path="/" load={this.setLoadedState} fetchAlerts={this.fetchAlerts} />
+            <Login path="/login" login={this.setLoginState} />
+          </Router>
+        </div>
+      );
+    }
+    if (!isLoaded) {
+      return (
+        <div>
+          <Router>
+            {/* <Redirect noThrow from="/" to="/login" />
+            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
+            <Redirect noThrow from="/login" to="/" />
+            <LoadingPage path="/" setCoordinates={this.setCoordinates} load={this.setLoadedState} fetchAlerts={this.fetchAlerts} />
+          </Router>
+        </div>
+      );
+    }
+    return null;
   }
 
   handleAlertOptions(category) {
@@ -78,43 +163,21 @@ class App extends React.Component {
     });
   }
 
-  // Optional- Grab user data from local storage after login
-
-  // componentDidMount() {
-  //   const { name, picture } = this.state;
-  //   let user = JSON.parse(sessionStorage.getItem('userData'));
-  //   this.setState({
-  //     name: user.name,
-  //     picture: user.picture,
-  //   });
-  // }
-
-  setLoginState() {
-    const { isLoggedIn } = this.state;
-    this.setState({
-      isLoggedIn: true,
-    });
-  }
-
-  renderLogin() {
+  render() {
     const {
       latitude,
       longitude,
       category,
       timeStamp,
       EventId,
+      alerts,
       isLoggedIn,
+      isLoaded,
     } = this.state;
 
-    return (!isLoggedIn)
+    return (!isLoggedIn || !isLoaded)
       ? (
-        <div>
-          <Router>
-            <Redirect noThrow from="/" to="/login" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-            <Login path="/login" login={this.setLoginState} />
-          </Router>
-        </div>
+        this.handleInitialStartup()
       )
       : (
         <div className="container">
@@ -123,8 +186,9 @@ class App extends React.Component {
           </Link>
           <Router className="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-            <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+            {/* <AlertFeed exact path="/" alerts={alerts} /> */}
+            {/* <LoadingPage path="/" /> */}
+            <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
           </Router>
@@ -132,26 +196,18 @@ class App extends React.Component {
             <Link to="/" className="home-grid nav-cell">
               <span className="home-button">Home</span>
             </Link>
-            <Link to="/login" className="search-grid nav-cell">
-              <span className="search-button">Login</span>
-            </Link>
             <Link to="/alertOptions" className="alert-grid nav-cell">
               <span className="alert-button">Add Alert</span>
             </Link>
-            <Link to="/dashboard" className="dash-grid nav-cell">
-              <span className="dash-button">Dashboard</span>
+            <Link to="/profile" className="search-grid nav-cell">
+              <span className="profile-button">Profile</span>
+            </Link>
+            <Link to="/settings" className="dash-grid nav-cell">
+              <span className="settings-button">Settings</span>
             </Link>
           </div>
         </div>
       );
-  }
-
-  render() {
-    return (
-      <div>
-        {this.renderLogin()}
-      </div>
-    );
   }
 }
 

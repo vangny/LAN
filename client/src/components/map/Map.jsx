@@ -91,8 +91,8 @@ export default class Map extends Component {
 
   resizeMap() {
     this.onWindowChange({
-      width: document.getElementById('map-container').getBoundingClientRect().width,
-      height: document.getElementById('map-container').getBoundingClientRect().height,
+      width: document.getElementById('map-container').getBoundingClientRect().width * 0.985,
+      height: document.getElementById('map-container').getBoundingClientRect().height * 0.98,
     });
   }
 
