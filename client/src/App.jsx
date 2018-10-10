@@ -87,6 +87,8 @@ class App extends React.Component {
     query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
        getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
         id
+        latitude
+        longitude
         category
         url
         createdAt
@@ -195,7 +197,6 @@ class App extends React.Component {
       name,
       picture,
     } = this.state;
-
     return (!isLoggedIn || !isLoaded)
       ? (
         this.handleInitialStartup()
