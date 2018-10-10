@@ -72,6 +72,16 @@ const typeDefs = `
     longitude: String
   }
   
+  type User {
+    id: ID
+    name: String
+    email: String
+    provider: String
+    provider_id: Int
+    picture: String
+    token: Int
+  }
+  
   scalar Date
   
   type MyType {
