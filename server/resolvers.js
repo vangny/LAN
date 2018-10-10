@@ -1,11 +1,8 @@
-const {
-  GraphQLScalarType,
-} = require('graphql');
+
 const { PubSub } = require('graphql-subscriptions');
-<<<<<<< HEAD
-=======
+
 const { SubscriptionServer } = require('subscriptions-transport-ws');
->>>>>>> Separate server into multiple files to separate concerns
+
 const { Kind } = require('graphql/language');
 
 const db = require('../db/index');
@@ -32,6 +29,7 @@ const resolvers = {
       return db.getMedia()
         .then(data => data.map(file => file.dataValues));
     },
+<<<<<<< HEAD
   },
   Mutation: {
     findOrCreateEvent: (root, args, context) => {
@@ -127,3 +125,42 @@ const root = {
 
 exports.root = root;
 >>>>>>> Separate server into multiple files to separate concerns
+=======
+  },
+  Mutation: {
+    findOrCreateEvent: (root, args, context) => {
+      console.log('searching for existing event...');
+      return db.findOrCreateEvent(args.category, args.latitude, args.longitude, args.timeStamp)
+        .then(event => event); // the result will be the event object that was just created
+    },
+    createAlert: (root, args, context) => {
+      return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
+        .then((alert) => {
+          pubsub.publish(NEW_ALERT, { newAlert: alert });
+          return alert;
+        });
+    },
+  },
+  Subscription: {
+    newAlert: {
+      subscribe: () => pubsub.asyncIterator(NEW_ALERT),
+    },
+  },
+  Date: {
+    __parseValue(value) {
+      return new Date(value); // value from the client
+    },
+    __serialize(value) {
+      return value.getTime(); // value sent to the client
+    },
+    __parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return parseInt(ast.value, 10); // ast value is always in string format
+      }
+      return null;
+    },
+  },
+};
+
+exports.resolvers = resolvers;
+>>>>>>> Refactor graphql server
