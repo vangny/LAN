@@ -5,9 +5,9 @@ import axios from "axios";
 import moment from "moment";
 
 import Dashboard from './components/Dashboard';
-import Alert from './components/alert/Alert';
-import AlertOptions from './components/alert/AlertOptions';
-import AlertFeed from './components/alert/AlertFeed';
+import Alert from './components/create-alert/Alert';
+import AlertOptions from './components/create-alert/AlertOptions';
+import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 
@@ -186,9 +186,9 @@ class App extends React.Component {
           </Link>
           <Router className="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" alerts={alerts} />
+            {/* <AlertFeed exact path="/" alerts={alerts} /> */}
             {/* <LoadingPage path="/" /> */}
-            <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+            <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
           </Router>
@@ -197,7 +197,7 @@ class App extends React.Component {
               <span className="home-button">Home</span>
             </Link>
             <Link to="/login" className="search-grid nav-cell">
-              <span className="search-button">Login</span>
+              <span className="search-button">Search</span>
             </Link>
             <Link to="/alertOptions" className="alert-grid nav-cell">
               <span className="alert-button">Add Alert</span>

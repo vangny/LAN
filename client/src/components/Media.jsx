@@ -55,7 +55,7 @@ export default class Media extends Component {
         {media.map((file) => {
           if (file.url) {
             // console.log(file.url);
-            return <img src={file.url} hspace="5" width='200' height='150' />;
+            return <img src={file.url} hspace="5" width='200' height='145' />;
           }
         }
         )}
