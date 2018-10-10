@@ -19,8 +19,8 @@ const User = sequelize.define('User', {
   token: { type: Sequelize.INTEGER },
 });
 
-const doesUserExist = (name) => {
-  return User.find({ where: { name } })
+const doesUserExist = (email) => {
+  return User.find({ where: { email } })
     .then(data => data ? true : false)
     .catch(err => console.log(err));
 };
