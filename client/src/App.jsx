@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
-import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+// import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
+// import { ApolloProvider } from 'react-apollo';
 
 import Dashboard from './components/Dashboard';
 import Alert from './components/create-alert/Alert';
