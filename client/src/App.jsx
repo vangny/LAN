@@ -29,8 +29,8 @@ import gql from 'graphql-tag';
 // import {
   
 // } from 'apollo-client';
-import { InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
-} from 'apollo-boost';
+// import { InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
+// } from 'apollo-boost';
 // const networkInterface = createNetworkInterface({
 //   uri: 'http://localhost:9000/graphql'
 // });
@@ -83,19 +83,6 @@ class App extends React.Component {
       timeStamp: moment().format(),
     }, () => {
       const { timeStamp } = this.state;
-
-      client.query({
-        query: gql`
-        mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
-          findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
-            id
-            category
-          }
-        }
-        `
-      }).then(event => console.log('event query results:', event));
-  
-
       const query = `
       mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
         findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
@@ -145,23 +132,14 @@ class App extends React.Component {
 
   renderLogin() {
   render() {
-    
-    const cache = new InMemoryCache();
+    // const cache = new InMemoryCache();
 
-    const client = new ApolloClient({
-      uri: 'http://localhost:9000/graphql',
-      link: new HttpLink(),
-      cache,
-    });
-    // client.query({
-    //   query: gql`
-    //   {
-    //     getAlerts(latitude:0, longitude:0, range:1000000) {
-    //       category
-    //     }
-    //   }
-    //   `
-    // }).then(result => console.log('client query results:', result));
+    // const client = new ApolloClient({
+    //   uri: 'http://localhost:9000/graphql',
+    //   link: new HttpLink(),
+    //   cache,
+    // });
+  
 
     const {
       latitude,
@@ -191,7 +169,6 @@ class App extends React.Component {
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
     return (
-
       <div className="container">
         <Link to="/" className="title nav-cell">
           <h2>Local Alert Network</h2>
@@ -238,6 +215,12 @@ class App extends React.Component {
               <span className="dash-button">Dashboard</span>
             </Link>
           </div>
+          <Link to="/alertOptions" className="alert-grid nav-cell">
+            <span className="alert-button">Add Alert</span>
+          </Link>
+          <Link to="/dashboard" className="dash-grid nav-cell">
+            <span className="dash-button">Dashboard</span>
+          </Link>
         </div>
 
       );
