@@ -43,6 +43,28 @@ const resolvers = {
           return alert;
         });
     },
+    findOrCreateUser: (root, args, context) => {
+      console.log(args);
+      console.log('searching for existing user...');
+      return db.doesUserExist(args.email)
+        .then((result) => {
+          if (result) {
+            console.log('user already exists!');
+          }
+          if (!result) {
+            console.log('New user created!')
+            return db.User.create(
+              args.name,
+              args.email,
+              args.provider,
+              args.provider_id,
+              args.picture,
+              args.token,
+            );
+          }
+          return result;
+        });
+    },
   },
   Subscription: {
     newAlert: {

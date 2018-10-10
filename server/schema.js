@@ -37,9 +37,9 @@ const typeDefs = `
       name: String
       email: String
       provider: String
-      provider_id: Int
+      provider_id: String
       picture: String
-      token: Int
+      token: String
     ): User
   }
   type Subscription {
@@ -77,9 +77,9 @@ const typeDefs = `
     name: String
     email: String
     provider: String
-    provider_id: Int
+    provider_id: String
     picture: String
-    token: Int
+    token: String
   }
   scalar Date
   type MyType {
