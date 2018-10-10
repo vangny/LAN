@@ -50,6 +50,7 @@ const resolvers = {
         .then((result) => {
           if (result) {
             console.log('user already exists!');
+            return args;
           }
           if (!result) {
             console.log('New user created!')

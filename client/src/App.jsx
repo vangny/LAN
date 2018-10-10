@@ -196,14 +196,14 @@ class App extends React.Component {
             <Link to="/" className="home-grid nav-cell">
               <span className="home-button">Home</span>
             </Link>
-            <Link to="/login" className="search-grid nav-cell">
-              <span className="search-button">Search</span>
-            </Link>
             <Link to="/alertOptions" className="alert-grid nav-cell">
               <span className="alert-button">Add Alert</span>
             </Link>
-            <Link to="/dashboard" className="dash-grid nav-cell">
-              <span className="dash-button">Dashboard</span>
+            <Link to="/profile" className="search-grid nav-cell">
+              <span className="profile-button">Profile</span>
+            </Link>
+            <Link to="/settings" className="dash-grid nav-cell">
+              <span className="settings-button">Settings</span>
             </Link>
           </div>
         </div>
