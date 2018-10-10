@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
+// import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
+// import { ApolloProvider } from 'react-apollo';
 
 import Dashboard from './components/Dashboard';
 import Alert from './components/create-alert/Alert';
@@ -10,6 +12,13 @@ import AlertOptions from './components/create-alert/AlertOptions';
 import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
+
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  cache,
+  link: new HttpLink(),
+  networkInterface: 'https://localhost:9000/graphql',
+})
 
 class App extends React.Component {
   constructor(props) {
@@ -184,29 +193,28 @@ class App extends React.Component {
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
           </Link>
-          <Router className="content">
-            <Redirect noThrow from="/login" to="/" />
-            {/* <AlertFeed exact path="/" alerts={alerts} /> */}
-            {/* <LoadingPage path="/" /> */}
-            <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
-            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
-            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-          </Router>
-          <div className="nav-bar">
-            <Link to="/" className="home-grid nav-cell">
-              <span className="home-button">Home</span>
-            </Link>
-            <Link to="/alertOptions" className="alert-grid nav-cell">
-              <span className="alert-button">Add Alert</span>
-            </Link>
-            <Link to="/profile" className="search-grid nav-cell">
-              <span className="profile-button">Profile</span>
-            </Link>
-            <Link to="/settings" className="dash-grid nav-cell">
-              <span className="settings-button">Settings</span>
-            </Link>
+            <Router className="content">
+              <Redirect noThrow from="/login" to="/" />
+              <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+              <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+              <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
+              <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
+            </Router>
+            <div className="nav-bar">
+              <Link to="/" className="home-grid nav-cell">
+                <span className="home-button">Home</span>
+              </Link>
+              <Link to="/login" className="search-grid nav-cell">
+                <span className="search-button">Login</span>
+              </Link>
+              <Link to="/alertOptions" className="alert-grid nav-cell">
+                <span className="alert-button">Add Alert</span>
+              </Link>
+              <Link to="/dashboard" className="dash-grid nav-cell">
+                <span className="dash-button">Dashboard</span>
+              </Link>
+            </div>
           </div>
-        </div>
       );
   }
 }

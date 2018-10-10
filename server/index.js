@@ -23,4 +23,3 @@ server.listen(PORT, (err) => {
     path: '/subscriptions',
   });
 });
-

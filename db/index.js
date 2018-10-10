@@ -17,6 +17,8 @@ const User = sequelize.define('User', {
   provider_id: { type: Sequelize.INTEGER },
   picture: { type: Sequelize.STRING },
   token: { type: Sequelize.INTEGER },
+  homeLat: { type: Sequelize.DECIMAL(25, 20) },
+  homeLong: { type: Sequelize.DECIMAL(25, 20) },
 });
 
 const doesUserExist = (email) => {
@@ -38,20 +40,22 @@ const Alert = sequelize.define('Alert', {
   longitude: { type: Sequelize.DECIMAL(25, 20) },
   notes: { type: Sequelize.STRING },
   category: { type: Sequelize.STRING },
+  url: { type: Sequelize.STRING },
+  photoTag: { type: Sequelize.STRING },
   // event_id: { type: Sequelize.NUMBER },
   // user_id: { type: Sequelize.NUMBER }
 });
 
-const Media = sequelize.define('Media', {
-  url: { type: Sequelize.STRING },
-  photoTag: { type: Sequelize.STRING },
+// const Media = sequelize.define('Media', {
+  // url: { type: Sequelize.STRING },
+  // photoTag: { type: Sequelize.STRING },
   // alert_id: { type: Sequelize.INTEGER }
-});
+// });
 
 Event.hasMany(Alert, { as: 'Alerts' });
 Alert.belongsTo(Event);
-Alert.hasMany(Media, { as: 'Media' });
-Media.belongsTo(Alert);
+// Alert.hasMany(Media, { as: 'Media' });
+// Media.belongsTo(Alert);
 // Alert.hasOne(User); 
 User.hasMany(Alert, { as: 'Alerts' });
 
@@ -98,23 +102,15 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
 };
 
 const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => {
-  let createdAlert;
   return Alert.create({
-    EventId, category, latitude, longitude, notes,
-  }).then((alert) => {
-    createdAlert = alert;
-    Media.create({
-      url: photo,
-      photoTag,
-      AlertId: alert.get('id'),
-    });
-  }).then(() => createdAlert);
+    EventId, category, latitude, longitude, notes, url: photo, photoTag,
+  }).then(alert => alert);
 };
 
 
 const getAlerts = (srcLat, srcLong, range) => (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
-    .then(alerts => ( alerts.filter(alert => distance(
+    .then(alerts => (alerts.filter(alert => distance(
       srcLat, srcLong, alert.dataValues.latitude, alert.dataValues.longitude,
     ) <= range)
     ))
@@ -142,11 +138,11 @@ const getMedia = () => (
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
-exports.Media = Media;
+// exports.Media = Media;
 exports.findOrCreateEvent = findOrCreateEvent;
 exports.createAlert = createAlert;
 exports.getAlerts = getAlerts;
 exports.getCoordinates = getCoordinates;
-exports.getMedia = getMedia;
+// exports.getMedia = getMedia;
 exports.doesUserExist = doesUserExist;
 // exports.addUser = addUser;

@@ -59,7 +59,8 @@ const typeDefs = `
     latitude: Float
     longitude: Float
     EventId: Int
-    media: [Media]
+    url: String
+    photoTag: String
     createdAt: Date
   }
   type Media {
@@ -90,5 +91,4 @@ const typeDefs = `
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 exports.schema = schema;
 exports.typeDefs = typeDefs;
-
 
