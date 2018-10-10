@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> Begin connecting Apollo Client Side
 const { PubSub } = require('graphql-subscriptions');
 
 const { SubscriptionServer } = require('subscriptions-transport-ws');
@@ -136,7 +139,7 @@ exports.root = root;
     createAlert: (root, args, context) => {
       return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
         .then((alert) => {
-          pubsub.publish(NEW_ALERT, { newAlert: alert });
+          pubsub.publish(NEW_ALERT, { alert });
           return alert;
         });
     },

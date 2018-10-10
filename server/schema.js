@@ -88,3 +88,4 @@ const typeDefs = `
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 exports.schema = schema;
+exports.typeDefs = typeDefs;

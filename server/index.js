@@ -32,12 +32,12 @@ app.use('/graphql', graphqlHTTP({
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
-const graphqlHTTP = require('express-graphql');
+// const graphqlHTTP = require('express-graphql');
 const { createServer } = require('http');
 const { execute, subscribe } = require('graphql');
-const {
-  ApolloServer, gql,
-} = require('apollo-server-express');
+// const {
+//   ApolloServer,
+// } = require('apollo-server-express');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 const cors = require('cors');
@@ -45,7 +45,7 @@ const cors = require('cors');
 const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 
-// const { typeDefs } = require('./typeDefs');
+
 // const { resolvers } = require('./resolvers');
 const { schema } = require('./schema');
 
@@ -71,8 +71,8 @@ app.use('/graphiql', graphiqlExpress({
   subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
 }));
 
-// const server = new ApolloServer({ schema, root });
-// server.applyMiddleware({ app });
+// const apolloServer = new ApolloServer({ typeDefs, resolvers });
+// apolloServer.applyMiddleware({ app });
 
 // app.listen({ port: PORT }, () => {
 //   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
@@ -95,11 +95,3 @@ server.listen(PORT, (err) => {
     path: '/subscriptions',
   });
 });
-
-// if (process.env.NODE_ENV !== 'test') {
-//   app.listen(PORT, () => {
-//     console.log(`Listening on ${PORT}`, `Running a GraphQL API server at localhost:${PORT}`);
-//   });
-// //   // app.start(() => console.log(`Server running on localhost:4000`))
-// }
-
