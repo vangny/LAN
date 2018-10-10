@@ -83,17 +83,6 @@ class Login extends Component {
           this.props.login();
         });
     }
-
-    // if (userData) {
-    //   const { newLogin } = this.state;
-    //   axios.post('/api/user', userData).then((response) => {
-    //     let resJSON = response;
-    //     console.log('local', resJSON);
-    //     sessionStorage.setItem('userData', JSON.stringify(resJSON));
-    //     this.setState({ newLogin: true });
-    //     this.props.login();
-    //   });
-    // }
   }
 
   responseFacebook(res) {

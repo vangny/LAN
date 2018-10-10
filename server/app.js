@@ -26,37 +26,4 @@ app.use('/graphiql', graphiqlExpress({
   subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
 }));
 
-// app.post('/api/user', (req, res) => {
-//   console.log('user data received!', req.body);
-//   const { 
-//     name,
-//     email,
-//     provider,
-//     provider_id,
-//     picture,
-//     token,
-//   } = req.body;
-//   db.doesUserExist(name)
-//     .then((result) => {
-//       if (result) {
-//         console.log('user exists!');
-//       } else {
-//         return db.User.create({
-//           name,
-//           email,
-//           provider,
-//           provider_id,
-//           picture,
-//           token,
-//         })
-//           .then(() => {
-//             res.status(200).send(token);
-//           },
-//           () => {
-//             console.log('token sent to client', token);
-//           });
-//       }
-//     });
-// });
-
 module.exports = app;
