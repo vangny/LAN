@@ -71,6 +71,18 @@ app.use('/graphiql', graphiqlExpress({
   subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
 }));
 
+app.post('/api/user', (req, res) => {
+  console.log('user data received!', req.body);
+  const { 
+    name,
+    email,
+    provider,
+    provider_id,
+    picture,
+    token,
+  } = req.body;
+  res.send(name, picture, token);
+});
 // const apolloServer = new ApolloServer({ typeDefs, resolvers });
 // apolloServer.applyMiddleware({ app });
 
