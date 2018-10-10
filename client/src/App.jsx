@@ -13,12 +13,12 @@ import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 
-const cache = new InMemoryCache();
-const client = new ApolloClient({
-  cache,
-  link: new HttpLink(),
-  networkInterface: 'https://localhost:9000/graphql',
-})
+// const cache = new InMemoryCache();
+// const client = new ApolloClient({
+//   cache,
+//   link: new HttpLink(),
+//   networkInterface: 'https://localhost:9000/graphql',
+// })
 
 class App extends React.Component {
   constructor(props) {
@@ -80,7 +80,9 @@ class App extends React.Component {
        getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
         id
         category
+        url
         createdAt
+
       }
     }
     `;
@@ -195,8 +197,8 @@ class App extends React.Component {
           </Link>
             <Router className="content">
               <Redirect noThrow from="/login" to="/" />
-              <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
-              <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
+              <AlertFeed exact path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
+              <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} alerts={alerts} />
               <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
               <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             </Router>
