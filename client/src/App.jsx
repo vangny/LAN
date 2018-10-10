@@ -1,74 +1,14 @@
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
-import gql from 'graphql-tag';
-// import {
-  
-// } from 'apollo-client';
-import { ApolloProvider, InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
-} from 'apollo-boost';
-// const networkInterface = createNetworkInterface({
-//   uri: 'http://localhost:9000/graphql'
-// });
-// const client = new ApolloClient({
-//   uri: "http://localhost:3000/graphql"
-// });
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, Router, navigate } from '@reach/router';
-import moment from 'moment';
-<<<<<<< HEAD
-
-=======
->>>>>>> Begin connecting Apollo Client Side
-import {
-  ApolloProvider,
-} from 'react-apollo';
-import gql from 'graphql-tag';
-<<<<<<< HEAD
-// import {
-  
-// } from 'apollo-client';
-// import { InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
-// } from 'apollo-boost';
-=======
-
-import { InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
-} from 'apollo-boost';
->>>>>>> Begin connecting Apollo Client Side
-// const networkInterface = createNetworkInterface({
-//   uri: 'http://localhost:9000/graphql'
-// });
-// const client = new ApolloClient({
-//   uri: "http://localhost:3000/graphql"
-// });
-
-<<<<<<< HEAD
 
 import Dashboard from "./components/Dashboard";
 import Alert from "./components/alert/Alert";
 import AlertOptions from "./components/alert/AlertOptions";
 import AlertFeed from "./components/alert/AlertFeed";
 import Login from './Login';
-=======
-const cache = new InMemoryCache();
-
-const client = new ApolloClient({
-  uri: 'http://localhost:9000/graphql',
-  link: new HttpLink(),
-  cache,
-});
-
-
-import Dashboard from './components/Dashboard';
-import Alert from './components/alert/Alert';
-import AlertOptions from './components/alert/AlertOptions';
-import AlertFeed from './components/alert/AlertFeed';
->>>>>>> Begin connecting Apollo Client Side
 
 class App extends React.Component {
   constructor(props) {
@@ -108,6 +48,7 @@ class App extends React.Component {
       timeStamp: moment().format(),
     }, () => {
       const { timeStamp } = this.state;
+
       const query = `
       mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
         findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
@@ -156,9 +97,6 @@ class App extends React.Component {
   }
 
   renderLogin() {
-  render() {
-    
-
     const {
       latitude,
       longitude,
@@ -179,32 +117,12 @@ class App extends React.Component {
         </div>
       )
       : (
-    // console.log(this.state);
-    
-      <ApolloProvider client={client}>
-      
-        <div className="container">
-          <Link to="/" className="title nav-cell">
-            <h2>Local Alert Network</h2>
-    return (
-      <ApolloProvider client={client}>
-      
         <div className="container">
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
           </Link>
           <Router className="content">
-<<<<<<< HEAD
             <Redirect noThrow from="/login" to="/" />
-      <ApolloProvider client={client}>
-      
-        <div className="container">
-          <Link to="/" className="title nav-cell">
-            <h2>Local Alert Network</h2>
-          </Link>
-          <Router className="content">
-=======
->>>>>>> Begin connecting Apollo Client Side
             <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
             <Dashboard path="/dashboard" latitude={latitude} longitude={longitude} />
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
@@ -214,19 +132,9 @@ class App extends React.Component {
             <Link to="/" className="home-grid nav-cell">
               <span className="home-button">Home</span>
             </Link>
-<<<<<<< HEAD
             <Link to="/login" className="search-grid nav-cell">
               <span className="search-button">Login</span>
             </Link>
-            <div className="search-grid nav-cell">
-              <span className="search-button">Search</span>
-            </div>
-
-=======
-            <div className="search-grid nav-cell">
-              <span className="search-button">Search</span>
-            </div>
->>>>>>> Begin connecting Apollo Client Side
             <Link to="/alertOptions" className="alert-grid nav-cell">
               <span className="alert-button">Add Alert</span>
             </Link>
@@ -235,8 +143,6 @@ class App extends React.Component {
             </Link>
           </div>
         </div>
-<<<<<<< HEAD
-
       );
   }
 
@@ -245,13 +151,6 @@ class App extends React.Component {
       <div>
         {this.renderLogin()}
       </div>
-=======
-      </ApolloProvider>
->>>>>>> Begin connecting Apollo Client Side
-
-      </ApolloProvider>
-    
-  
     );
   }
 }

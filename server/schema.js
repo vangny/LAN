@@ -17,7 +17,6 @@ const typeDefs = `
     getMedia: [Media]
     getCoords: [Coordinates]
   }
-  
   type Mutation {
     createAlert(
       EventId: Int
@@ -27,20 +26,25 @@ const typeDefs = `
       notes: String
       url: String
       photoTag: String
-      ): Alert
-
+    ): Alert
     findOrCreateEvent(
       latitude: Float
       longitude: Float
       timeStamp: Date
       category: String
     ): Event
+    findOrCreateUser(
+      name: String
+      email: String
+      provider: String
+      provider_id: Int
+      picture: String
+      token: Int
+    ): User
   }
-  
   type Subscription {
     newAlert: Alert
   }
-  
   type Event {
     id: ID
     latitude: Float
@@ -49,7 +53,6 @@ const typeDefs = `
     timeStamp: Date
     category: String
   }
-  
   type Alert {
     id: ID
     category: String
@@ -59,19 +62,16 @@ const typeDefs = `
     media: [Media]
     createdAt: Date
   }
-  
   type Media {
     id: ID
     url: String
     photoTag: String
     AlertId: Alert
   }
-  
   type Coordinates {
     latitude: String
     longitude: String
   }
-  
   type User {
     id: ID
     name: String
@@ -81,21 +81,14 @@ const typeDefs = `
     picture: String
     token: Int
   }
-  
   scalar Date
-  
   type MyType {
     created: Date
   }
-  
-  schema {
-    query: Query,
-    mutation: Mutation,
-    subscription: Subscription
-  }
-  
-  `;
+`;
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 exports.schema = schema;
 exports.typeDefs = typeDefs;
+
+
