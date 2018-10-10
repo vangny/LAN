@@ -17,6 +17,8 @@ const User = sequelize.define('User', {
   provider_id: { type: Sequelize.INTEGER },
   picture: { type: Sequelize.STRING },
   token: { type: Sequelize.INTEGER },
+  homeLat: { type: Sequelize.DECIMAL(25, 20) },
+  homeLong: { type: Sequelize.DECIMAL(25, 20) },
 });
 
 const doesUserExist = (email) => {

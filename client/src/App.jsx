@@ -30,7 +30,7 @@ class App extends React.Component {
       category: null,
       timeStamp: null,
       EventId: null,
-      alerts: [],
+      alerts: null,
       isLoggedIn: false,
       name: '',
       picture: '',

@@ -50,19 +50,21 @@ const resolvers = {
         .then((result) => {
           if (result) {
             console.log('user already exists!');
+            return args;
           }
           if (!result) {
             console.log('New user created!')
-            return db.User.create(
-              args.name,
-              args.email,
-              args.provider,
-              args.provider_id,
-              args.picture,
-              args.token,
-            );
+            return db.User.create({
+
+              name: args.name,
+              email: args.email,
+              provider: args.provider,
+              provider_id: args.provider_id,
+              picture: args.picture,
+              token: args.token,
+            });
           }
-          return result;
+          return args;
         });
     },
   },

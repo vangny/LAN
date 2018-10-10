@@ -6,7 +6,7 @@ class AlertFeed extends Component {
     super(props);
 
     this.state = {
-      alerts: [],
+      alerts: null,
     };
   }
 
