@@ -13,8 +13,6 @@ sequelize.authenticate()
 const User = sequelize.define('User', {
   name: { type: Sequelize.STRING },
   email: { type: Sequelize.STRING },
-  homeLat: { type: Sequelize.DECIMAL(25, 20) },
-  homeLong: { type: Sequelize.DECIMAL(25, 20) },
   provider: { type: Sequelize.STRING },
   provider_id: { type: Sequelize.INTEGER },
   picture: { type: Sequelize.STRING },

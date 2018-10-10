@@ -30,7 +30,7 @@ class App extends React.Component {
       category: null,
       timeStamp: null,
       EventId: null,
-      alerts: null,
+      alerts: [],
       isLoggedIn: false,
       name: '',
       picture: '',
@@ -236,6 +236,7 @@ class App extends React.Component {
               </Link>
             </div>
           </div>
+        </div>
       );
   }
 }

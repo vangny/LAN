@@ -6,7 +6,7 @@ class AlertFeed extends Component {
     super(props);
 
     this.state = {
-      alerts: null,
+      alerts: [],
     };
   }
 
@@ -21,9 +21,6 @@ class AlertFeed extends Component {
         id
         category
         createdAt
-        media {
-          url
-        }
       }
     }
     `;
