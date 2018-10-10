@@ -14,7 +14,7 @@ const AlertFeed = ({ alerts }) => {
       ))}
     </div>
   ) : <div className="feed">
-      <p>No local alerts currently</p>;
+      <p>No local alerts currently</p>
       </div>
 };
 

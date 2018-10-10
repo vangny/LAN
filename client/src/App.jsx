@@ -193,27 +193,6 @@ class App extends React.Component {
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
           </Link>
-          <Router className="content">
-            <Redirect noThrow from="/login" to="/" />
-            {/* <AlertFeed exact path="/" alerts={alerts} /> */}
-            {/* <LoadingPage path="/" /> */}
-            <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
-            <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
-            <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-          </Router>
-          <div className="nav-bar">
-            <Link to="/" className="home-grid nav-cell">
-              <span className="home-button">Home</span>
-            </Link>
-            <Link to="/alertOptions" className="alert-grid nav-cell">
-              <span className="alert-button">Add Alert</span>
-            </Link>
-            <Link to="/profile" className="search-grid nav-cell">
-              <span className="profile-button">Profile</span>
-            </Link>
-            <Link to="/settings" className="dash-grid nav-cell">
-              <span className="settings-button">Settings</span>
-            </Link>
             <Router className="content">
               <Redirect noThrow from="/login" to="/" />
               <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
@@ -236,7 +215,6 @@ class App extends React.Component {
               </Link>
             </div>
           </div>
-        </div>
       );
   }
 }
