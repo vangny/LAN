@@ -31,7 +31,7 @@ class Login extends Component {
       };
     }
     if (type === 'google' && res.w3.U3) {
-      console.log('google state triggered')
+      console.log('google state triggered');
       userData = {
         name: res.w3.ig,
         email: res.w3.U3,
@@ -43,11 +43,17 @@ class Login extends Component {
     }
 
     if (userData) {
-      const { name, email, provider, provider_id, picture, token} = userData;
+      const {
+        name,
+        email,
+        provider,
+        provider_id,
+        picture,
+        token } = userData;
       const { newLogin } = this.state;
       const query = `
-    mutation FindOrCreateUser($name: String!, $email: String!, $provider: String!!, $provider_id: Int!, $picture: String!, $token: String!) {
-      findOrCreateUser(name: $name, email: $email, provider: $provider, provider_id: $provider_id, picture: $picture, token: $token ) {
+    mutation FindOrCreateUser($name: String!, $email: String!, $provider: String!, $provider_id: String!, $picture: String!, $token: String!) {
+      findOrCreateUser(name: $name, email: $email, provider: $provider, provider_id: $provider_id, picture: $picture, token: $token) {
         name
         picture
         token
