@@ -6,7 +6,6 @@ const {
   GraphQLScalarType,
 } = require('graphql');
 const { PubSub } = require('graphql-subscriptions');
-const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { Kind } = require('graphql/language');
 
 const iconv = require('iconv-lite');
@@ -93,7 +92,6 @@ const schema = buildSchema(`
     latitude: String
     longitude: String
   }
-<<<<<<< HEAD
 
   type User {
     id: ID
@@ -105,9 +103,6 @@ const schema = buildSchema(`
     token: Int
   }
 
-=======
-  
->>>>>>> Clean up commented out code
   scalar Date
   
   type MyType {
@@ -142,7 +137,7 @@ const root = {
   createAlert: ({
     EventId, category, latitude, longitude, notes, url, photoTag,
   }) => {
-    pubsub.publish(NEW_ALERT, { newAlert: { category } });
+    pubsub.publish(NEW_ALERT, { newAlert: { latitude, longitude } });
     return db.createAlert(EventId, category, latitude, longitude, notes, url, photoTag)
       .then(alert => alert);
   },
@@ -180,14 +175,11 @@ const root = {
   },
 };
 
-<<<<<<< HEAD
 const app = express();
 
 app.use(bodyparser.json());
 app.use(express.static(`${__dirname}/../client/dist`));
 // app.use(express.static(`${__dirname}, "jsx"`));
-=======
->>>>>>> Clean up commented out code
 app.use('/graphql', graphqlHTTP({
   schema,
   rootValue: root,

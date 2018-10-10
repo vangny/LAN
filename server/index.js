@@ -16,23 +16,25 @@ const cors = require('cors');
 const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 
-const { schema } = require('./graphqlSchema');
-const { root } = require('./resolvers');
+// const { typeDefs } = require('./typeDefs');
+// const { resolvers } = require('./resolvers');
+const { schema } = require('./schema');
+
+// console.log('this is schema!', schema);
 
 iconv.encodings = encodings;
 
 const PORT = process.env.PORT || 9000;
 const app = express();
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.static(`${__dirname}/../client/dist`));
-app.use('*', cors({ origin: `http://localhost:${PORT}` }));
+app.use('*', cors({ origin: `http://localhost:3000` }));
 
 
-app.use('/graphql', graphqlExpress({
+app.use('/graphql', bodyParser.json(), graphqlExpress({
   schema,
-  rootValue: root,
-  graphiql: true,
+  // rootValue: root,
 }));
 
 app.use('/graphiql', graphiqlExpress({
@@ -49,21 +51,21 @@ app.use('/graphiql', graphiqlExpress({
 
 
 const server = createServer(app);
-server.listen(PORT, () => {
-  console.log(`Apollo Server is now running on http://localhost:${PORT}`);
-  new SubscriptionServer({
+server.listen(PORT, (err) => {
+  // console.log(`Apollo Server is now running on http://localhost:${PORT}`);
+  if (err) throw err;
+
+  SubscriptionServer.create({
     schema,
     execute,
     subscribe,
-    onConnect: () => console.log('Client connected~~~~~~')
-  }, 
+    onConnect: () => console.log('Client connected~~~~~~'),
+  },
   {
     server,
     path: '/subscriptions',
   });
 });
-
-
 
 // if (process.env.NODE_ENV !== 'test') {
 //   app.listen(PORT, () => {

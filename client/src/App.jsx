@@ -3,6 +3,18 @@ import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
+import gql from 'graphql-tag';
+// import {
+  
+// } from 'apollo-client';
+import { ApolloProvider, InMemoryCache, HttpLink, ApolloClient, createNetworkInterface,
+} from 'apollo-boost';
+// const networkInterface = createNetworkInterface({
+//   uri: 'http://localhost:9000/graphql'
+// });
+// const client = new ApolloClient({
+//   uri: "http://localhost:3000/graphql"
+// });
 
 import Dashboard from "./components/Dashboard";
 import Alert from "./components/alert/Alert";
@@ -48,6 +60,18 @@ class App extends React.Component {
       timeStamp: moment().format(),
     }, () => {
       const { timeStamp } = this.state;
+
+      client.query({
+        query: gql`
+        mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
+          findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
+            id
+            category
+          }
+        }
+        `
+      }).then(event => console.log('event query results:', event));
+  
 
       const query = `
       mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
@@ -97,6 +121,25 @@ class App extends React.Component {
   }
 
   renderLogin() {
+  render() {
+    
+    const cache = new InMemoryCache();
+
+    const client = new ApolloClient({
+      uri: 'http://localhost:9000/graphql',
+      link: new HttpLink(),
+      cache,
+    });
+    // client.query({
+    //   query: gql`
+    //   {
+    //     getAlerts(latitude:0, longitude:0, range:1000000) {
+    //       category
+    //     }
+    //   }
+    //   `
+    // }).then(result => console.log('client query results:', result));
+
     const {
       latitude,
       longitude,
@@ -117,6 +160,10 @@ class App extends React.Component {
         </div>
       )
       : (
+    // console.log(this.state);
+    
+      <ApolloProvider client={client}>
+      
         <div className="container">
           <Link to="/" className="title nav-cell">
             <h2>Local Alert Network</h2>
@@ -151,6 +198,9 @@ class App extends React.Component {
       <div>
         {this.renderLogin()}
       </div>
+      </ApolloProvider>
+    
+  
     );
   }
 }

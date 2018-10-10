@@ -1,11 +1,15 @@
-const {
-  buildSchema,
-} = require('graphql');
+const { makeExecutableSchema } = require('graphql-tools');
+const { resolvers } = require('./resolvers');
+
+
+// const {
+//   buildSchema,
+// } = require('graphql');
 
 // const { GraphQLSchema, GraphQLObjectType } = require
 // const { gql } = require('apollo-server-express');
 
-const schema = buildSchema(`
+const typeDefs = `
   type Query {
     getAlerts(latitude: Float,
       longitude: Float,
@@ -80,6 +84,7 @@ const schema = buildSchema(`
     subscription: Subscription
   }
   
-  `);
+  `;
 
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 exports.schema = schema;
