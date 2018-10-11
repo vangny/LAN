@@ -211,7 +211,7 @@ class App extends React.Component {
             <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" name={name} picture={picture} />
+            <Profile path="/profile" name={name} picture={picture} alerts={alerts} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">

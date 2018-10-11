@@ -45,6 +45,30 @@ Blinking Animation
   color: rgb(216, 53, 24);
 }
 
+.LAN-title {
+  grid-area: header;
+  order: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  width: 90%;
+
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  font-size: 72px;
+  padding: 80px 50px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+
+  color: #d31a1a;
+  background-color: #f2f2f3;
+  /* background-image: url('https://d36tnp772eyphs.cloudfront.net/blogs/1/2014/04/Mammatus-Clouds-matador-seo-940x626.jpg');
+  background-repeat: no-repeat, repeat; */
+  background-size: cover;
+  letter-spacing: .1em;
+}
+
 .login-logo {
   grid-area: logo;
   display: flex;
@@ -651,7 +675,7 @@ Profile Page
   grid-gap: 5px;
   /* background-image: linear-gradient(130deg, #537895 , #09203f
   ); */
-  background-color: #f0f0f1;;
+  background-color: #f0f0f1;
   height: 100%;
   width: 100%;
   margin: auto;
@@ -697,24 +721,34 @@ Profile Page
   flex-direction: column;
   max-width: 300px;
   min-height: 100px;
-  margin: 20px;
-  list-style: none;
+  margin: 30px;
   border: 1px solid #77777769;
   background-color: white;
-  border-radius: 4px;
-  padding: 30px 50px 0px 50px;
+  padding: 30px 50px 30px 50px;
   box-shadow: 0 0 1em #80808066;
-  overflow-x: scroll;
-  white-space: nowrap;
 }
 
 .friend-list {
   grid-area: friends;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-self: center;
   flex-direction: column;
+  max-height: 400px;
+  max-width: 300px;
   
+}
+
+.friend-avatar {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: #eaecf3 solid 5px;
+  display: flex;
+  /* justify-self: center;
+  align-items: center; */
+  flex-direction: column;
+
 }
 
 .friend-button {
@@ -735,32 +769,10 @@ Profile Page
   text-transform: uppercase;
   /* text-rendering: optimizeLegibility; */
 
-  color: #ff1e00;
+  color: #f0f0f1;
   background-color: #333;
   letter-spacing: .1em;
 }
 
-.LAN-title {
-  grid-area: header;
-  order: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
-  width: 90%;
 
-  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  font-size: 72px;
-  padding: 80px 50px;
-  text-align: center;
-  text-transform: uppercase;
-  text-rendering: optimizeLegibility;
-
-  color: #d31a1a;
-  background-color: #f2f2f3;
-  /* background-image: url('https://d36tnp772eyphs.cloudfront.net/blogs/1/2014/04/Mammatus-Clouds-matador-seo-940x626.jpg');
-  background-repeat: no-repeat, repeat; */
-  background-size: cover;
-  letter-spacing: .1em;
-}
 
