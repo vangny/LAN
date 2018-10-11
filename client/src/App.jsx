@@ -65,7 +65,6 @@ class App extends React.Component {
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
     this.setLoadedState = this.setLoadedState.bind(this);
-    // this.fetchAlerts = this.fetchAlerts.bind(this);
     this.handleInitialStartup = this.handleInitialStartup.bind(this);
   }
 
@@ -102,44 +101,6 @@ class App extends React.Component {
     });
   }
 
-  // fetchAlerts() {
-  //   const { latitude, longitude } = this.state;
-  //   const range = 10;
-  //   const query = gql`
-  //   query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
-  //      getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-  //       id
-  //       latitude
-  //       longitude
-  //       category
-  //       url
-  //       createdAt
-
-  //     }
-  //   }
-  //   `;
-
-  //   fetch('/graphql', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       query,
-  //       variables: { latitude, longitude, range },
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then((data) => {
-  //       console.log('Alert feed: ', data);
-  //       this.setState({
-  //         alerts: data.data.getAlerts,
-  //       }, () => this.setLoadedState());
-  //     });
-    
-  // }
-
   handleInitialStartup() {
     const { isLoggedIn, isLoaded } = this.state;
 
@@ -149,7 +110,7 @@ class App extends React.Component {
           <Router>
             <Redirect noThrow from="/" to="/login" />
             {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
-            <LoadingPage path="/" load={this.setLoadedState} fetchAlerts={this.fetchAlerts} />
+            <LoadingPage path="/" load={this.setLoadedState}  />
             <Login path="/login" login={this.setLoginState} />
           </Router>
         </div>
@@ -214,7 +175,6 @@ class App extends React.Component {
       category,
       timeStamp,
       EventId,
-      alerts,
       isLoggedIn,
       isLoaded,
       name,
@@ -231,12 +191,11 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            {/* <AlertFeed exact path="/" alerts={alerts} /> */}
-            {/* <LoadingPage path="/" /> */}
-            <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
+            <Dashboard path="/" latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} alerts={alerts} />
+            <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
@@ -260,12 +219,11 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" alerts={alerts} latitude={latitude} longitude={longitude} />
-            {/* <LoadingPage path="/" /> */}
-            {/* <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} /> */}
+            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" name={name} picture={picture} alerts={alerts} />
+            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
