@@ -17,7 +17,7 @@ const Dashboard = ({ latitude, longitude, alerts }) => (
       <Map latitude={latitude} longitude={longitude} />
     </div>
     <div className="alerts-container">
-      <AlertFeed alerts={alerts} latitude={latitude} longitude={longitude} />
+      <AlertFeed latitude={latitude} longitude={longitude} />
     </div>
     <div className="media-container">
       <div className="media-feed">

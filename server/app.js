@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 
@@ -8,7 +8,6 @@ iconv.encodings = encodings;
 
 const { schema } = require('./schema');
 
-const db = require('../db/index');
 const PORT = process.env.PORT || 9000;
 // const pubsub = new PubSub();
 
