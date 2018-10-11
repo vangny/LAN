@@ -96,8 +96,8 @@ class Login extends Component {
   render() {
     return (
       <div className="login-home">
-        <div className="header">
-          <h1>Local Alert Network</h1>
+        <div className="LAN-title">
+          <h4>Local Alert Network</h4>
         </div>
         <div className="login-logo">
           <img src={require('../../icons/icon-512x512.png')} alt="" />
@@ -105,9 +105,10 @@ class Login extends Component {
         <div className="login-google">
           <GoogleLogin
             clientId="681417979790-t30qgb7rckeutkq0nu4t9vagskmncffk.apps.googleusercontent.com"
-            buttonText="LOGIN WITH GOOGLE"
+            buttonText="Login with Google"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
+            className="btnGoogle"
           />
         </div>
         <br />
@@ -116,6 +117,7 @@ class Login extends Component {
             appId="319558131933866"
             fields="name, email, picture"
             callback={this.responseFacebook}
+            cssClass="btnFacebook"
           />
         </div>
       </div>
