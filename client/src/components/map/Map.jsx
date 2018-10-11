@@ -90,10 +90,17 @@ export default class Map extends Component {
   }
 
   resizeMap() {
-    this.onWindowChange({
-      width: document.getElementById('map-container').getBoundingClientRect().width * 0.985,
-      height: document.getElementById('map-container').getBoundingClientRect().height * 0.98,
-    });
+    if (window.innerWidth >= 1200) {
+      this.onWindowChange({
+        width: document.getElementById('map-container').getBoundingClientRect().width,
+        height: document.getElementById('map-container').getBoundingClientRect().height,
+      });
+    } else {
+      this.onWindowChange({
+        width: document.getElementById('content').getBoundingClientRect().width,
+        height: document.getElementById('content').getBoundingClientRect().height,
+      });
+    }
   }
 
   updateLayerSettings(settings) {

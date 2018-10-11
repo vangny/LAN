@@ -30,7 +30,6 @@ Blinking Animation
   ); */
   background-color:#f0f0f1;
   height: 100%;
-  margin-left: 5px;
   grid-template-rows: 20% 40% 15% 15% 10%;
   grid-template-areas: 'header'
                        'logo'
@@ -152,7 +151,6 @@ CSS for Mobile
       grid-template-areas: 'header'
                            'content'
                            'navbar';
-      grid-row-gap: 5px;
     }
     
     .title {
@@ -164,7 +162,7 @@ CSS for Mobile
     
     .content {
       height: 100%;
-      margin-left: 5px;
+      /* margin-left: 5px; */
       grid-area: content;
       overflow: scroll;
     }
@@ -280,12 +278,13 @@ CSS for Mobile
     
     .alerts-container {
       height: 100%;
-      width: 99%;
+      width: 100%;
       grid-area: feed;
-    }
-    .dashboard .feed {
       overflow: scroll;
     }
+    /* .dashboard .feed {
+      overflow: scroll;
+    } */
     .alert {
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
@@ -293,7 +292,8 @@ CSS for Mobile
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-      margin-bottom: 1%;
+      margin: 1%;
+      padding: 1%;
     }
     .alert:focus {
       outline: 0;
@@ -332,6 +332,39 @@ CSS for Mobile
       z-index: 100;
       background: #ffffff;
     } */
+
+    /**************
+    Alert Styling
+    **************/
+    .feed {
+      overflow: scroll;
+    }
+
+    .alert {
+      display: grid;
+      grid-template-rows: 80% 20%;
+      grid-template-areas: 'alert-image'
+                           'alert-info';
+      grid-row-gap: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #212121;
+      border: 1px solid gray;
+      -webkit-border-radius: 4px 0 0 4px;
+      border-radius: 4px 4px 4px 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      margin: 2%;
+      padding: 1%;
+    }
+
+    .image-container {
+      grid-area: alert-image;
+      padding: 1%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
 }
 
 /*
@@ -502,6 +535,21 @@ CSS for Desktops - Dashboard
     
     .dashboard .feed {
       overflow: scroll;
+    }
+
+    .alert {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #212121;
+      border: 1px solid gray;
+      -webkit-border-radius: 4px 0 0 4px;
+      border-radius: 4px 4px 4px 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      margin: 1%;
+      padding: 1%;
+    }
+    .alert:focus {
+      outline: 0;
+      background-color: #FFF;
     }
     
     .media-container {
