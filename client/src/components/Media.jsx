@@ -23,26 +23,36 @@ export default class Media extends Component {
     //       media: res.data,
     //     });
     //   });
+    const { latitude, longitude } = this.props;
+    const range = 10;
     const query = `
-    {
-      getMedia {
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
         id
+        category
         url
+        createdAt
+
       }
-    }`;
+    }
+    `;
+
     fetch('/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ query })
+      body: JSON.stringify({
+        query,
+        variables: { latitude, longitude, range },
+      }),
     })
       .then(response => response.json())
-      .then((mediaFeed) => {
-        console.log('returning media feed: ', mediaFeed)
+      .then((data) => {
+        console.log('Alert feed: ', data);
         this.setState({
-          media: mediaFeed.data.getMedia,
+          media: data.data.getAlerts,
         });
       });
   }
