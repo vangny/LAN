@@ -3,8 +3,14 @@ import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
 import axios from "axios";
 import moment from "moment";
-// import { ApolloClient, InMemoryCache, HttpLink } from 'apollo-boost';
-// import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { split } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import gql from 'graphql-tag';
 
 import Dashboard from './components/Dashboard';
 import Alert from './components/create-alert/Alert';
@@ -15,12 +21,28 @@ import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
 
-// const cache = new InMemoryCache();
-// const client = new ApolloClient({
-//   cache,
-//   link: new HttpLink(),
-//   networkInterface: 'https://localhost:9000/graphql',
-// })
+const httpLink = new HttpLink({ uri: '/graphql' });
+
+const wsLink = new WebSocketLink({
+  uri: 'ws://localhost:9000/subscriptions',
+  options: {
+    reconnect: true,
+  },
+});
+
+const link = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === 'OperationDefinition' && operation === 'subscription';
+  },
+  wsLink,
+  httpLink,
+);
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link,
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +65,7 @@ class App extends React.Component {
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
     this.setLoadedState = this.setLoadedState.bind(this);
-    this.fetchAlerts = this.fetchAlerts.bind(this);
+    // this.fetchAlerts = this.fetchAlerts.bind(this);
     this.handleInitialStartup = this.handleInitialStartup.bind(this);
   }
 
@@ -71,7 +93,7 @@ class App extends React.Component {
     this.setState({
       latitude: Number(localStorage.getItem('latitude')),
       longitude: Number(localStorage.getItem('longitude')),
-    }, () => this.fetchAlerts());
+    }, () => this.setLoadedState());
   }
 
   setLoadedState() {
@@ -80,42 +102,43 @@ class App extends React.Component {
     });
   }
 
-  fetchAlerts() {
-    const { latitude, longitude } = this.state;
-    const range = 10;
-    const query = `
-    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
-       getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
-        id
-        latitude
-        longitude
-        category
-        url
-        createdAt
+  // fetchAlerts() {
+  //   const { latitude, longitude } = this.state;
+  //   const range = 10;
+  //   const query = gql`
+  //   query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+  //      getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+  //       id
+  //       latitude
+  //       longitude
+  //       category
+  //       url
+  //       createdAt
 
-      }
-    }
-    `;
+  //     }
+  //   }
+  //   `;
 
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { latitude, longitude, range },
-      }),
-    })
-      .then(response => response.json())
-      .then((data) => {
-        console.log('Alert feed: ', data);
-        this.setState({
-          alerts: data.data.getAlerts,
-        }, () => this.setLoadedState());
-      });
-  }
+  //   fetch('/graphql', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       query,
+  //       variables: { latitude, longitude, range },
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //       console.log('Alert feed: ', data);
+  //       this.setState({
+  //         alerts: data.data.getAlerts,
+  //       }, () => this.setLoadedState());
+  //     });
+    
+  // }
 
   handleInitialStartup() {
     const { isLoggedIn, isLoaded } = this.state;
@@ -139,7 +162,7 @@ class App extends React.Component {
             {/* <Redirect noThrow from="/" to="/login" />
             <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <Redirect noThrow from="/login" to="/" />
-            <LoadingPage path="/" setCoordinates={this.setCoordinates} load={this.setLoadedState} fetchAlerts={this.fetchAlerts} />
+            <LoadingPage path="/" setCoordinates={this.setCoordinates} load={this.setLoadedState} />
           </Router>
         </div>
       );
@@ -237,7 +260,7 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" alerts={alerts} />
+            <AlertFeed exact path="/" alerts={alerts} latitude={latitude} longitude={longitude} />
             {/* <LoadingPage path="/" /> */}
             {/* <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} /> */}
             <Map path="/map" latitude={latitude} longitude={longitude} />
@@ -263,4 +286,10 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById('app'),
+);
