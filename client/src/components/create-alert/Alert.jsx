@@ -90,9 +90,10 @@ class Alert extends Component {
     //   photo,
     //   photoTag,
     // };
+    console.log(EventId);
 
     const query = `
-    mutation CreateAlert($category: String!, $EventId: Int!, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
+    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
       createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
         id
         category

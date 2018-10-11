@@ -195,7 +195,7 @@ class App extends React.Component {
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)}/>
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
@@ -223,7 +223,7 @@ class App extends React.Component {
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">

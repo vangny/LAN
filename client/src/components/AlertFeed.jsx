@@ -48,7 +48,7 @@ const AlertFeed = ({ latitude, longitude }) => {
   //     }
   //     `;
 
-  const range = 10000000;
+  const range = 10;
 
   return (
     <div className="feed">
@@ -90,19 +90,21 @@ const AlertFeed = ({ latitude, longitude }) => {
                   <img src={alert.url} width='200' height='145' />
                 </div>
                 <div className="alert-info-container">
-                  {`Category: ${alert.category}`}
-                  <br />
-                  {moment(alert.createdAt).fromNow()}
-                  <br />
+                {`Category: ${alert.category}`}
+                <br />
+                {moment(alert.createdAt).fromNow()}
+                <br />
+                {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
                 </div>
               </div>
             ) : (
               <div className="alert" key="alert.id">
                 <div className="alert-info-container">
-                  {`Category: ${alert.category}`}
-                  <br />
-                  {moment(alert.createdAt).fromNow()}
-                  <br />
+                {`Category: ${alert.category}`}
+                <br />
+                {moment(alert.createdAt).fromNow()}
+                <br />
+                {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
                 </div>
               </div>
             )
