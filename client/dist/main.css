@@ -774,6 +774,7 @@ Profile Page
   background-color: white;
   padding: 30px 50px 30px 50px;
   box-shadow: 0 0 1em #80808066;
+  overflow: scroll;
 }
 
 .friend-list {

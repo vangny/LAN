@@ -12,7 +12,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { name, picture, alerts } = this.props;
+    const { name, picture, latitude, longitude } = this.props;
     return (
       <div className="profile-layout">
         <h1 className="ava-header">My Alert Network</h1>
@@ -21,7 +21,7 @@ class Profile extends Component {
           <h2 className="ava-name">{this.props.name}</h2>
         </div>
         <div className="friend-feed">
-          <AlertFeed alerts={this.props.alerts} />
+          <AlertFeed latitude={latitude} longitude={longitude} />
         </div>
         <div className="friend-list">
           <h1>Friends</h1>
