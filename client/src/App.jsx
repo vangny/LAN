@@ -12,6 +12,7 @@ import AlertOptions from './components/create-alert/AlertOptions';
 import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
+import Profile from './components/Profile';
 
 // const cache = new InMemoryCache();
 // const client = new ApolloClient({
@@ -54,8 +55,14 @@ class App extends React.Component {
   // }
 
   setLoginState() {
+    let { name, picture } = this.state;
+    let obj = JSON.parse(sessionStorage.userData);
+    let userName = obj.data.findOrCreateUser.name;
+    let userPic = obj.data.findOrCreateUser.picture;
     this.setState({
       isLoggedIn: true,
+      name: userName,
+      picture: userPic,
     });
   }
 
@@ -184,6 +191,8 @@ class App extends React.Component {
       alerts,
       isLoggedIn,
       isLoaded,
+      name,
+      picture,
     } = this.state;
 
     return (!isLoggedIn || !isLoaded)
@@ -202,6 +211,7 @@ class App extends React.Component {
             <Dashboard path="/" latitude={latitude} longitude={longitude} alerts={alerts} />
             <Alert path="/alert" category={category} EventId={EventId} latitude={latitude} longitude={longitude} timeStamp={timeStamp} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
+            <Profile path="/profile" name={name} picture={picture} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">

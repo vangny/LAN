@@ -17,7 +17,6 @@ class Login extends Component {
   }
 
   loginUser(res, type) {
-    console.log('loginUser triggered');
     let userData;
 
     if (type === 'facebook' && res.email) {
@@ -31,7 +30,6 @@ class Login extends Component {
       };
     }
     if (type === 'google' && res.w3.U3) {
-      console.log('google state triggered');
       userData = {
         name: res.w3.ig,
         email: res.w3.U3,
