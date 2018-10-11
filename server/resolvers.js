@@ -44,7 +44,6 @@ const resolvers = {
         });
     },
     findOrCreateUser: (root, args, context) => {
-      console.log(args);
       console.log('searching for existing user...');
       return db.doesUserExist(args.email)
         .then((result) => {
