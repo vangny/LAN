@@ -113,7 +113,7 @@ class Login extends Component {
             className="btnGoogle"
           >
             <i className="fab fa-google" />
-            <span>&nbsp;&nbsp;Login with Facebook</span>
+            <span>&nbsp;&nbsp;Login with Google</span>
           </GoogleLogin>
         </div>
         <br />
