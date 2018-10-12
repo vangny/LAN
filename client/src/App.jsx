@@ -20,6 +20,7 @@ import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
+import GetAlerts from './getAlerts';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
@@ -169,6 +170,7 @@ class App extends React.Component {
   }
 
   render() {
+
     const {
       latitude,
       longitude,
@@ -219,7 +221,8 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+            <GetAlerts exact path="/" latitude={latitude} longitude={longitude} />
+            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>

@@ -94,6 +94,7 @@
     "react-google-login": "^3.2.1",
     "react-html5-camera-photo": "^1.2.8-beta.0",
     "react-map-gl": "^3.3.5",
+    "react-toastify": "^4.4.0",
     "sequelize": "^4.39.0",
     "subscriptions-transport-ws": "^0.9.15"
   }
