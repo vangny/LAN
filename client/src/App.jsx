@@ -210,9 +210,17 @@ class App extends React.Component {
         </div>
       ) : (
         <div className="container">
-          <Link to="/" className="title nav-cell">
-            <h2>Local Alert Network</h2>
-          </Link>
+          <div to="/" className="header nav-cell">
+            <div className="header-icon" >
+              <img src={require('../../icons/icon-72x72.png')} alt="" />
+            </div>
+            <div className="header-title">
+              <span>Local Alert Network</span>
+            </div>
+            <div className="header-settings">
+              <i className="fas fa-cog "></i>
+            </div>
+          </div>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}

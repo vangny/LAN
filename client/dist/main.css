@@ -22,6 +22,13 @@ Blinking Animation
   }
 }
 
+a:link {
+  text-decoration: none;
+}
+
+a {
+  color: #212121;
+}
 /*
 ====================
 Login Styles
@@ -63,7 +70,7 @@ Login Styles
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
   text-transform: uppercase;
   text-rendering: optimizeLegibility;
@@ -141,17 +148,48 @@ CSS for Mobile
       height: 100%;
       display: grid;
       /* grid-template-columns: 1fr 1fr 1fr 1fr; */
-      grid-template-rows: 10% 83% 7%;
+      grid-template-rows: 10% 85% 5%;
       grid-template-areas: 'header'
                            'content'
                            'navbar';
     }
     
-    .title {
+    .header {
       grid-area: header;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      display: grid;
+      grid-template-columns: 15% 70% 15%;
+      grid-template-areas: 'icon title settings';
+    }
+    
+    .header-icon {
+      grid-area: icon;
       display: flex;
       align-items: center;
       justify-content: center;
+      height: 100%;
+    }
+
+    .header-title {
+      grid-area: title;
+      
+      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-title > span {
+      margin-top: 2.5%;
+    }
+
+    .header-settings {
+      grid-area: settings;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
     }
     
     .content {
@@ -162,19 +200,21 @@ CSS for Mobile
     }
     
     .nav-bar {
-      height: 80%;
+      height: 100%;
       width:100%;
       /* margin-top: 5px; */
       grid-area: navbar;
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
       grid-template-areas: 'home search alert dashboard';
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
     }
     
     .nav-cell {
       /* height: 100%; */
       /* width: 100%; */
-      border-style: solid;
+      /* border-style: solid; */
+      background-color: #ffffff;
     }
     
     .home-grid {
@@ -282,7 +322,7 @@ CSS for Mobile
     .alert {
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      border: 1px solid gray;
+      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -342,7 +382,7 @@ CSS for Mobile
       grid-row-gap: 5px;
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      border: 1px solid gray;
+      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
