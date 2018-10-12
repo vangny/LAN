@@ -49,8 +49,14 @@ const AlertFeed = ({ latitude, longitude , client }) => {
   let unsubscribe = null;
   return (
     <div className="feed">
+<<<<<<< HEAD
       <Query query={GET_ALERTS} variables={{ latitude, longitude, range }} pollInterval={45000}>
         {({ loading, error, data, subscribeToMore }) => {
+=======
+    {/* <span>{`Current search radius: ${range} miles`}</span> */}
+      <Query query={GET_ALERTS} variables={{ latitude, longitude, range }}>
+        {({ loading, error, data }) => {
+>>>>>>> Refactor header CSS
           if (loading) return <p> Loading...</p>;
           if (error) return <p>Error fetching alerts...</p>;
           if (!unsubscribe) {
