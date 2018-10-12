@@ -108,7 +108,6 @@ class App extends React.Component {
         <div>
           <Router>
             <Redirect noThrow from="/" to="/login" />
-            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <LoadingPage path="/" load={this.setLoadedState}  />
             <Login path="/login" login={this.setLoginState} />
           </Router>
@@ -119,8 +118,6 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-            {/* <Redirect noThrow from="/" to="/login" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <Redirect noThrow from="/login" to="/" />
             <LoadingPage path="/" setCoordinates={this.setCoordinates} load={this.setLoadedState} />
           </Router>

@@ -1,6 +1,6 @@
 body {
   font-family: Century Gothic, Arial, sans-serif;
-  background: #ffffff;
+  background-color:#f0f0f1;
   margin: 0;
 }
 
@@ -22,50 +22,33 @@ Blinking Animation
   }
 }
 
-.login-home {
-  display: grid;
-  grid-gap: 5px;
-  justify-items: center;
-  /* background-image: linear-gradient(130deg, #537895 , #09203f
-  ); */
-  background-color:#f0f0f1;
+/*
+====================
+Login Styles
+==================== 
+*/
+
+.login-container {
   height: 100%;
-  grid-template-rows: 20% 40% 15% 15% 10%;
-  grid-template-areas: 'header'
-                       'logo'
-                       'button1'
-                       'button2'
-                       'footer'                  
-}
-
-.header {
-  grid-area: header;
-  order: 0;
-  color: rgb(216, 53, 24);
-}
-
-.LAN-title {
-  grid-area: header;
-  order: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
-  width: 90%;
-
+  width: 100%;
+  display: grid;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  font-size: 72px;
-  padding: 80px 50px;
-  text-align: center;
-  text-transform: uppercase;
-  text-rendering: optimizeLegibility;
+  justify-items: center;
+  /* background-color:#f0f0f1; */
+  
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: 'logo-title logo-title'
+                       'google-btn facebook-btn';
+}
 
-  color: #d31a1a;
-  background-color: #f2f2f3;
-  /* background-image: url('https://d36tnp772eyphs.cloudfront.net/blogs/1/2014/04/Mammatus-Clouds-matador-seo-940x626.jpg');
-  background-repeat: no-repeat, repeat; */
-  background-size: cover;
-  letter-spacing: .1em;
+.logo-title-container {
+  grid-area: logo-title;
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 30% 70%;
+  grid-template-areas: 'blank blank'
+                       'logo title';
 }
 
 .login-logo {
@@ -73,27 +56,40 @@ Blinking Animation
   display: flex;
   align-items: center;
   justify-content: center;
-  order:1;
 }
 
-.login-google {
-  grid-area: button1;
+.login-title {
+  grid-area: title;
   display: flex;
   align-items: center;
   justify-content: center;
-  order: 2;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  background-size: cover;
+  letter-spacing: .1em;
+}
+
+.login-google {
+  grid-area: google-btn;
+  display: flex;
+  /* align-items: center;
+  justify-content: center; */
 }
 
 .btnGoogle {
-  margin:5px;
-  width: 195px;
-  height:75px;
-  border-radius: 95%;
+  width: 165px;
+  height:35px; 
+  border-radius: 4px;
   background: #db3236;
   color:white;
-  border:0px transparent;
+  border:0px transparent;  
   text-align: center;
-  font-size: 16px;
+  /* margin:5px; */
+  display: inline-block;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .btnGoogle:hover {
@@ -102,28 +98,26 @@ Blinking Animation
   cursor: pointer;
 }
 
-.login-face {
-  grid-area: button2;
+.login-facebook {
+  grid-area: facebook-btn;
   display: flex;
-  position: inherit;
-  align-items: center;
-  justify-content: center;
-  /* display: inline-block; */
-  order: 3;
+  /* position: inherit; */
+  /* align-items: left;
+  justify-content: left; */
 }
 
 .btnFacebook { 
-  width: 195px;
-  height:75px; 
+  width: 165px;
+  height:35px; 
   border-radius: 4px;
   background: #3b5998;
   color:white;
   border:0px transparent;  
   text-align: center;
-  margin:5px;
+  /* margin:5px; */
   display: inline-block;
-  border-radius: 95%;
-  font-size: 16px;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .btnFacebook:hover {
