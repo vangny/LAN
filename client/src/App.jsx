@@ -20,6 +20,8 @@ import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
+import Modal from './components/create-alert/Modal';
+import Settings from './components/Settings';
 
 
 const httpLink = new HttpLink({ uri: '/graphql' });
@@ -51,8 +53,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: Number(localStorage.getItem('latitude')) || 'Loading...',
-      longitude: Number(localStorage.getItem('longitude')) || 'Loading...',
+      latitude: Number(localStorage.getItem('latitude')),
+      longitude: Number(localStorage.getItem('longitude')),
       category: null,
       timeStamp: null,
       EventId: null,
@@ -61,20 +63,31 @@ class App extends React.Component {
       name: '',
       picture: '',
       isLoaded: false,
+      showSettings: false,
+      filter: localStorage.getItem('filter') ||'none',
+      range: Number(localStorage.getItem('range')) || 10,
     };
+<<<<<<< HEAD
     // this.componentDidMount = this.componentDidMount.bind(this);
+=======
+>>>>>>> Implement a settings modal
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
     this.setLoadedState = this.setLoadedState.bind(this);
     this.handleInitialStartup = this.handleInitialStartup.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
+    this.renderSettings = this.renderSettings.bind(this);
   }
 
+<<<<<<< HEAD
   // componentDidMount() {
   //   client.resetStore();
   //   console.log('Client cache: ', client.cache.data.data);
   // }
 
+=======
+>>>>>>> Implement a settings modal
   setLoginState() {
     let { name, picture } = this.state;
     let obj = JSON.parse(sessionStorage.userData);
@@ -164,6 +177,22 @@ class App extends React.Component {
     });
   }
 
+  handleSettings() {
+    const { showSettings } = this.state;
+    this.setState({
+      showSettings: !showSettings,
+    });
+  }
+
+  renderSettings() {
+    const { showSettings } = this.state;
+    return showSettings ? (
+      <Modal>
+        <Settings handleSettings={this.handleSettings} />
+      </Modal>
+    ) : null;
+  }
+
   render() {
     const {
       latitude,
@@ -210,6 +239,7 @@ class App extends React.Component {
         </div>
       ) : (
         <div className="container">
+          {this.renderSettings()}
           <div to="/" className="header nav-cell">
             <div className="header-icon" >
               <img src={require('../../icons/icon-72x72.png')} alt="" />
@@ -218,7 +248,9 @@ class App extends React.Component {
               <span>Local Alert Network</span>
             </div>
             <div className="header-settings">
-              <i className="fas fa-cog "></i>
+              <button type="button" onClick={() => this.handleSettings()}>
+                <i className="fas fa-cog "></i>
+              </button>
             </div>
           </div>
           <Router className="content" id="content">

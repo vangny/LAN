@@ -5,9 +5,13 @@ import { navigate } from '@reach/router';
 import { Mutation } from 'react-apollo';
 import  gql  from 'graphql-tag';
 import AlertCamera from './Camera';
+<<<<<<< HEAD
 import Modal from './modal';
 // import CreatAlertWithMutation from './CreateAlertMutation';
 
+=======
+import Modal from './Modal';
+>>>>>>> Implement a settings modal
 
 class Alert extends Component {
   constructor(props) {
