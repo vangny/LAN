@@ -39,6 +39,7 @@ export default class Settings extends Component {
               value="10"
               step="10"
               onChange={event => this.setOption('range', event.target.value)}
+              className="range"
             />
           </div>
           <div className="filter-container">
