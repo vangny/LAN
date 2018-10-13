@@ -54,7 +54,6 @@ const resolvers = {
           if (!result) {
             console.log('New user created!')
             return db.User.create({
-
               name: args.name,
               email: args.email,
               provider: args.provider,
@@ -65,6 +64,16 @@ const resolvers = {
           }
           return args;
         });
+    },
+    setHome: (root, args, context) => {
+      console.log('User requests new home location to be set...');
+      const values = ({ homeLat: args.latitude }, { homeLong: args.longitude });
+      const selector = {
+        where: { email: args.email },
+      };
+      return db.User.update(values, selector)
+        .then(result => console.log('User location updated, Success!', result))
+        .catch(err => console.log(err));
     },
   },
   Subscription: {

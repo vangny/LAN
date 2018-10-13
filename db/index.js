@@ -46,6 +46,11 @@ const Alert = sequelize.define('Alert', {
   // user_id: { type: Sequelize.NUMBER }
 });
 
+const Location = sequelize.define('Location', {
+  latitude: { type: Sequelize.DECIMAL(25, 20) },
+  longitude: { type: Sequelize.DECIMAL(25, 20) },
+});
+
 // const Media = sequelize.define('Media', {
   // url: { type: Sequelize.STRING },
   // photoTag: { type: Sequelize.STRING },
@@ -58,6 +63,8 @@ Alert.belongsTo(Event);
 // Media.belongsTo(Alert);
 // Alert.hasOne(User); 
 User.hasMany(Alert, { as: 'Alerts' });
+User.hasMany(Location);
+Location.belongsTo(User);
 
 sequelize.sync();
 
@@ -131,3 +138,4 @@ exports.getCoordinates = getCoordinates;
 // exports.getMedia = getMedia;
 exports.doesUserExist = doesUserExist;
 // exports.addUser = addUser;
+exports.Location = Location;

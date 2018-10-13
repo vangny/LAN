@@ -41,6 +41,11 @@ const typeDefs = `
       picture: String
       token: String
     ): User
+    setHome(
+      email: String
+      latitude: Float
+      longitude: Float
+    ): User
   }
   type Subscription {
     newAlert: Alert
@@ -81,6 +86,8 @@ const typeDefs = `
     provider_id: String
     picture: String
     token: String
+    homeLat: Float
+    homeLong: Float
   }
   scalar Date
   type MyType {

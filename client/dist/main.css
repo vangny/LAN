@@ -877,6 +877,11 @@ Profile Page
   text-align: center;
 }
 
+.location-button {
+  max-width: 75px;
+  margin: 35px;
+}
+
 .friend-feed {
   grid-area: feed;
   display: flex;
@@ -885,12 +890,13 @@ Profile Page
   flex-direction: column;
   max-width: 300px;
   min-height: 100px;
-  margin: 30px;
+  margin: 35px;
   border: 1px solid #77777769;
   background-color: white;
   padding: 30px 50px 30px 50px;
   box-shadow: 0 0 1em #80808066;
   overflow: scroll;
+  order: 2;
 }
 
 .friend-list {
@@ -901,6 +907,7 @@ Profile Page
   flex-direction: column;
   max-height: 400px;
   max-width: 300px;
+  order: 3;
   
 }
 
