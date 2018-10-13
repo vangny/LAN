@@ -14,7 +14,6 @@ const typeDefs = `
     getAlerts(latitude: Float,
       longitude: Float,
       range: Float): [Alert]
-    getMedia: [Media]
     getCoords: [Coordinates]
   }
   type Mutation {
@@ -41,6 +40,11 @@ const typeDefs = `
       picture: String
       token: String
     ): User
+    setHome(
+      email: String
+      latitude: Float
+      longitude: Float
+    ): User
   }
   type Subscription {
     newAlert: Alert
@@ -63,12 +67,6 @@ const typeDefs = `
     photoTag: String
     createdAt: Date
   }
-  type Media {
-    id: ID
-    url: String
-    photoTag: String
-    AlertId: Alert
-  }
   type Coordinates {
     latitude: String
     longitude: String
@@ -81,6 +79,8 @@ const typeDefs = `
     provider_id: String
     picture: String
     token: String
+    homeLat: Float
+    homeLong: Float
   }
   scalar Date
   type MyType {

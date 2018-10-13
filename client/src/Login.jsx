@@ -52,6 +52,7 @@ class Login extends Component {
       const query = `
     mutation FindOrCreateUser($name: String!, $email: String!, $provider: String!, $provider_id: String!, $picture: String!, $token: String!) {
       findOrCreateUser(name: $name, email: $email, provider: $provider, provider_id: $provider_id, picture: $picture, token: $token) {
+        email
         name
         picture
         token
