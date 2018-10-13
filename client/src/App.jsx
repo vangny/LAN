@@ -20,7 +20,7 @@ import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
-import Modal from './components/create-alert/Modal';
+import Modal from './components/create-alert/modal';
 import Settings from './components/Settings';
 
 
