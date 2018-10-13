@@ -67,10 +67,7 @@ class App extends React.Component {
       filter: localStorage.getItem('filter') ||'none',
       range: Number(localStorage.getItem('range')) || 10,
     };
-<<<<<<< HEAD
     // this.componentDidMount = this.componentDidMount.bind(this);
-=======
->>>>>>> Implement a settings modal
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
@@ -80,14 +77,11 @@ class App extends React.Component {
     this.renderSettings = this.renderSettings.bind(this);
   }
 
-<<<<<<< HEAD
   // componentDidMount() {
   //   client.resetStore();
   //   console.log('Client cache: ', client.cache.data.data);
   // }
 
-=======
->>>>>>> Implement a settings modal
   setLoginState() {
     let { name, picture } = this.state;
     let obj = JSON.parse(sessionStorage.userData);
