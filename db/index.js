@@ -27,13 +27,16 @@ const doesUserExist = (email) => {
     .catch(err => console.log(err));
 };
 
+const Friendships = sequelize.define('Friendships', {
+  user1: { type: Sequelize.INTEGER },
+  user2: { type: Sequelize.INTEGER },
+});
+
 const Event = sequelize.define('Event', {
   latitude: { type: Sequelize.DECIMAL(25, 20) },
   longitude: { type: Sequelize.DECIMAL(25, 20) },
   category: { type: Sequelize.STRING },
-
 });
-
 
 const Alert = sequelize.define('Alert', {
   latitude: { type: Sequelize.DECIMAL(25, 20) },
@@ -64,6 +67,8 @@ Alert.belongsTo(Event);
 // Alert.hasOne(User); 
 User.hasMany(Alert, { as: 'Alerts' });
 User.hasMany(Location);
+User.hasMany(Friendships);
+Friendships.hasMany(User);
 Location.belongsTo(User);
 
 sequelize.sync();
@@ -127,6 +132,23 @@ const getCoordinates = () => (
   Alert.findAll({ attributes: ['latitude', 'longitude'] })
 );
 
+const getMedia = () => (
+  Media.findAll({ order: [['createdAt', 'DESC']] })
+);
+
+// 
+const newFriends = (userEmail, friendEmail) => {
+  User.findAll({ where: { userEmail, friendEmail } })
+    .then(results => {
+      console.log('Adding users to Friendships...')
+      results.filter((user) => {
+        if (user.id) {
+          Friendships.create(results.id);
+        }
+      })
+    });
+};
+
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
@@ -139,3 +161,4 @@ exports.getCoordinates = getCoordinates;
 exports.doesUserExist = doesUserExist;
 // exports.addUser = addUser;
 exports.Location = Location;
+exports.Friendships = Friendships;

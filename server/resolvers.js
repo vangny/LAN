@@ -29,6 +29,11 @@ const resolvers = {
     //   return db.getMedia()
     //     .then(data => data.map(file => file.dataValues));
     // },
+    getUser: () => {
+      console.log('Searching for user...');
+      return db.getFriends()
+        .then(friends => .map())
+    },
   },
   Mutation: {
     findOrCreateEvent: (root, args, context) => {
@@ -73,6 +78,16 @@ const resolvers = {
       };
       return db.User.update(values, selector)
         .then(result => console.log('User location updated, Success!', result))
+        .catch(err => console.log(err));
+    },
+    addFriend: (root, args, context) => {
+      console.log('User requests to add a new friend...');
+      // const values = ({ homeLat: args.latitude }, { homeLong: args.longitude });
+      // const selector = {
+      //   where: { email: args.email },
+      // };
+      return db.User.newFriends(args.userEmail, args.friendEmail)
+        .then(result => console.log('New friend added... Success!', result))
         .catch(err => console.log(err));
     },
   },

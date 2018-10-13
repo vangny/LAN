@@ -68,12 +68,6 @@ const typeDefs = `
     photoTag: String
     createdAt: Date
   }
-  type Media {
-    id: ID
-    url: String
-    photoTag: String
-    AlertId: Alert
-  }
   type Coordinates {
     latitude: String
     longitude: String

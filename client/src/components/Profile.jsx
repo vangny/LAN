@@ -10,6 +10,7 @@ class Profile extends Component {
       homeLocation: null,
     };
     this.setHome = this.setHome.bind(this);
+    this.addFriend = this.addFriend.bind(this);
   }
 
   setHome() {
@@ -42,6 +43,11 @@ class Profile extends Component {
       });
   }
 
+  addFriend() {
+    console.log('Checking if user exists...');
+    
+  }
+
   render() {
     const { name, picture, latitude, longitude } = this.props;
     return (
@@ -59,8 +65,7 @@ class Profile extends Component {
           <h1>Friends</h1>
           <h2 className="ava-name">Nathan Vang</h2>
           <h3 className="ava-name">Minnesota</h3>
-         
-          <button type="button" className="friend-button" onClick={() => this.setHome()}>Add Friend</button>
+          <button type="button" className="friend-button" onClick={() => this.addFriend()}>Add Friend</button>
         </div>
       </div>
     );
