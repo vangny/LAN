@@ -5,7 +5,7 @@ import { navigate } from '@reach/router';
 import { Mutation } from 'react-apollo';
 import  gql  from 'graphql-tag';
 import AlertCamera from './Camera';
-import Modal from './modal';
+import Modal from './Modal';
 // import CreatAlertWithMutation from './CreateAlertMutation';
 
 
