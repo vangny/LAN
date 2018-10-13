@@ -54,25 +54,25 @@ const resolvers = {
         .then((result) => {
           if (result) {
             console.log('user already exists!');
-            return args;
+            return result;
           }
-          if (!result) {
-            console.log('New user created!')
-            return db.User.create({
-              name: args.name,
-              email: args.email,
-              provider: args.provider,
-              provider_id: args.provider_id,
-              picture: args.picture,
-              token: args.token,
-            });
-          }
-          return args;
+          // if {
+          console.log('New user created!')
+          return db.User.create({
+            name: args.name,
+            email: args.email,
+            provider: args.provider,
+            provider_id: args.provider_id,
+            picture: args.picture,
+            token: args.token,
+          }).then(newUser => newUser.dataValues);
+          // }
+          // return args;
         });
     },
     setHome: (root, args, context) => {
       console.log('User requests new home location to be set...');
-      const values = ({ homeLat: args.latitude }, { homeLong: args.longitude });
+      const values = ({ homeLat: args.latitude, homeLong: args.longitude });
       const selector = {
         where: { email: args.email },
       };
@@ -80,6 +80,11 @@ const resolvers = {
         .then(result => console.log('User location updated, Success!', result))
         .catch(err => console.log(err));
     },
+
+    findOrCreateFriendship: (root, args, context) => {
+      return db.findOrCreateFriendship(args.userId, args.userEmail, args.friendEmail).then(friend => console.log('server: ', friend))
+      
+    }
     // addFriend: (root, args, context) => {
     //   console.log('User requests to add a new friend...');
      
