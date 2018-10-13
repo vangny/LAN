@@ -24,11 +24,11 @@ const resolvers = {
       return db.getCoordinates()
         .then(data => data.map(coordinate => coordinate.dataValues));
     },
-    getMedia: () => {
-      console.log('grabbing media files...');
-      return db.getMedia()
-        .then(data => data.map(file => file.dataValues));
-    },
+    // getMedia: () => {
+    //   console.log('grabbing media files...');
+    //   return db.getMedia()
+    //     .then(data => data.map(file => file.dataValues));
+    // },
   },
   Mutation: {
     findOrCreateEvent: (root, args, context) => {
@@ -37,6 +37,7 @@ const resolvers = {
         .then(event => event); // the result will be the event object that was just created
     },
     createAlert: (root, args, context) => {
+      console.log(args.EventId);
       return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
         .then((alert) => {
           pubsub.publish(NEW_ALERT, { newAlert: alert });

@@ -5,6 +5,7 @@ import { navigate } from '@reach/router';
 import AlertCamera from './Camera';
 import Modal from './modal';
 
+
 class Alert extends Component {
   constructor(props) {
     super(props);
@@ -92,7 +93,7 @@ class Alert extends Component {
     // };
 
     const query = `
-    mutation CreateAlert($category: String!, $EventId: Int!, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
+    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
       createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
         id
         category
@@ -116,7 +117,7 @@ class Alert extends Component {
     })
       .then(response => response.json())
       .then((newAlert) => {
-        console.log('Data returned after mutation ', newAlert);
+        console.log('Data returned after mutation ', newAlert.data);
         navigate('/');
       });
 

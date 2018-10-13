@@ -116,23 +116,8 @@ const getAlerts = (srcLat, srcLong, range) => (
     ))
 );
 
-// const addUser = (user) => {
-//     console.log('creating user');
-//     Users.upsert({ user })
-//         .then(()=> {
-//         console.log('entered user!')
-//         })
-//         .catch(() => {
-//             console.log('could not enter user');
-//         })
-// }
-
 const getCoordinates = () => (
   Alert.findAll({ attributes: ['latitude', 'longitude'] })
-);
-
-const getMedia = () => (
-  Media.findAll({ order: [['createdAt', 'DESC']] })
 );
 
 exports.Event = Event;

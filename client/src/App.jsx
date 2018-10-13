@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Link, Router, navigate, Redirect } from "@reach/router";
-import axios from "axios";
+// import axios from "axios";
 import moment from "moment";
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -10,21 +10,22 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 
 import Dashboard from './components/Dashboard';
 import Alert from './components/create-alert/Alert';
 import AlertOptions from './components/create-alert/AlertOptions';
-import AlertFeed from './components/AlertFeed';
+// import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
+import GetAlerts from './getAlerts';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:9000/subscriptions',
+  uri: `ws://${location.host}/subscriptions`,
   options: {
     reconnect: true,
   },
@@ -169,6 +170,7 @@ class App extends React.Component {
   }
 
   render() {
+
     const {
       latitude,
       longitude,
@@ -195,7 +197,7 @@ class App extends React.Component {
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)}/>
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
@@ -219,11 +221,12 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+            <GetAlerts exact path="/" latitude={latitude} longitude={longitude} />
+            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
