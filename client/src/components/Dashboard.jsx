@@ -2,9 +2,10 @@ import React from 'react';
 import Map from './map/Map';
 import AlertFeed from './AlertFeed';
 import Media from './Media';
-import GetAlerts from '../getAlerts';
 
-const Dashboard = ({ latitude, longitude, alerts }) => (
+
+const Dashboard = ({ latitude, longitude, client }) => {console.log('dashboard client: ', client)
+return (
   <div className="dashboard">
     <div className="search-alerts">
       <form>
@@ -19,7 +20,7 @@ const Dashboard = ({ latitude, longitude, alerts }) => (
     </div>
     <div className="alerts-container">
       {/* <GetAlerts latitude={latitude} longitude={longitude} /> */}
-      <AlertFeed latitude={latitude} longitude={longitude} />
+      <AlertFeed latitude={latitude} longitude={longitude} client={client}/>
     </div>
     <div className="media-container">
       <div className="media-feed">
@@ -27,6 +28,6 @@ const Dashboard = ({ latitude, longitude, alerts }) => (
       </div>
     </div>
   </div>
-);
+)};
 
 export default Dashboard;

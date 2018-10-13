@@ -20,7 +20,7 @@ import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
-import GetAlerts from './getAlerts';
+
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
@@ -45,6 +45,7 @@ const client = new ApolloClient({
   link,
 });
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +62,7 @@ class App extends React.Component {
       picture: '',
       isLoaded: false,
     };
-    // this.componentWillMount = this.componentWillMount.bind(this);
+    // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
@@ -69,12 +70,9 @@ class App extends React.Component {
     this.handleInitialStartup = this.handleInitialStartup.bind(this);
   }
 
-  // componentWillMount() {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     localStorage.setItem('latitude', position.coords.latitude);
-  //     localStorage.setItem('longitude', position.coords.longitude);
-  //     this.setState({ isLoaded: true }, () => (console.log('loaded')));
-  //   });
+  // componentDidMount() {
+  //   client.resetStore();
+  //   console.log('Client cache: ', client.cache.data.data);
   // }
 
   setLoginState() {
@@ -170,7 +168,6 @@ class App extends React.Component {
   }
 
   render() {
-
     const {
       latitude,
       longitude,
@@ -193,7 +190,7 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <Dashboard path="/" latitude={latitude} longitude={longitude} />
+            <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} />
@@ -222,7 +219,7 @@ class App extends React.Component {
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
+            <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
@@ -250,7 +247,7 @@ class App extends React.Component {
 // ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <App client={client}/>
   </ApolloProvider>,
   document.getElementById('app'),
 );

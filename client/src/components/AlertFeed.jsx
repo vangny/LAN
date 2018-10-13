@@ -3,10 +3,8 @@ import axios from 'axios';
 import { Query, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
-import queryComponent from '../getAlerts';
 
-const AlertFeed = ({ latitude, longitude }) => {
+const AlertFeed = ({ latitude, longitude , client }) => {
   const range = 10;
   const distance = (lat1, lon1, lat2, lon2) => {
     const radlat1 = Math.PI * lat1 / 180;
@@ -51,8 +49,8 @@ const AlertFeed = ({ latitude, longitude }) => {
   let unsubscribe = null;
   return (
     <div className="AlertFeed">
-      <Query query={GET_ALERTS} variables={{ latitude, longitude, range }}>
-        {({ loading, error, data, subscribeToMore, ...result }) => {
+      <Query query={GET_ALERTS} variables={{ latitude, longitude, range }} pollInterval={45000}>
+        {({ loading, error, data, subscribeToMore }) => {
           if (loading) return <p> Loading...</p>;
           if (error) return <p>Error fetching alerts...</p>;
           if (!unsubscribe) {

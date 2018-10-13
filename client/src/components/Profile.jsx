@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import GetAlerts from '../getAlerts';
+import AlertFeed from './AlertFeed';
 
 class Profile extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Profile extends Component {
           <h2 className="ava-name">{this.props.name}</h2>
         </div>
         <div className="friend-feed">
-          <GetAlerts latitude={latitude} longitude={longitude} />
+          <AlertFeed latitude={latitude} longitude={longitude} />
         </div>
         <div className="friend-list">
           <h1>Friends</h1>
