@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 import { navigate } from '@reach/router';
+import { Mutation } from 'react-apollo';
+import  gql  from 'graphql-tag';
 import AlertCamera from './Camera';
 import Modal from './modal';
+// import CreatAlertWithMutation from './CreateAlertMutation';
 
 
 class Alert extends Component {
@@ -16,8 +19,8 @@ class Alert extends Component {
       modal: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.waitForData = this.waitForData.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+    // this.waitForData = this.waitForData.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.showUploaded = this.showUploaded.bind(this);
   }
@@ -74,71 +77,64 @@ class Alert extends Component {
         </div>);
   }
 
-  handleSubmit() {
-    const {
-      category,
-      EventId,
-      latitude,
-      longitude,
-    } = this.props;
-    const { notes, photo, photoTag } = this.state;
-    // const alertData = {
-    //   category,
-    //   EventId,
-    //   latitude,
-    //   longitude,
-    //   notes,
-    //   photo,
-    //   photoTag,
-    // };
+  // handleSubmit() {
+  //   const {
+  //     category,
+  //     EventId,
+  //     latitude,
+  //     longitude,
+  //   } = this.props;
+  //   const { notes, photo, photoTag } = this.state;
+  //   // const alertData = {
+  //   //   category,
+  //   //   EventId,
+  //   //   latitude,
+  //   //   longitude,
+  //   //   notes,
+  //   //   photo,
+  //   //   photoTag,
+  //   // };
+    
+  //   const query = gql`
+  //   mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
+  //     createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
+  //       id
+  //       category
+  //       createdAt
+  //       url
+  //     }
+  //   }
+  //   `;
+  //   fetch('/graphql', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       query,
+  //       variables: {
+  //         category, latitude, longitude, notes, photo, photoTag,
+  //       },
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then((newAlert) => {
+  //       console.log('Data returned after mutation ', newAlert.data);
+  //       navigate('/');
+  //     });
+  // }
 
-    const query = `
-    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
-      createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
-        id
-        category
-        createdAt
-        url
-      }
-    }
-    `;
-    fetch('/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: {
-          EventId, category, latitude, longitude, notes, photo, photoTag,
-        },
-      }),
-    })
-      .then(response => response.json())
-      .then((newAlert) => {
-        console.log('Data returned after mutation ', newAlert.data);
-        navigate('/');
-      });
-
-    // axios.post('/api/alerts', alertData)
-    //   .then((res) => {
-    //     sendAlertsToApp(res.data);
-    //     console.log('alert sent', alertData);
-    //   })
-    //   .catch((err) => { console.log(err); });
-  }
-
-  waitForData() {
-    const { latitude } = this.props;
-    return latitude !== 'Loading...' ? (
-      <button type="button" onClick={this.handleSubmit}>Submit</button>
-    ) : (
-      <p>
-        Still grabbing your location... Please wait
-      </p>
-    );
-  }
+  // waitForData() {
+  //   const { latitude } = this.props;
+  //   return latitude !== 'Loading...' ? (
+  //     <button type="button" onClick={this.handleSubmit}>Submit</button>
+  //   ) : (
+  //     <p>
+  //       Still grabbing your location... Please wait
+  //     </p>
+  //   );
+  // }
 
   changeModal(view) {
     this.setState({
@@ -164,7 +160,17 @@ class Alert extends Component {
 
   render() {
     const { photo, notes, photoTag } = this.state;
-    const { category } = this.props;
+    const { category, latitude, longitude } = this.props;
+    const createAlert = gql`
+    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
+      createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
+        id
+        category
+        createdAt
+        url
+      }
+    }
+    `;
     // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="alert-layout">
@@ -197,7 +203,23 @@ class Alert extends Component {
           {this.showUploaded()}
         </div>
         <div className="submit">
-          {this.waitForData()}
+          <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag }}>
+            {(mutate, { loading, error }) => {
+              if (loading) return <p>Loading...</p>;
+              if (error) return <p>Error creating alert</p>;
+              return (
+                <button
+                  type="button"
+                  onClick={() => {
+                    mutate();
+                    navigate('/');
+                  }}
+                >
+                Submit
+                </button>
+              );
+            }}
+          </Mutation>
         </div>
       </div>
 
