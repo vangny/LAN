@@ -68,7 +68,7 @@ Alert.belongsTo(Event);
 User.hasMany(Alert, { as: 'Alerts' });
 User.hasMany(Location);
 User.hasMany(Friendships);
-Friendships.hasMany(User);
+// Friendships.hasMany(User);
 Location.belongsTo(User);
 
 sequelize.sync();

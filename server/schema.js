@@ -14,7 +14,6 @@ const typeDefs = `
     getAlerts(latitude: Float,
       longitude: Float,
       range: Float): [Alert]
-    getMedia: [Media]
     getCoords: [Coordinates]
   }
   type Mutation {

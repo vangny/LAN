@@ -217,7 +217,7 @@ class App extends React.Component {
             <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} />
+            <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)}/>
           </Router>
           <div className="nav-bar">
@@ -257,16 +257,8 @@ class App extends React.Component {
             <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-<<<<<<< HEAD
-            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
-||||||| merged common ancestors
-            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
-=======
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} />
->>>>>>> Added set home location that updates user table with current lat long
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
