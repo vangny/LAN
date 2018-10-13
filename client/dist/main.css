@@ -1,6 +1,6 @@
 body {
   font-family: Century Gothic, Arial, sans-serif;
-  background: #ffffff;
+  background-color:#f0f0f1;
   margin: 0;
 }
 
@@ -22,50 +22,40 @@ Blinking Animation
   }
 }
 
-.login-home {
-  display: grid;
-  grid-gap: 5px;
-  justify-items: center;
-  /* background-image: linear-gradient(130deg, #537895 , #09203f
-  ); */
-  background-color:#f0f0f1;
+a:link {
+  text-decoration: none;
+}
+
+a {
+  color: #212121;
+}
+/*
+====================
+Login Styles
+==================== 
+*/
+
+.login-container {
   height: 100%;
-  grid-template-rows: 20% 40% 15% 15% 10%;
-  grid-template-areas: 'header'
-                       'logo'
-                       'button1'
-                       'button2'
-                       'footer'                  
-}
-
-.header {
-  grid-area: header;
-  order: 0;
-  color: rgb(216, 53, 24);
-}
-
-.LAN-title {
-  grid-area: header;
-  order: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
-  width: 90%;
-
+  width: 100%;
+  display: grid;
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  font-size: 72px;
-  padding: 80px 50px;
-  text-align: center;
-  text-transform: uppercase;
-  text-rendering: optimizeLegibility;
+  justify-items: center;
+  /* background-color:#f0f0f1; */
+  
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: 'logo-title logo-title'
+                       'google-btn facebook-btn';
+}
 
-  color: #d31a1a;
-  background-color: #f2f2f3;
-  /* background-image: url('https://d36tnp772eyphs.cloudfront.net/blogs/1/2014/04/Mammatus-Clouds-matador-seo-940x626.jpg');
-  background-repeat: no-repeat, repeat; */
-  background-size: cover;
-  letter-spacing: .1em;
+.logo-title-container {
+  grid-area: logo-title;
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 30% 70%;
+  grid-template-areas: 'blank blank'
+                       'logo title';
 }
 
 .login-logo {
@@ -73,27 +63,40 @@ Blinking Animation
   display: flex;
   align-items: center;
   justify-content: center;
-  order:1;
 }
 
-.login-google {
-  grid-area: button1;
+.login-title {
+  grid-area: title;
   display: flex;
   align-items: center;
   justify-content: center;
-  order: 2;
+  font-size: 18px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  background-size: cover;
+  letter-spacing: .1em;
+}
+
+.login-google {
+  grid-area: google-btn;
+  display: flex;
+  /* align-items: center;
+  justify-content: center; */
 }
 
 .btnGoogle {
-  margin:5px;
-  width: 195px;
-  height:75px;
-  border-radius: 95%;
+  width: 165px;
+  height:35px; 
+  border-radius: 4px;
   background: #db3236;
   color:white;
-  border:0px transparent;
+  border:0px transparent;  
   text-align: center;
-  font-size: 16px;
+  /* margin:5px; */
+  display: inline-block;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .btnGoogle:hover {
@@ -102,28 +105,26 @@ Blinking Animation
   cursor: pointer;
 }
 
-.login-face {
-  grid-area: button2;
+.login-facebook {
+  grid-area: facebook-btn;
   display: flex;
-  position: inherit;
-  align-items: center;
-  justify-content: center;
-  /* display: inline-block; */
-  order: 3;
+  /* position: inherit; */
+  /* align-items: left;
+  justify-content: left; */
 }
 
 .btnFacebook { 
-  width: 195px;
-  height:75px; 
+  width: 165px;
+  height:35px; 
   border-radius: 4px;
   background: #3b5998;
   color:white;
   border:0px transparent;  
   text-align: center;
-  margin:5px;
+  /* margin:5px; */
   display: inline-block;
-  border-radius: 95%;
-  font-size: 16px;
+  font-size: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .btnFacebook:hover {
@@ -147,18 +148,51 @@ CSS for Mobile
       height: 100%;
       display: grid;
       /* grid-template-columns: 1fr 1fr 1fr 1fr; */
-      grid-template-rows: 10% 83% 7%;
+      grid-template-rows: 10% 85% 5%;
       grid-template-areas: 'header'
                            'content'
                            'navbar';
     }
     
-    .title {
+    .header {
       grid-area: header;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      display: grid;
+      grid-template-columns: 15% 70% 15%;
+      grid-template-areas: 'icon title settings';
+    }
+    
+    .header-icon {
+      grid-area: icon;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .header-title {
+      grid-area: title;
+      
+      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+      font-size: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
+    .header-title > span {
+      margin-top: 2.5%;
+    }
+
+    .header-settings {
+      grid-area: settings;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+      .header-settings > button > i {
+        font-size: 24px;
+      }
     
     .content {
       height: 100%;
@@ -168,19 +202,21 @@ CSS for Mobile
     }
     
     .nav-bar {
-      height: 80%;
+      height: 100%;
       width:100%;
       /* margin-top: 5px; */
       grid-area: navbar;
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
       grid-template-areas: 'home search alert dashboard';
+      box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
     }
     
     .nav-cell {
       /* height: 100%; */
       /* width: 100%; */
-      border-style: solid;
+      /* border-style: solid; */
+      background-color: #ffffff;
     }
     
     .home-grid {
@@ -210,7 +246,87 @@ CSS for Mobile
       align-items: center;
       justify-content: center;
     }
-    
+
+    /**************
+    Settings Styling
+    **************/
+    .options-modal-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width:100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.733);
+    }
+
+    .options-container {
+      position:fixed;
+      background: white;
+      height: 60%;
+      width: 80%;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      display: 'grid';
+      grid-template-rows: 45% 45% 10%;
+      grid-template-areas: 'range'
+                           'filter'
+                           'change-setting-buttons';
+    }
+
+    .range-container {
+      grid-area: range;
+      display: flex;
+      /* height: 100%; */
+      /* width: 100%; */
+    }
+
+    .filter-container {
+      grid-area: filter;
+      display: flex;
+      /* height: 100%; */
+      /* width: 100%; */
+    }
+
+    .settings-buttons {
+      grid-area: change-setting-buttons;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-template-columns: 50% 50%;
+      grid-template-areas: 'exit change';
+    }
+
+    .exit-button {
+      grid-area: exit;
+      width: 125px;
+      height:25; 
+      border-radius: 4px;
+      background: #db3236;
+      color:white;
+      border:0px transparent;  
+      text-align: center;
+      /* margin:5px; */
+      display: inline-block;
+      font-size: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+    .change-button {
+      grid-area: change;
+      width: 125px;
+      height:25px; 
+      border-radius: 4px;
+      background: #20b230;
+      color:white;
+      border:0px transparent;  
+      text-align: center;
+      /* margin:5px; */
+      display: inline-block;
+      font-size: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
     /**************
     Dashboard Styling
     **************/
@@ -288,7 +404,7 @@ CSS for Mobile
     .alert {
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      border: 1px solid gray;
+      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -348,7 +464,7 @@ CSS for Mobile
       grid-row-gap: 5px;
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      border: 1px solid gray;
+      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);

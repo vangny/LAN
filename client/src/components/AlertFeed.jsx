@@ -48,7 +48,7 @@ const AlertFeed = ({ latitude, longitude , client }) => {
     `;
   let unsubscribe = null;
   return (
-    <div className="AlertFeed">
+    <div className="feed">
       <Query query={GET_ALERTS} variables={{ latitude, longitude, range }} pollInterval={45000}>
         {({ loading, error, data, subscribeToMore }) => {
           if (loading) return <p> Loading...</p>;

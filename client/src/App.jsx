@@ -20,6 +20,8 @@ import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
 import Map from './components/map/Map';
+import Modal from './components/create-alert/modal';
+import Settings from './components/Settings';
 
 
 const httpLink = new HttpLink({ uri: '/graphql' });
@@ -51,8 +53,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      latitude: Number(localStorage.getItem('latitude')) || 'Loading...',
-      longitude: Number(localStorage.getItem('longitude')) || 'Loading...',
+      latitude: Number(localStorage.getItem('latitude')),
+      longitude: Number(localStorage.getItem('longitude')),
       category: null,
       timeStamp: null,
       EventId: null,
@@ -61,6 +63,9 @@ class App extends React.Component {
       name: '',
       picture: '',
       isLoaded: false,
+      showSettings: false,
+      filter: localStorage.getItem('filter') ||'none',
+      range: Number(localStorage.getItem('range')) || 10,
     };
     // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
@@ -68,6 +73,8 @@ class App extends React.Component {
     this.setCoordinates = this.setCoordinates.bind(this);
     this.setLoadedState = this.setLoadedState.bind(this);
     this.handleInitialStartup = this.handleInitialStartup.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
+    this.renderSettings = this.renderSettings.bind(this);
   }
 
   // componentDidMount() {
@@ -108,7 +115,6 @@ class App extends React.Component {
         <div>
           <Router>
             <Redirect noThrow from="/" to="/login" />
-            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <LoadingPage path="/" load={this.setLoadedState}  />
             <Login path="/login" login={this.setLoginState} />
           </Router>
@@ -119,8 +125,6 @@ class App extends React.Component {
       return (
         <div>
           <Router>
-            {/* <Redirect noThrow from="/" to="/login" />
-            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
             <Redirect noThrow from="/login" to="/" />
             <LoadingPage path="/" setCoordinates={this.setCoordinates} load={this.setLoadedState} />
           </Router>
@@ -165,6 +169,22 @@ class App extends React.Component {
           navigate('/alert');
         });
     });
+  }
+
+  handleSettings() {
+    const { showSettings } = this.state;
+    this.setState({
+      showSettings: !showSettings,
+    });
+  }
+
+  renderSettings() {
+    const { showSettings } = this.state;
+    return showSettings ? (
+      <Modal>
+        <Settings handleSettings={this.handleSettings} />
+      </Modal>
+    ) : null;
   }
 
   render() {
@@ -213,9 +233,20 @@ class App extends React.Component {
         </div>
       ) : (
         <div className="container">
-          <Link to="/" className="title nav-cell">
-            <h2>Local Alert Network</h2>
-          </Link>
+          {this.renderSettings()}
+          <div to="/" className="header nav-cell">
+            <div className="header-icon" >
+              <img src={require('../../icons/icon-72x72.png')} alt="" />
+            </div>
+            <div className="header-title">
+              <span>Local Alert Network</span>
+            </div>
+            <div className="header-settings">
+              <button type="button" onClick={() => this.handleSettings()}>
+                <i className="fas fa-cog "></i>
+              </button>
+            </div>
+          </div>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
