@@ -24,11 +24,11 @@ const resolvers = {
       return db.getCoordinates()
         .then(data => data.map(coordinate => coordinate.dataValues));
     },
-    getMedia: () => {
-      console.log('grabbing media files...');
-      return db.getMedia()
-        .then(data => data.map(file => file.dataValues));
-    },
+    // getMedia: () => {
+    //   console.log('grabbing media files...');
+    //   return db.getMedia()
+    //     .then(data => data.map(file => file.dataValues));
+    // },
   },
   Mutation: {
     findOrCreateEvent: (root, args, context) => {

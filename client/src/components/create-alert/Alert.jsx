@@ -5,6 +5,7 @@ import { navigate } from '@reach/router';
 import AlertCamera from './Camera';
 import Modal from './modal';
 
+
 class Alert extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +91,6 @@ class Alert extends Component {
     //   photo,
     //   photoTag,
     // };
-    console.log(EventId);
 
     const query = `
     mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
@@ -117,7 +117,7 @@ class Alert extends Component {
     })
       .then(response => response.json())
       .then((newAlert) => {
-        console.log('Data returned after mutation ', newAlert);
+        console.log('Data returned after mutation ', newAlert.data);
         navigate('/');
       });
 
