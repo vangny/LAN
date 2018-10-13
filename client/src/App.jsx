@@ -15,7 +15,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import Dashboard from './components/Dashboard';
 import Alert from './components/create-alert/Alert';
 import AlertOptions from './components/create-alert/AlertOptions';
-// import AlertFeed from './components/AlertFeed';
+import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
 import Profile from './components/Profile';
@@ -221,8 +221,8 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <GetAlerts exact path="/" latitude={latitude} longitude={longitude} />
-            {/* <AlertFeed exact path="/" latitude={latitude} longitude={longitude} /> */}
+            {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
+            <AlertFeed exact path="/" latitude={latitude} longitude={longitude} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude}/>

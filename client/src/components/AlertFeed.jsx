@@ -4,39 +4,45 @@ import { Query, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
-// import GetAlerts from '../getAlerts';
+import queryComponent from '../getAlerts';
 
 class AlertFeed extends React.Component {
-  constructor({ alerts }) {
+  constructor() {
     super();
-    this.state = {
-      alerts
-    };
+    // this.state = {
+    //   alerts
+    // };
     
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.renderAlertData = this.renderAlertData.bind(this);
+    // this.componentDidMount = this.componentDidMount.bind(this);
+    // this.renderAlertData = this.renderAlertData.bind(this);
   }
   
   componentDidMount() {
-    const { subscribeToNewAlerts } = this.props;
+    // console.log('mounting AlertFeed');
+    // const { subscribeToNewAlerts } = this.props;
     // const { alerts } = this.state;
+    // const alertCache = this.props.client.cache.data.data;
     
-    subscribeToNewAlerts();
-    const alertCache = this.props.client.cache.data.data;
-    console.log('alertCache: ', alertCache);
-    const alerts = [];
-    for (let i = 0; i < Object.keys(alertCache).length; i += 1) {
-      alerts.push(alertCache[Object.keys(alertCache)[i]]);
-    }
-    // this.setState({
+    // subscribeToNewAlerts();
+    // console.log('1. alertCache: ', alertCache);
+    // console.log('2. Object.keys(alertCache): ', Object.keys(alertCache));
+    // const alerts = [];
+    // for (let i = 0; i < Object.keys(alertCache).length; i += 1) {
+    //   alerts.push(alertCache[Object.keys(alertCache)[i]]);
+    // }
+
+    
+  
+  // console.log('3. Alerts before setState: ', alerts);
+  // this.setState({
     //   alerts,
-    // }, () => { console.log(this.state.alerts)});
-    // // console.log('cached alerts: ', this.props.client);
+    // }, () => { console.log('4. Alerts after setState: ', this.state.alerts)});
+    // console.log('cached alerts: ', this.props.client);
   }
 
-  renderAlertData() {
-    const { range, latitude, longitude } = this.props;
-    const { alerts } = this.state;
+  render() {
+    const { latitude, longitude } = this.props;
+    const range = 10;
     const distance = (lat1, lon1, lat2, lon2) => {
       const radlat1 = Math.PI * lat1 / 180;
       const radlat2 = Math.PI * lat2 / 180;
@@ -52,52 +58,91 @@ class AlertFeed extends React.Component {
       dist = dist * 60 * 1.1515;
       return dist;
     };
-    if (alerts.length === 0) return <p>{`Currently no alerts within ${range} miles. Consider expanding your search`}</p>;
-    return (
-
-      alerts.map(alert => (window.innerWidth >= 1200 ? (
-        <div className="alert" key={Number(alert.id)}>
-          {`Category: ${alert.category}`}
-          <br />
-          {moment(alert.createdAt).fromNow()}
-          <br />
-          {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
-        </div>
-        ): (alert.url !== null ? (
-        <div className="alert" key={Number(alert.id)}>
-          <div className="image-container">
-            <img src={alert.url} width='200' height='145' />
-          </div>
-          <div className="alert-info-container">
-            {`Category: ${alert.category}`}
-            <br />
-            {moment(alert.createdAt).fromNow()}
-            <br />
-            {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
-          </div>
-        </div>
-        ) : (
-        <div className="alert" key={Number(alert.id)}>
-          <div className="alert-info-container">
-            {`Category: ${alert.category}`}
-            <br />
-            {moment(alert.createdAt).fromNow()}
-            <br />
-            {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
-          </div>
-        </div>
-        )
-      )))
-    );
-  }
-
-  render() {
-    const { range } = this.props;
-
+    const GET_ALERTS = gql`
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
+      getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+        id
+        latitude
+        longitude
+        category
+        url
+        createdAt
+  
+      }
+    }
+    `;
+    const NEW_ALERT = gql`
+    subscription {
+      newAlert {
+        id
+        latitude
+        longitude
+        category
+        url
+        createdAt
+      }
+    }
+    `;
+    let unsubscribe = null;
     return (
       <div className="AlertFeed">
-        <span>{`Current search scope: ${range} miles`}</span>
-        {this.renderAlertData()}
+        <Query query={GET_ALERTS} variables={{ latitude, longitude, range }}>
+          {({ loading, error, data, subscribeToMore, ...result }) => {
+            if (loading) return <p> Loading...</p>;
+            if (error) return <p>Error fetching alerts...</p>;
+            if (!unsubscribe) {
+              unsubscribe = subscribeToMore({
+                document: NEW_ALERT,
+                updateQuery: (prev, { subscriptionData }) => {
+                  if (!subscriptionData.data) return prev;
+                  const { newAlert } = subscriptionData.data;
+                  console.log('updateQuery returns', { ...prev, getAlerts: [newAlert, ...prev.getAlerts] });
+                  return {
+                    ...prev,
+                    getAlerts: [newAlert, ...prev.getAlerts],
+                  };
+                },
+              });
+            }
+            return (
+              <div>
+                {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
+                  <div className="alert" key={Number(alert.id)}>
+                    {`Category: ${alert.category}`}
+                    <br />
+                    {moment(alert.createdAt).fromNow()}
+                    <br />
+                    {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                  </div>
+                  ): (alert.url !== null ? (
+                  <div className="alert" key={Number(alert.id)}>
+                    <div className="image-container">
+                      <img src={alert.url} width='200' height='145' />
+                    </div>
+                    <div className="alert-info-container">
+                      {`Category: ${alert.category}`}
+                      <br />
+                      {moment(alert.createdAt).fromNow()}
+                      <br />
+                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                    </div>
+                  </div>
+                  ) : (
+                  <div className="alert" key={Number(alert.id)}>
+                    <div className="alert-info-container">
+                      {`Category: ${alert.category}`}
+                      <br />
+                      {moment(alert.createdAt).fromNow()}
+                      <br />
+                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                    </div>
+                  </div>
+                  )
+                )))}
+              </div>
+            ) ; 
+          }}
+        </Query>
       </div>
     );
   }

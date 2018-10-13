@@ -37,7 +37,6 @@ const resolvers = {
         .then(event => event); // the result will be the event object that was just created
     },
     createAlert: (root, args, context) => {
-      console.log(args.EventId);
       return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
         .then((alert) => {
           pubsub.publish(NEW_ALERT, { newAlert: alert });
