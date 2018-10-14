@@ -120,12 +120,19 @@ const createAlert = (EventId, category, latitude, longitude, notes, photo, photo
 };
 
 
-const getAlerts = (srcLat, srcLong, range) => (
+const getAlerts = (srcLat, srcLong, range, category) => ( category !== 'none' ? (
+  Alert.findAll({ where: { category }, order: [['createdAt', 'DESC']] })
+    .then(alerts => (alerts.filter(alert => distance(
+      srcLat, srcLong, alert.dataValues.latitude, alert.dataValues.longitude,
+    ) <= range)
+    ))
+) : (
   Alert.findAll({ order: [['createdAt', 'DESC']] })
     .then(alerts => (alerts.filter(alert => distance(
       srcLat, srcLong, alert.dataValues.latitude, alert.dataValues.longitude,
     ) <= range)
     ))
+)
 );
 
 const getCoordinates = () => (

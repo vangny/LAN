@@ -217,6 +217,7 @@ class App extends React.Component {
       picture,
       email,
       range,
+      filter,
     } = this.state;
     return (!isLoggedIn || !isLoaded)
       ? (
@@ -229,7 +230,7 @@ class App extends React.Component {
           </Link>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} range={range}/>
+            <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
@@ -269,7 +270,7 @@ class App extends React.Component {
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
-            <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} />
+            <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} />

@@ -14,7 +14,7 @@ const NEW_ALERT = 'NEW_ALERT';
 const resolvers = {
   Query: {
     getAlerts: (root, args, context) => (
-      db.getAlerts(args.latitude, args.longitude, args.range)
+      db.getAlerts(args.latitude, args.longitude, args.range, args.filter)
         .then(alerts => (
           alerts.map(alert => alert.dataValues)
         ))

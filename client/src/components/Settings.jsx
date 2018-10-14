@@ -27,6 +27,7 @@ export default class Settings extends Component {
         <div className="options-container">
           <div className="options">
             <div className="range-container">
+              <span>{`Range: ${range}`}</span>
               <input
                 type="range"
                 min="0"
