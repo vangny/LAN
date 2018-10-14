@@ -82,9 +82,15 @@ const resolvers = {
     },
 
     findOrCreateFriendship: (root, args, context) => {
-      return db.findOrCreateFriendship(args.userId, args.userEmail, args.friendEmail).then(friend => console.log('server: ', friend))
-      
-    }
+      return db.findOrCreateFriendship(args.userId, args.userEmail, args.friendEmail)
+        .then(friendships => ({
+          user1: friendships[0].dataValues.user1,
+          user2: friendships[0].dataValues.user2,
+          new: friendships[1],
+        }))
+        // .then(friendship => console.log(friendship)) // friendship[1] is a boolean that is true if a row was created.
+        .catch(err => err);
+    },
     // addFriend: (root, args, context) => {
     //   console.log('User requests to add a new friend...');
      

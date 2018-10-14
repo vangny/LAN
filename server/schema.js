@@ -54,8 +54,9 @@ const typeDefs = `
   }
 
   type Friendship {
-    user: String
-    friend: String
+    user1: String
+    user2: String
+    new: Boolean
   }
 
   type Event {

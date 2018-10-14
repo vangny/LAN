@@ -146,17 +146,15 @@ const getCoordinates = () => (
 // };
 
 const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
-  console.log('userId: ', userId);
   return User.findOne({ where: { email: friendEmail } })
     .then((friend) => {
-      console.log('friend: ', friend);
       return Friendships.findOrCreate({ where: {
         user1: userId,
         user2: friend.dataValues.id,
       }});
     })
-    .then((friendship, created) => console.log(friendship, created))
-    .catch(err => err)
+    // .then(friendship => {friendship})
+    // .catch(err => err);
 }
 
 exports.Event = Event;

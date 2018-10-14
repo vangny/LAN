@@ -81,7 +81,9 @@ class Profile extends Component {
     const findOrCreateFriendship = gql`
     mutation findOrCreateFriendship($userId: Int, $userEmail: String!, $friendEmail: String!) {
       findOrCreateFriendship(userId: $userId, userEmail: $userEmail, friendEmail: $friendEmail) {
-        user
+        user1
+        user2
+        new
       }
     }
     `;
@@ -105,8 +107,8 @@ class Profile extends Component {
           <div className="friend-search">
             <Mutation mutation={findOrCreateFriendship} variables={{ userId, userEmail, friendEmail }}>
               {(mutate, { loading, error, data }) => {
-                if (loading) return <p>Loading...</p>
-                if (error) return <p>Error finding friend</p>
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>Error: Email address not found</p>;
                 return (
                   <div>
                     <input className="friend-search" placeholder="Search for friend by email address" onChange={e => this.friendSearchHandler(e)} />
@@ -116,12 +118,7 @@ class Profile extends Component {
               }}
             </Mutation>
           </div>
-          {/* <button type="button" className="friend-button" onClick={() => this.addFriend()}>Add Friend</button> */}
         </div>
-
-        {/* <Query query={findFriend} variables={{ userEmail, friendEmail }}>
-
-        </Query> */}
       </div>
     );
   }
