@@ -86,10 +86,10 @@ class App extends React.Component {
 
   setLoginState() {
     let { name, picture, email } = this.state;
-    let obj = JSON.parse(sessionStorage.userData);
-    let userName = obj.data.findOrCreateUser.name;
-    let userPic = obj.data.findOrCreateUser.picture;
-    let userEmail = obj.data.findOrCreateUser.email;
+    let user = JSON.parse(sessionStorage.userData);
+    let userName = user.data.findOrCreateUser.name;
+    let userPic = user.data.findOrCreateUser.picture;
+    let userEmail = user.data.findOrCreateUser.email;
     this.setState({
       isLoggedIn: true,
       name: userName,
