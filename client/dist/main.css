@@ -267,6 +267,10 @@ CSS for Mobile
       top:50%;
       left:50%;
       transform: translate(-50%,-50%);
+      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    }
+
+    .options {
       display: 'grid';
       grid-template-rows: 45% 45% 10%;
       grid-template-areas: 'range'
@@ -276,10 +280,37 @@ CSS for Mobile
 
     .range-container {
       grid-area: range;
+      /* display: flex; */
+      /* height: 100%;
+      width: 100%; */
       display: flex;
-      /* height: 100%; */
-      /* width: 100%; */
+      align-items: center;
+      justify-content: center;
     }
+
+    .range {
+      -webkit-appearance: none;
+      width: 80%;
+      height: 10px;
+      background: #d3d3d3;
+      outline: none;
+      border-radius: 10px 10px 10px 10px;
+      /* opacity: 0.7; */
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+      cursor: pointer;
+    }
+      .range::hover {
+        opacity: 1;
+      }
+      .range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50% 50%;
+        background: black;
+      }
 
     .filter-container {
       grid-area: filter;
@@ -290,7 +321,7 @@ CSS for Mobile
 
     .settings-buttons {
       grid-area: change-setting-buttons;
-      display: flex;
+      display: grid;
       align-items: center;
       justify-content: center;
       grid-template-columns: 50% 50%;
@@ -300,7 +331,9 @@ CSS for Mobile
     .exit-button {
       grid-area: exit;
       width: 125px;
-      height:25; 
+      height:25;
+      position: fixed;
+      left: 20%;
       border-radius: 4px;
       background: #db3236;
       color:white;

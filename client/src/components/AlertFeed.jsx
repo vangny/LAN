@@ -4,8 +4,8 @@ import { Query, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 
-const AlertFeed = ({ latitude, longitude , client }) => {
-  const range = 10;
+const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
+  // const range = 10;
   const distance = (lat1, lon1, lat2, lon2) => {
     const radlat1 = Math.PI * lat1 / 180;
     const radlat2 = Math.PI * lat2 / 180;
@@ -22,8 +22,8 @@ const AlertFeed = ({ latitude, longitude , client }) => {
     return dist;
   };
   const GET_ALERTS = gql`
-    query GetAlerts($latitude: Float, $longitude: Float, $range: Float) {
-      getAlerts(latitude: $latitude, longitude: $longitude, range: $range){
+    query GetAlerts($latitude: Float, $longitude: Float, $range: Int, $filter: String) {
+      getAlerts(latitude: $latitude, longitude: $longitude, range: $range, filter: $filter){
         id
         latitude
         longitude
@@ -49,7 +49,7 @@ const AlertFeed = ({ latitude, longitude , client }) => {
   let unsubscribe = null;
   return (
     <div className="feed">
-      <Query query={GET_ALERTS} variables={{ latitude, longitude, range }} pollInterval={45000}>
+      <Query query={GET_ALERTS} variables={{ latitude, longitude, range: Number(range), filter }} pollInterval={45000}>
         {({ loading, error, data, subscribeToMore }) => {
           if (loading) return <p> Loading...</p>;
           if (error) return <p>Error fetching alerts...</p>;
