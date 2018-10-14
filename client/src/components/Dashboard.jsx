@@ -4,7 +4,7 @@ import AlertFeed from './AlertFeed';
 import Media from './Media';
 
 
-const Dashboard = ({ latitude, longitude, client }) => {console.log('dashboard client: ', client)
+const Dashboard = ({ latitude, longitude, client, range }) => {console.log('dashboard client: ', client)
 return (
   <div className="dashboard">
     <div className="search-alerts">
@@ -20,7 +20,7 @@ return (
     </div>
     <div className="alerts-container">
       {/* <GetAlerts latitude={latitude} longitude={longitude} /> */}
-      <AlertFeed latitude={latitude} longitude={longitude} client={client}/>
+      <AlertFeed latitude={latitude} longitude={longitude} client={client} range={range}/>
     </div>
     <div className="media-container">
       <div className="media-feed">

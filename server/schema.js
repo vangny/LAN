@@ -5,8 +5,7 @@ const typeDefs = `
   type Query {
     getAlerts(latitude: Float,
       longitude: Float,
-      range: Float): [Alert]
-
+      range: Int): [Alert]
     getCoords: [Coordinates]
   }
   type Mutation {
