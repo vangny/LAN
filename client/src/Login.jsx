@@ -52,6 +52,7 @@ class Login extends Component {
       const query = `
     mutation FindOrCreateUser($name: String!, $email: String!, $provider: String!, $provider_id: String!, $picture: String!, $token: String!) {
       findOrCreateUser(name: $name, email: $email, provider: $provider, provider_id: $provider_id, picture: $picture, token: $token) {
+        id
         email
         name
         picture
@@ -75,9 +76,8 @@ class Login extends Component {
         .then(res => res.json())
         .then((userData) => {
           console.log('User data received from server!', userData);
-          let resJSON = userData;
-          console.log('local', resJSON);
-          sessionStorage.setItem('userData', JSON.stringify(resJSON));
+          // console.log('local', userData);
+          sessionStorage.setItem('userData', JSON.stringify(userData));
           this.setState({ newLogin: true });
           this.props.login();
         });

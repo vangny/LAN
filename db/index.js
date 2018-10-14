@@ -23,7 +23,7 @@ const User = sequelize.define('User', {
 
 const doesUserExist = (email) => {
   return User.find({ where: { email } })
-    .then(data => data ? true : false)
+    .then(data => data.dataValues)
     .catch(err => console.log(err));
 };
 
@@ -132,22 +132,30 @@ const getCoordinates = () => (
   Alert.findAll({ attributes: ['latitude', 'longitude'] })
 );
 
-const getMedia = () => (
-  Media.findAll({ order: [['createdAt', 'DESC']] })
-);
-
 // 
-const newFriends = (userEmail, friendEmail) => {
-  User.findAll({ where: { userEmail, friendEmail } })
-    .then(results => {
-      console.log('Adding users to Friendships...')
-      results.filter((user) => {
-        if (user.id) {
-          Friendships.create(results.id);
-        }
-      })
-    });
-};
+// const newFriends = (userEmail, friendEmail) => {
+//   User.findAll({ where: { userEmail, friendEmail } })
+//     .then(results => {
+//       console.log('Adding users to Friendships...')
+//       results.filter((user) => {
+//         if (user.id) {
+//           Friendships.create(results.id);
+//         }
+//       })
+//     });
+// };
+
+const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
+  return User.findOne({ where: { email: friendEmail } })
+    .then((friend) => {
+      return Friendships.findOrCreate({ where: {
+        user1: userId,
+        user2: friend.dataValues.id,
+      }});
+    })
+    // .then(friendship => {friendship})
+    // .catch(err => err);
+}
 
 exports.Event = Event;
 exports.User = User;
@@ -162,3 +170,4 @@ exports.doesUserExist = doesUserExist;
 // exports.addUser = addUser;
 exports.Location = Location;
 exports.Friendships = Friendships;
+exports.findOrCreateFriendship = findOrCreateFriendship;

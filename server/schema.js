@@ -1,19 +1,12 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const { resolvers } = require('./resolvers');
 
-
-// const {
-//   buildSchema,
-// } = require('graphql');
-
-// const { GraphQLSchema, GraphQLObjectType } = require
-// const { gql } = require('apollo-server-express');
-
 const typeDefs = `
   type Query {
     getAlerts(latitude: Float,
       longitude: Float,
       range: Float): [Alert]
+
     getCoords: [Coordinates]
   }
   type Mutation {
@@ -26,12 +19,14 @@ const typeDefs = `
       url: String
       photoTag: String
     ): Alert
+
     findOrCreateEvent(
       latitude: Float
       longitude: Float
       timeStamp: Date
       category: String
     ): Event
+
     findOrCreateUser(
       name: String
       email: String
@@ -40,15 +35,30 @@ const typeDefs = `
       picture: String
       token: String
     ): User
+
+    findOrCreateFriendship(
+      userId: Int
+      userEmail: String
+      friendEmail: String
+    ): Friendship
+
     setHome(
       email: String
       latitude: Float
       longitude: Float
     ): User
   }
+
   type Subscription {
     newAlert: Alert
   }
+
+  type Friendship {
+    user1: String
+    user2: String
+    new: Boolean
+  }
+
   type Event {
     id: ID
     latitude: Float
@@ -57,6 +67,7 @@ const typeDefs = `
     timeStamp: Date
     category: String
   }
+
   type Alert {
     id: ID
     category: String
@@ -67,10 +78,12 @@ const typeDefs = `
     photoTag: String
     createdAt: Date
   }
+
   type Coordinates {
     latitude: String
     longitude: String
   }
+
   type User {
     id: ID
     name: String
@@ -82,6 +95,7 @@ const typeDefs = `
     homeLat: Float
     homeLong: Float
   }
+
   scalar Date
   type MyType {
     created: Date
