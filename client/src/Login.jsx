@@ -77,6 +77,7 @@ class Login extends Component {
         .then((userData) => {
           console.log('User data received from server!', userData);
           // console.log('local', userData);
+          sessionStorage.setItem('loggedIn', true);
           sessionStorage.setItem('userData', JSON.stringify(userData));
           this.setState({ newLogin: true });
           this.props.login();
