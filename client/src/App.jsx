@@ -59,7 +59,7 @@ class App extends React.Component {
       timeStamp: null,
       EventId: null,
       alerts: null,
-      isLoggedIn: false,
+      isLoggedIn: JSON.parse(sessionStorage.getItem('loggedIn')),
       name: '',
       picture: '',
       email: '',
@@ -122,7 +122,7 @@ class App extends React.Component {
 
   handleInitialStartup() {
     const { isLoggedIn, isLoaded } = this.state;
-
+    
     if (!isLoggedIn) {
       return (
         <div>

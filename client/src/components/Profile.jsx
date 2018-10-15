@@ -137,7 +137,7 @@ class Profile extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error getting friend list</p>;
                 return (data.friends.map(friend => (
-                  <div className="friend">
+                  <div key={Math.random() * 1000000000000}className="friend">
                     <img src={friend.picture} />
                     <span>{friend.name}</span>
                   </div>
