@@ -161,9 +161,11 @@ class Alert extends Component {
   render() {
     const { photo, notes, photoTag } = this.state;
     const { category, latitude, longitude } = this.props;
+    const userId = this.props.userId
+    console.log('alert user id', userId);
     const createAlert = gql`
-    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
-      createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
+    mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String, $userId: Int) {
+      createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag, userId: $userId ) {
         id
         category
         createdAt

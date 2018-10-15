@@ -19,6 +19,7 @@ const typeDefs = `
       notes: String
       url: String
       photoTag: String
+      userId: Int
     ): Alert
 
     findOrCreateEvent(
@@ -78,6 +79,7 @@ const typeDefs = `
     url: String
     photoTag: String
     createdAt: Date
+    userId: Int
   }
 
   type Coordinates {
