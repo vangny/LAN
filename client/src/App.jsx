@@ -77,13 +77,14 @@ class App extends React.Component {
     this.handleSettings = this.handleSettings.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
     this.changeSettings = this.changeSettings.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
 
   // componentDidMount() {
   //   client.resetStore();
   //   console.log('Client cache: ', client.cache.data.data);
   // }
-
+  
   setLoginState() {
     let { name, picture, email } = this.state;
     let user = JSON.parse(sessionStorage.userData);
@@ -109,6 +110,12 @@ class App extends React.Component {
     this.setState({
       isLoaded: true,
     });
+  }
+
+  logOut() {
+    sessionStorage.removeItem('loggedIn');
+    this.setState({ isLoggedIn: false });
+    navigate('/');
   }
 
   changeSettings(filter, range) {
@@ -233,7 +240,7 @@ class App extends React.Component {
             <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
+            <Profile path="/profile" logOut={this.logOut} latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)}/>
           </Router>
           <div className="nav-bar">
@@ -273,7 +280,7 @@ class App extends React.Component {
             <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} />
+            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
           </Router>
           <div className="nav-bar">

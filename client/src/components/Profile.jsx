@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Mutation, Query} from 'react-apollo';
 import gql from 'graphql-tag';
-import $ from 'jquery';
 // import AlertFeed from './AlertFeed';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      friends: [],
-      homeLocation: null,
+      // homeLocation: null,
       userEmail: JSON.parse(sessionStorage.getItem('userData')).data.findOrCreateUser.email,
       userId: Number(JSON.parse(sessionStorage.getItem('userData')).data.findOrCreateUser.id),
       friendEmail: null,
@@ -60,9 +58,9 @@ class Profile extends Component {
   //   console.log('Checking if user exists...');
     
   // }
-
+  
   render() {
-    const { name, picture, latitude, longitude } = this.props;
+    const { name, picture, logOut } = this.props;
     const { userEmail, friendEmail, userId } = this.state
 
     // s
@@ -87,7 +85,6 @@ class Profile extends Component {
       }
     }
     `;
-
     // const userEmail = JSON.parse(sessionStorage.getItem('userData')).email;
     return (
       <div className="profile-layout">
@@ -96,6 +93,9 @@ class Profile extends Component {
           <img className="avatar" src={picture} alt="avatar pic" />
           <h2 className="ava-name">{name}</h2>
           <button type="button" className="location-button" onClick={() => this.setHome()}>Set Home</button>
+          <button type="button" className="logOut-button" onClick={logOut}>
+          Log Out of Account
+          </button>
         </div>
         {/* <div className="friend-feed">
           <AlertFeed latitude={latitude} longitude={longitude} />
