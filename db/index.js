@@ -151,6 +151,10 @@ const getCoordinates = () => (
 //       })
 //     });
 // };
+const getFriends = userId => (
+  Friendships.findAll({ where: { user1: userId } })
+    .then(friends => friends.map(friend => friend.dataValues.user2)))
+  .then(friendIds => User.findAll({ where: { id: friendIds } }));
 
 const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
   return User.findOne({ where: { email: friendEmail } })
@@ -178,3 +182,4 @@ exports.doesUserExist = doesUserExist;
 exports.Location = Location;
 exports.Friendships = Friendships;
 exports.findOrCreateFriendship = findOrCreateFriendship;
+exports.getFriends = getFriends;

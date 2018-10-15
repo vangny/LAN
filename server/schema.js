@@ -8,6 +8,7 @@ const typeDefs = `
       range: Int,
       filter: String): [Alert]
     getCoords: [Coordinates]
+    friends(userId: Int): [User]
   }
   type Mutation {
     createAlert(
