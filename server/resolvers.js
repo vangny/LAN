@@ -48,13 +48,14 @@ const resolvers = {
         .then(event => event); // the result will be the event object that was just created
     },
     createAlert: (root, args, context) => {
+      const userId = args.userId;
       return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
         .then((alert) => {
           pubsub.publish(NEW_ALERT, { newAlert: alert });
           return alert;
         })
         .then((data) => {
-          return db.sendToNotofications(args.userId);
+          return db.sendToNotofications(userId);
         })
         .then((userTables) => {
           console.log('Data packaged for server', userTables);

@@ -161,7 +161,7 @@ class Alert extends Component {
   render() {
     const { photo, notes, photoTag } = this.state;
     const { category, latitude, longitude } = this.props;
-    const userId = this.props.userId
+    const userId = this.props.userId;
     console.log('alert user id', userId);
     const createAlert = gql`
     mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String, $userId: Int) {
@@ -170,6 +170,7 @@ class Alert extends Component {
         category
         createdAt
         url
+        userId
       }
     }
     `;
@@ -205,7 +206,7 @@ class Alert extends Component {
           {this.showUploaded()}
         </div>
         <div className="submit">
-          <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag }}>
+          <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag, userId }}>
             {(mutate, { loading, error }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error creating alert</p>;

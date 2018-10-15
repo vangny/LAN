@@ -114,7 +114,7 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => {
+const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag, userId) => {
   return Alert.create({
     EventId, category, latitude, longitude, notes, url: photo, photoTag,
   }).then(alert => alert);
