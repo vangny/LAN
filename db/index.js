@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const moment = require('moment');
+
 require('dotenv').config();
 
 const sequelize = new Sequelize(`${process.env.DB_URL}`);
@@ -168,6 +169,26 @@ const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
     // .catch(err => err);
 }
 
+const sendToNotofications = (id) => {
+  console.log('DATA in DB', id);
+  const userTable = User.findAll({ where: { id: id } });
+
+  const friendsTable = Friendships.findAll({ where: { user1: id } });
+
+  const alerts = Alert.findAll({
+    limit: 1,
+    order: [['createdAt', 'DESC']],
+  });
+
+  return Promise.all([userTable, friendsTable, alerts])
+    .then((values) => {
+      return values;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
@@ -183,3 +204,4 @@ exports.Location = Location;
 exports.Friendships = Friendships;
 exports.findOrCreateFriendship = findOrCreateFriendship;
 exports.getFriends = getFriends;
+exports.sendToNotofications = sendToNotofications;

@@ -5,6 +5,8 @@ const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 const { Kind } = require('graphql/language');
 
+const axios = require('axios');
+
 const db = require('../db/index');
 
 const pubsub = new PubSub();
@@ -50,6 +52,15 @@ const resolvers = {
         .then((alert) => {
           pubsub.publish(NEW_ALERT, { newAlert: alert });
           return alert;
+        })
+        .then((data) => {
+          return db.sendToNotofications(args.userId);
+        })
+        .then((userTables) => {
+          console.log('Data packaged for server', userTables);
+          axios.post('http://localhost:5000', userTables)
+            .then((res => console.log('Data sent to microservice', res)))
+            .catch((err => console.log(err)));
         });
     },
     findOrCreateUser: (root, args, context) => {
@@ -60,8 +71,7 @@ const resolvers = {
             console.log('user already exists!');
             return result;
           }
-          // if {
-          console.log('New user created!')
+          console.log('New user created!');
           return db.User.create({
             name: args.name,
             email: args.email,
@@ -70,8 +80,6 @@ const resolvers = {
             picture: args.picture,
             token: args.token,
           }).then(newUser => newUser.dataValues);
-          // }
-          // return args;
         });
     },
     setHome: (root, args, context) => {

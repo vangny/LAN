@@ -117,6 +117,7 @@ class App extends React.Component {
       name: userName,
       picture: userPic,
       email: userEmail,
+      userId: userId,
     });
   }
 
