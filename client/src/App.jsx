@@ -119,9 +119,6 @@ class App extends React.Component {
       email: userEmail,
       userId: userId,
     });
-    
-    console.log('User ID set', userId);
-    console.log('User ID set to', this.state.userId);
   }
 
   setCoordinates() {
