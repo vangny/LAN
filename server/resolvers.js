@@ -24,6 +24,10 @@ const resolvers = {
       return db.getCoordinates()
         .then(data => data.map(coordinate => coordinate.dataValues));
     },
+    friends: (root, args) => (
+      db.getFriends(args.userId)
+        .then(friends => friends.map(friend => friend.dataValues))
+    ),
     // getMedia: () => {
     //   console.log('grabbing media files...');
     //   return db.getMedia()
@@ -89,7 +93,10 @@ const resolvers = {
           new: friendships[1],
         }))
         // .then(friendship => console.log(friendship)) // friendship[1] is a boolean that is true if a row was created.
-        .catch(err => err);
+        .catch((err) => {
+          console.log('Cannot find email address: ', err);
+          return err;
+        });
     },
     // addFriend: (root, args, context) => {
     //   console.log('User requests to add a new friend...');

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Mutation, Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import $ from 'jquery';
 // import AlertFeed from './AlertFeed';
 
 class Profile extends Component {
@@ -68,12 +69,11 @@ class Profile extends Component {
     
     // console.log(name, picture, latitude, longitude);
 
-    const findFriend = gql`
-    query findFriend( $friendEmail: String) {
-      findFriend(email: $friendEmail) {
-        id
+    const friends = gql`
+    query friends( $userId: Int) {
+      friends(userId: $userId) {
         name
-        email
+        picture
       }
     }
     `;
@@ -100,15 +100,28 @@ class Profile extends Component {
         {/* <div className="friend-feed">
           <AlertFeed latitude={latitude} longitude={longitude} />
         </div> */}
-        <div className="friend-list">
+        <div className="friends">
           <h1>Friends</h1>
-          <h2 className="ava-name">Nathan Vang</h2>
-          <h3 className="ava-name">Minnesota</h3>
           <div className="friend-search">
             <Mutation mutation={findOrCreateFriendship} variables={{ userId, userEmail, friendEmail }}>
-              {(mutate, { loading, error, data }) => {
+              {(mutate, { loading, error }) => {
                 if (loading) return <p>Loading...</p>;
-                if (error) return <p>Error: Email address not found</p>;
+                if (error) {
+                  return (
+                    <div className="friend-search">
+                      <p>Error: Email address not found</p>
+                      <input className="friend-search" placeholder="Search for friend by email address" onChange={e => this.friendSearchHandler(e)} />
+                      <button
+                        type="button" 
+                        onClick={() => {
+                          mutate();
+                        }}
+                      >
+                      Add Friend
+                      </button>
+                    </div>
+                  );
+                }
                 return (
                   <div>
                     <input className="friend-search" placeholder="Search for friend by email address" onChange={e => this.friendSearchHandler(e)} />
@@ -117,6 +130,20 @@ class Profile extends Component {
                 );
               }}
             </Mutation>
+          </div>
+          <div className="friend-list">
+            <Query query={friends} variables={{ userId }}>
+              {({ data, error, loading }) => {
+                if (loading) return <p>Loading...</p>;
+                if (error) return <p>Error getting friend list</p>;
+                return (data.friends.map(friend => (
+                  <div className="friend">
+                    <img src={friend.picture} />
+                    <span>{friend.name}</span>
+                  </div>
+                )));
+              }}
+            </Query>
           </div>
         </div>
       </div>
