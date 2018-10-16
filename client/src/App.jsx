@@ -23,6 +23,7 @@ import LoadingPage from './components/LoadingPage';
 // import Map from './components/map/Map';
 import Modal from './components/create-alert/modal';
 import Settings from './components/Settings';
+import '../main.css';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 

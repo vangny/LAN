@@ -1,6 +1,7 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -37,9 +38,9 @@ module.exports = (env) => {
     filename: 'bundle.js',
   };
 
-  config.node = {
-    fs: 'empty',
-  };
+  // config.node = {
+  //   fs: 'empty',
+  // };
 
   config.optimization = {
     splitChunks: {
@@ -70,7 +71,7 @@ module.exports = (env) => {
   config.module = {
     rules: [
       {
-        test: /\.jsx$/, // the $ matches the preceding item zero or one time, so this regex also searches for js files too
+        test: /\.(js|jsx)$/, // the $ matches the preceding item zero or one time, so this regex also searches for js files too
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -114,7 +115,7 @@ module.exports = (env) => {
   if (isProd) {
     config.output = {
       path: DIST_DIR,
-      publicPath: '/',
+      // publicPath: '/',
       chunkFilename: '[name].[chunkhash].bundle.js',
       filename: '[name].[chunkhash].bundle.js',
     };
@@ -141,61 +142,3 @@ module.exports = (env) => {
 
   return config;
 };
-
-// module.exports = {
-//   entry: `${CLI_DIR}/src/App.jsx`,
-//   output: {
-//     path: DIST_DIR,
-//     filename: 'bundle.js',
-//   },
-//   node: {
-//     fs: "empty"
-//   },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.jsx$/, // the $ matches the preceding item zero or one time, so this regex also searches for js files too
-//         exclude: /node_modules/,
-//         use: {
-//           loader: 'babel-loader',
-//         },
-//       },
-//       {
-//         test: /\.html$/,
-//         use: [
-//           {
-//             loader: 'html-loader',
-//           },
-//         ],
-//       },
-//       {
-//         test: /\.css$/,
-//         use: [
-//           require.resolve('style-loader'),
-//           {
-//             loader: require.resolve('css-loader'),
-//             options: {
-//               importLoaders: 1,
-//             },
-//           },
-//         ],
-//       },
-//       {
-//         test: /\.(png|svg|jpg|gif)$/,
-//         use: [
-//           'file-loader',
-//         ],
-//       },
-//     ],
-//   },
-//   resolve: {
-//     extensions: ['.js', '.jsx'],
-//   },
-//   plugins: [
-//     new HtmlWebPackPlugin({
-//       template: `${CLI_DIR}/index.html`,
-//       filename: `${DIST_DIR}/index.html`,
-//     }),
-  
-//   ],
-// };
