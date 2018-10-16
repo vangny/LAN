@@ -19,6 +19,7 @@ const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) =
         </div>
         <div className="category-buttons-container">
 
+<<<<<<< HEAD
           <button id="hurricane-button" className="category-button" type="button" value="Hurricane" onClick={e => handleAlertOptions(e.currentTarget.value)}>{/*<img className="cat-icon" src={require('../../../button-icons/013-hurricane.png')} value="hurricane" alt="hurricane" />*/}
           <div className="button-content"></div>
           </button>
@@ -45,6 +46,22 @@ const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) =
 
           <button id="blizzard-button" className="category-button" type="button" value="Blizzard" onClick={e => handleAlertOptions(e.currentTarget.value)}>{/*<img className="cat-icon" src={require('../../../button-icons/blizzard.png')} alt="blizzard" />*/}</button>
 
+=======
+          <button id="hurricane-button" className="category-button" type="button" value="hurricane" onClick={e => handleAlertOptions(e.currentTarget.value)}>
+          <div className="button-content"></div>
+          </button>
+          <button id="flood-button" className="category-button" type="button" value="flood" onClick={e => handleAlertOptions(e.currentTarget.value)}></button>
+          <button id="forest-fire-button" className="category-button" type="button" value="forest fire" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="house-fire-button" className="category-button" type="button" value="house fire" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="earthquake-button" className="category-button" type="button" value="earthquake" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="landslide-button" className="category-button" type="button" value="landslide" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="traffic-accident-button" className="category-button" type="button" value="traffic accident" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="volcano-eruption-button" className="category-button" type="button" value="volcano eruption" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="tsunami-button" className="category-button" type="button" value="tsunami" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="thief-button" className="category-button" type="button" value="criminal activity" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="toxic-button" className="category-button" type="button" value="toxic waste" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+          <button id="blizzard-button" className="category-button" type="button" value="blizzard" onClick={e => handleAlertOptions(e.currentTarget.value)} />
+>>>>>>> Reformat icons directory
         </div>
       </div>
     ) : (
