@@ -10,19 +10,20 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
+import Loadable from 'react-loadable';
 // import gql from 'graphql-tag';
 
 import Dashboard from './components/Dashboard';
-import Alert from './components/create-alert/Alert';
-import AlertOptions from './components/create-alert/AlertOptions';
+// import Alert from './components/create-alert/Alert';
+// import AlertOptions from './components/create-alert/AlertOptions';
 import AlertFeed from './components/AlertFeed';
 import Login from './Login';
 import LoadingPage from './components/LoadingPage';
-import Profile from './components/Profile';
-import Map from './components/map/Map';
+// import Profile from './components/Profile';
+// import Map from './components/map/Map';
 import Modal from './components/create-alert/modal';
 import Settings from './components/Settings';
+import '../main.css';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
@@ -47,6 +48,25 @@ const client = new ApolloClient({
   link,
 });
 
+const Alert = Loadable({
+  loader: () => import('./components/create-alert/Alert'),
+  loading: () => <div>Loading...</div>,
+});
+
+const AlertOptions = Loadable({
+  loader: () => import('./components/create-alert/AlertOptions'),
+  loading: () => <div>Loading...</div>,
+});
+
+const Profile = Loadable({
+  loader: () => import('./components/Profile'),
+  loading: () => <div>Loading...</div>,
+});
+
+const Map = Loadable({
+  loader: () => import('./components/map/Map'),
+  loading: () => <div>Loading...</div>,
+});
 
 class App extends React.Component {
   constructor(props) {

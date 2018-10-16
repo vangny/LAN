@@ -5,6 +5,8 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { Router, Link } from "@reach/router";
 
+import '../main.css';
+
 class Login extends Component {
   constructor(props) {
     super(props);

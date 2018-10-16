@@ -1,4 +1,5 @@
 const express = require('express');
+const expressStaticGzip = require('express-static-gzip');
 const bodyparser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const iconv = require('iconv-lite');
@@ -15,8 +16,10 @@ const PORT = process.env.PORT || 9000;
 
 const app = express();
 
+app.use('/', expressStaticGzip(`${__dirname}/../client/dist`));
+
 app.use(bodyparser.json());
-app.use(express.static(`${__dirname}/../client/dist`));
+// app.use(express.static(`${__dirname}/../client/dist`));
 // app.use(express.static(`${__dirname}, "jsx"`));
 app.use('/graphql', bodyparser.json(), graphqlExpress({
   schema,
