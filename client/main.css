@@ -985,15 +985,40 @@ Profile Page
 Alert Options Page
 ==================== 
 */
+.lat-long-container {
+  text-align:center;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  padding: 5%;
+  border:solid;
+  border-radius:10px;
+  margin: 5%;
+  background-color:white;
+}
+
 .category-buttons-container {
   display:grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-gap: 1em;
+  padding: 5%
 }
 
 .category-button {
+  height: 95px;
+  width: 95px;
   /* height: 75%;
   width: 75%; */
-  border-radius: 10px;
+  position: relative;
+  border-radius:10px;
+  background-color:#b75d5d
+}
+
+.cat-icon {
+  position: relative;
+  height:75%;
+  width:75%;
+}
+
+.scale-down {
+  object-fit: scale-down;
 }

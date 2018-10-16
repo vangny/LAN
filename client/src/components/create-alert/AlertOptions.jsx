@@ -12,23 +12,36 @@ const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) =
   return latitude !== 'Loading...'
     ? (
       <div>
-        <div>{`lat: ${latitude} long: ${longitude}`}</div>
+        <div className="lat-long-container">
+          Current coordinates:
+          <br />
+          {`${latitude}, ${longitude}`}
+        </div>
         <div className="category-buttons-container">
 
-          <button id="hurricane-button" className="category-button" type="button" value="hurricane" onClick={e => handleAlertOptions(e.target.value)}>hurricane</button>
+          <button id="hurricane-button" className="category-button" type="button" value="hurricane" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/013-hurricane.png')} value="hurricane" alt="hurricane" /></button>
 
-          <button id="flood-button" className="category-button" type="button" value="flood" onClick={e => handleAlertOptions(e.target.value)}>{/*<img src={require('../../../dist/button-icons/016-flood.png')} alt="Flood" />*/}flood</button>
+          <button id="flood-button" className="category-button" type="button" value="flood" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/016-flood.png')} alt="flood" /></button>
 
-          <button id="fire-button" className="category-button" type="button" value="fire" onClick={e => handleAlertOptions(e.target.value)}>fire</button>
+          <button id="forest-fire-button" className="category-button" type="button" value="forest fire" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/015-fire.png')} alt="forest fire" /></button>
 
-          <button id="earthquake-button" className="category-button" type="button" value="earthquake" onClick={e => handleAlertOptions(e.target.value)}>earthquake</button>
+          <button id="house-fire-button" className="category-button" type="button" value="house fire" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/014-house.png')} alt="forest fire" /></button>
 
-          <button id="traffic-accident-button" className="category-button" type="button" value="traffic accident" onClick={e => handleAlertOptions(e.target.value)}>car crash</button>
+          <button id="earthquake-button" className="category-button" type="button" value="earthquake" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/018-earthquake.png')} alt="earthquake" /></button>
 
-          <button id="volcano-eruption" className="category-button" type="button" value="volcano eruption" onClick={e => handleAlertOptions(e.target.value)}>Volcano Eruption</button>
+          <button id="landslide-button" className="category-button" type="button" value="landslide" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/006-landslide-2.png')} alt="landslide" /></button>
 
-          <button id="tsunami-button" className="category-button" type="button" value="tsunami" onClick={e => handleAlertOptions(e.target.value)}>Tsunami</button>
+          <button id="traffic-accident-button" className="category-button" type="button" value="traffic accident" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/car-collision (1).png')} alt="traffic-accident" /></button>
 
+          <button id="volcano-eruption" className="category-button" type="button" value="volcano eruption" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/002-volcano.png')} alt="volcano-eruption" /></button>
+
+          <button id="tsunami-button" className="category-button" type="button" value="tsunami" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/003-tsunami.png')} alt="tsunami" /></button>
+
+          <button id="thief-button" className="category-button" type="button" value="criminal activity" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/thief.png')} alt="thief" /></button>
+
+          <button id="toxic-button" className="category-button" type="button" value="toxic waste" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/004-waste.png')} alt="toxic waste" /></button>
+
+          <button id="blizzard-button" className="category-button" type="button" value="blizzard" onClick={e => handleAlertOptions(e.currentTarget.value)}><img className="cat-icon" src={require('../../../button-icons/blizzard.png')} alt="blizzard" /></button>
 
         </div>
       </div>
