@@ -33,6 +33,7 @@ class Alert extends Component {
 
 /* eslint-disable */
   handleDrop(files) {
+    console.log(files);
     const { photoTag } = this.state;
     const upload = files.map((file) => {
       const formData = new FormData();
@@ -119,24 +120,22 @@ class Alert extends Component {
     return (
       <div className="alert-layout">
         <div className="location-info">
-          <h1>
+          <h2>
             Disaster Type:
             {' '}
-            {category.split(/\s+/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}
-          </h1>
+            {category}
+          </h2>
         </div>
         <div className="photo">
           {this.renderModal()}
           <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
+          <br />
           <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
-        </div>
-        <div className="notes">
-          <textarea size="" type="text" name="notes" placeholder="Enter any additional notes here" onChange={this.handleChange} value={notes} />
         </div>
         <Dropzone
           className="dropzone"
           name="file"
-          // type="file"
+          type="file"
           onDrop={this.handleDrop}
           multiple
           accept="image/*"
@@ -144,7 +143,11 @@ class Alert extends Component {
           <p>Drop files</p>
         </Dropzone>
         <div className="photo-preview">
+          <span>Photo preview</span>
           {this.showUploaded()}
+        </div>
+        <div className="notes">
+          <textarea cols="30" rows="3" type="text" name="notes" placeholder="Enter any additional notes here" onChange={this.handleChange} value={notes} />
         </div>
         <div className="submit">
           <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag, userId }}>

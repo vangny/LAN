@@ -741,6 +741,7 @@ ALERT COMPONENTS
     font-size: 35px;
     text-align: center;
   }
+*/
 
 .modal-container {
   background-color: white;
@@ -750,9 +751,9 @@ ALERT COMPONENTS
   text-align: center;
   overflow: scroll;
   overflow-x: hide;
-  max-height: 600px;
+  max-height: 100%;
 }
-
+/*
 .photo-button {
     background: green;
     border: none;
@@ -765,9 +766,10 @@ ALERT COMPONENTS
 .alert-layout {
   display: grid;
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   align-content: space-between;
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  max-height: 100%;
 
 }
 /*
@@ -794,14 +796,17 @@ ALERT COMPONENTS
     order: 4;
 } */
 
-textarea {
-  height: 20%;
+/* textarea {
+  text-align:center;
+  height: 75%;
   width:50%;
-}
+} */
 
 #submit-alert-button {
   border-radius:10px;
   background-color:#b75d5d;
+  height: 40px; 
+  width: 120px;
 }
 /* .user-photo {
     grid-row: 4;
@@ -1011,6 +1016,8 @@ Alert Options Page
   /* grid-auto-rows: minmax(65px, 100px); */
   padding: 5%;
   grid-gap: 10px;
+  place-items: center center;
+  /* align-items: center; */
 }
 
 .category-button {
