@@ -46,4 +46,8 @@ app.use('/api/tracker', (req, res) => {
     });
 });
 
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
+
 module.exports = app;

@@ -980,4 +980,20 @@ Profile Page
 }
 
 
+/*
+====================
+Alert Options Page
+==================== 
+*/
+.category-buttons-container {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 1em;
+}
 
+.category-button {
+  /* height: 75%;
+  width: 75%; */
+  border-radius: 10px;
+}

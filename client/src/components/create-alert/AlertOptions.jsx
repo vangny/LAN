@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) => {
   navigator.geolocation.watchPosition((position) => {
     appContext.setState({
@@ -14,10 +13,24 @@ const AlertOptions = ({ latitude, longitude, appContext, handleAlertOptions }) =
     ? (
       <div>
         <div>{`lat: ${latitude} long: ${longitude}`}</div>
-        <button id="hurricane" type="button" value="hurricane" onClick={e => handleAlertOptions(e.target.value)}>hurricane</button>
-        <button id="flood" type="button" value="flood" onClick={e => handleAlertOptions(e.target.value)}>flood</button>
-        <button id="wildfire" type="button" value="wildfire" onClick={e => handleAlertOptions(e.target.value)}>wildfire</button>
-        <button id="earthquake" type="button" value="earthquake" onClick={e => handleAlertOptions(e.target.value)}>earthquake</button>
+        <div className="category-buttons-container">
+
+          <button id="hurricane-button" className="category-button" type="button" value="hurricane" onClick={e => handleAlertOptions(e.target.value)}>hurricane</button>
+
+          <button id="flood-button" className="category-button" type="button" value="flood" onClick={e => handleAlertOptions(e.target.value)}>{/*<img src={require('../../../dist/button-icons/016-flood.png')} alt="Flood" />*/}flood</button>
+
+          <button id="fire-button" className="category-button" type="button" value="fire" onClick={e => handleAlertOptions(e.target.value)}>fire</button>
+
+          <button id="earthquake-button" className="category-button" type="button" value="earthquake" onClick={e => handleAlertOptions(e.target.value)}>earthquake</button>
+
+          <button id="traffic-accident-button" className="category-button" type="button" value="traffic accident" onClick={e => handleAlertOptions(e.target.value)}>car crash</button>
+
+          <button id="volcano-eruption" className="category-button" type="button" value="volcano eruption" onClick={e => handleAlertOptions(e.target.value)}>Volcano Eruption</button>
+
+          <button id="tsunami-button" className="category-button" type="button" value="tsunami" onClick={e => handleAlertOptions(e.target.value)}>Tsunami</button>
+
+
+        </div>
       </div>
     ) : (
       <p>
