@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const moment = require('moment');
+
 require('dotenv').config();
 
 const sequelize = new Sequelize(`${process.env.DB_URL}`);
@@ -113,7 +114,7 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   );
 };
 
-const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag) => {
+const createAlert = (EventId, category, latitude, longitude, notes, photo, photoTag, userId) => {
   return Alert.create({
     EventId, category, latitude, longitude, notes, url: photo, photoTag,
   }).then(alert => alert);
@@ -168,6 +169,26 @@ const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
     // .catch(err => err);
 }
 
+const sendToNotofications = (id) => {
+  console.log('DATA in DB', id);
+  const userTable = User.findAll({ where: { id: id } });
+
+  const friendsTable = getFriends(id);
+
+  const alerts = Alert.findAll({
+    limit: 1,
+    order: [['createdAt', 'DESC']],
+  });
+
+  return Promise.all([userTable, alerts, friendsTable])
+    .then((values) => {
+      return values;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 exports.Event = Event;
 exports.User = User;
 exports.Alert = Alert;
@@ -183,3 +204,4 @@ exports.Location = Location;
 exports.Friendships = Friendships;
 exports.findOrCreateFriendship = findOrCreateFriendship;
 exports.getFriends = getFriends;
+exports.sendToNotofications = sendToNotofications;

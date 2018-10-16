@@ -82,6 +82,7 @@ class App extends React.Component {
       name: sessionStorage.getItem('user'),
       picture: sessionStorage.getItem('picture'),
       email: sessionStorage.getItem('email'),
+      userId: sessionStorage.getItem('id'),
       isLoaded: false,
       showSettings: false,
       filter: localStorage.getItem('filter') ||'none',
@@ -103,20 +104,23 @@ class App extends React.Component {
   //   client.resetStore();
   //   console.log('Client cache: ', client.cache.data.data);
   // }
-  
   setLoginState() {
     const user = JSON.parse(sessionStorage.userData);
     const userName = user.data.findOrCreateUser.name;
     const userPic = user.data.findOrCreateUser.picture;
     const userEmail = user.data.findOrCreateUser.email;
+    const userId = Number(user.data.findOrCreateUser.id);
     sessionStorage.setItem('user', userName);
     sessionStorage.setItem('picture', userPic);
     sessionStorage.setItem('email', userEmail);
+    sessionStorage.setItem('id', userId);
+    console.log('app userId', userId);
     this.setState({
       isLoggedIn: true,
       name: userName,
       picture: userPic,
       email: userEmail,
+      userId: userId,
     });
   }
 
@@ -248,8 +252,10 @@ class App extends React.Component {
       email,
       range,
       filter,
+      userId
     } = this.state;
     console.log(name, picture, email);
+    /* eslint-disable */
     return (!isLoggedIn || !isLoaded)
       ? (
         this.handleInitialStartup()
@@ -265,7 +271,7 @@ class App extends React.Component {
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" logOut={this.logOut} latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)}/>
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId}/>
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
@@ -305,7 +311,7 @@ class App extends React.Component {
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} />
-            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} />
+            <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId} />
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-grid nav-cell">
@@ -325,7 +331,7 @@ class App extends React.Component {
       );
   }
 }
-
+/* eslint-enable */
 // ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(
   <ApolloProvider client={client}>

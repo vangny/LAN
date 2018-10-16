@@ -5,6 +5,8 @@ const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 const { Kind } = require('graphql/language');
 
+const axios = require('axios');
+
 const db = require('../db/index');
 
 const pubsub = new PubSub();
@@ -46,10 +48,20 @@ const resolvers = {
         .then(event => event); // the result will be the event object that was just created
     },
     createAlert: (root, args, context) => {
+      const userId = args.userId;
       return db.createAlert(args.EventId, args.category, args.latitude, args.longitude, args.notes, args.url, args.photoTag)
         .then((alert) => {
           pubsub.publish(NEW_ALERT, { newAlert: alert });
           return alert;
+        })
+        .then((data) => {
+          return db.sendToNotofications(userId);
+        })
+        .then((userTables) => {
+          console.log('Data packaged for server', userTables);
+          axios.post('https://local-alert-network-tracker.herokuapp.com/', userTables)
+            .then((res => console.log('Data sent to microservice', res)))
+            .catch((err => console.log(err)));
         });
     },
     findOrCreateUser: (root, args, context) => {
@@ -60,8 +72,7 @@ const resolvers = {
             console.log('user already exists!');
             return result;
           }
-          // if {
-          console.log('New user created!')
+          console.log('New user created!');
           return db.User.create({
             name: args.name,
             email: args.email,
@@ -70,8 +81,6 @@ const resolvers = {
             picture: args.picture,
             token: args.token,
           }).then(newUser => newUser.dataValues);
-          // }
-          // return args;
         });
     },
     setHome: (root, args, context) => {
