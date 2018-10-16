@@ -82,7 +82,7 @@ class App extends React.Component {
       name: sessionStorage.getItem('user'),
       picture: sessionStorage.getItem('picture'),
       email: sessionStorage.getItem('email'),
-      userId: '',
+      userId: sessionStorage.getItem('id'),
       isLoaded: false,
       showSettings: false,
       filter: localStorage.getItem('filter') ||'none',
