@@ -77,65 +77,6 @@ class Alert extends Component {
         </div>);
   }
 
-  // handleSubmit() {
-  //   const {
-  //     category,
-  //     EventId,
-  //     latitude,
-  //     longitude,
-  //   } = this.props;
-  //   const { notes, photo, photoTag } = this.state;
-  //   // const alertData = {
-  //   //   category,
-  //   //   EventId,
-  //   //   latitude,
-  //   //   longitude,
-  //   //   notes,
-  //   //   photo,
-  //   //   photoTag,
-  //   // };
-    
-  //   const query = gql`
-  //   mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
-  //     createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
-  //       id
-  //       category
-  //       createdAt
-  //       url
-  //     }
-  //   }
-  //   `;
-  //   fetch('/graphql', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       query,
-  //       variables: {
-  //         category, latitude, longitude, notes, photo, photoTag,
-  //       },
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then((newAlert) => {
-  //       console.log('Data returned after mutation ', newAlert.data);
-  //       navigate('/');
-  //     });
-  // }
-
-  // waitForData() {
-  //   const { latitude } = this.props;
-  //   return latitude !== 'Loading...' ? (
-  //     <button type="button" onClick={this.handleSubmit}>Submit</button>
-  //   ) : (
-  //     <p>
-  //       Still grabbing your location... Please wait
-  //     </p>
-  //   );
-  // }
-
   changeModal(view) {
     this.setState({
       modal: view,
@@ -190,7 +131,7 @@ class Alert extends Component {
           <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
         </div>
         <div className="notes">
-          <input size="" type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
+          <textarea size="" type="text" name="notes" placeholder="Enter any additional notes here" onChange={this.handleChange} value={notes} />
         </div>
         <Dropzone
           className="dropzone"
@@ -200,9 +141,9 @@ class Alert extends Component {
           multiple
           accept="image/*"
         >
-          <p>Drop files or click here to upload</p>
+          <p>Drop files</p>
         </Dropzone>
-        <div>
+        <div className="photo-preview">
           {this.showUploaded()}
         </div>
         <div className="submit">
@@ -212,6 +153,7 @@ class Alert extends Component {
               if (error) return <p>Error creating alert</p>;
               return (
                 <button
+                  id="submit-alert-button"
                   type="button"
                   onClick={() => {
                     mutate();

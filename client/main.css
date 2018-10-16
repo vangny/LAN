@@ -727,7 +727,7 @@ CSS for Desktops - Dashboard
 ALERT COMPONENTS
 ==================== 
 */
-.button-alerts {
+/* .button-alerts {
     cursor: pointer;
     border: none;
     border-radius: 3px;
@@ -761,16 +761,16 @@ ALERT COMPONENTS
     padding: 10px 20px;
     font-size: 20px;
 }
-
+*/
 .alert-layout {
   display: grid;
   align-items: center;
   justify-content: center;
   align-content: space-between;
-  grid-template-rows: repeat(5, auto);
+  grid-template-rows: repeat(7, 1fr);
 
 }
-
+/*
 .photo {
     grid-row: 1;
     order: 1;
@@ -792,19 +792,26 @@ ALERT COMPONENTS
 .notes {
     grid-row: 4;
     order: 4;
+} */
+
+textarea {
+  height: 20%;
+  width:50%;
 }
 
-.user-photo {
+#submit-alert-button {
+  border-radius:10px;
+  background-color:#b75d5d;
+}
+/* .user-photo {
     grid-row: 4;
     order: 4;
     text-align: center;
     font-style: bold;
 }
 
-.submit {
-    grid-row: 5;
-    order: 5;
-}
+
+*/
 
 /*
 ====================
@@ -1032,12 +1039,12 @@ Alert Options Page
   height:100%;
   width:100%;
 }
-/* .cat-icon {
-  text-align:center;
-  position: absolute;
+.cat-icon {
+  position: relative;
   height:75%;
   width:75%;
-} */
+  float: right;
+}
 
 #hurricane-button {
   /* background-image:url(/../button-icons/013-hurricane.png); */

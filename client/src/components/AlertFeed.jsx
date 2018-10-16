@@ -47,44 +47,46 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
     }
     `;
   
-  // const insertIcon = (category) => {
-  //   if (category === 'hurricane') {
-  //     return <img 
-  //   }
-  //   if (category === 'flood') {
+  const insertIcon = (category) => {
+    return null;
+    // console.log('inserting icon!');
+    // if (category === 'hurricane') {
+    //   return <img className="cat-icon" src={require('../../../icons/button-icons/013-hurricane.png')} value="hurricane" alt="hurricane" />;
+    // }
+    // if (category === 'flood') {
       
-  //   }
-  //   if (category === 'forest fire') {
+    // }
+    // if (category === 'forest fire') {
       
-  //   }
-  //   if (category === 'house fire') {
+    // }
+    // if (category === 'house fire') {
       
-  //   }
-  //   if (category === 'earthquake') {
+    // }
+    // if (category === 'earthquake') {
       
-  //   }
-  //   if (category === 'landslide') {
+    // }
+    // if (category === 'landslide') {
       
-  //   }
-  //   if (category === 'traffic accident') {
+    // }
+    // if (category === 'traffic accident') {
       
-  //   }
-  //   if (category === 'volcano eruption') {
+    // }
+    // if (category === 'volcano eruption') {
 
-  //   }
-  //   if (category === 'tsunami') {
+    // }
+    // if (category === 'tsunami') {
 
-  //   }
-  //   if (category === 'criminal activity') {
+    // }
+    // if (category === 'criminal activity') {
 
-  //   }
-  //   if (category === 'toxic waste') {
+    // }
+    // if (category === 'toxic waste') {
 
-  //   }
-  //   if (category === 'blizzard') {
+    // }
+    // if (category === 'blizzard') {
 
-  //   }
-  // }
+    // }
+  }
 
   let unsubscribe = null;
   return (
@@ -116,6 +118,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                   {moment(alert.createdAt).fromNow()}
                   <br />
                   {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                  {insertIcon(alert.category)}
                 </div>
                 ): (alert.url !== null ? (
                 <div className="alert" key={Number(alert.id)}>
@@ -128,6 +131,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                     {moment(alert.createdAt).fromNow()}
                     <br />
                     {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                    {insertIcon(alert.category)}
                   </div>
                 </div>
                 ) : (
@@ -138,6 +142,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                     {moment(alert.createdAt).fromNow()}
                     <br />
                     {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                    {insertIcon(alert.category)}
                   </div>
                 </div>
                 )
