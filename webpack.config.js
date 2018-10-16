@@ -4,6 +4,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = (env) => {
   console.log(`WEBPACK ENV: ${env}`);
@@ -20,13 +21,20 @@ module.exports = (env) => {
   const CleanPLugin = new CleanWebpackPlugin(['dist'], {
     root: CLI_DIR,
     verbose: true,
-    dry: false
+    dry: false,
   });
 
   const HTMLPlugin = new HtmlWebpackPlugin({
     template: `${CLI_DIR}/index.html`,
     filename: `${DIST_DIR}/index.html`,
     chunksSortMode: 'none',
+  });
+
+  const GzipPlugin = new CompressionPlugin({
+    test: /\.js(\?.*)?$/i,
+    algorithm: 'gzip',
+    deleteOriginalAssets: true, // change to false to see files in analyzer
+    // threshold: 10240,
   });
 
   const config = {};
@@ -48,9 +56,10 @@ module.exports = (env) => {
         commons: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendor',
-          chunks: 'initial',
-        }
-      }
+          chunks: 'all',
+          enforce: true,
+        },
+      },
     },
     runtimeChunk: {
       name: 'manifest',
@@ -110,7 +119,7 @@ module.exports = (env) => {
     extensions: ['.js', '.jsx'],
   };
 
-  config.plugins = [AnalyzerPlugin, CleanPLugin, HTMLPlugin];
+  config.plugins = [AnalyzerPlugin, CleanPLugin, HTMLPlugin, GzipPlugin];
 
   if (isProd) {
     config.output = {
