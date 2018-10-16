@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Link, Router, navigate, Redirect } from "@reach/router";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link, Router, navigate, Redirect } from '@reach/router';
 // import axios from "axios";
-import moment from "moment";
+import moment from 'moment';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { split } from 'apollo-link';
@@ -10,6 +10,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+
 // import gql from 'graphql-tag';
 
 import Dashboard from './components/Dashboard';
@@ -22,7 +23,6 @@ import Profile from './components/Profile';
 import Map from './components/map/Map';
 import Modal from './components/create-alert/modal';
 import Settings from './components/Settings';
-
 
 const httpLink = new HttpLink({ uri: '/graphql' });
 
@@ -58,11 +58,10 @@ class App extends React.Component {
       category: null,
       timeStamp: null,
       EventId: null,
-      alerts: null,
       isLoggedIn: JSON.parse(sessionStorage.getItem('loggedIn')),
-      name: '',
-      picture: '',
-      email: '',
+      name: sessionStorage.getItem('user'),
+      picture: sessionStorage.getItem('picture'),
+      email: sessionStorage.getItem('email'),
       isLoaded: false,
       showSettings: false,
       filter: localStorage.getItem('filter') ||'none',
@@ -86,11 +85,13 @@ class App extends React.Component {
   // }
   
   setLoginState() {
-    let { name, picture, email } = this.state;
-    let user = JSON.parse(sessionStorage.userData);
-    let userName = user.data.findOrCreateUser.name;
-    let userPic = user.data.findOrCreateUser.picture;
-    let userEmail = user.data.findOrCreateUser.email;
+    const user = JSON.parse(sessionStorage.userData);
+    const userName = user.data.findOrCreateUser.name;
+    const userPic = user.data.findOrCreateUser.picture;
+    const userEmail = user.data.findOrCreateUser.email;
+    sessionStorage.setItem('user', userName);
+    sessionStorage.setItem('picture', userPic);
+    sessionStorage.setItem('email', userEmail);
     this.setState({
       isLoggedIn: true,
       name: userName,
@@ -114,6 +115,9 @@ class App extends React.Component {
 
   logOut() {
     sessionStorage.removeItem('loggedIn');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('picture');
+    sessionStorage.removeItem('email');
     this.setState({ isLoggedIn: false });
     navigate('/');
   }
@@ -129,13 +133,12 @@ class App extends React.Component {
 
   handleInitialStartup() {
     const { isLoggedIn, isLoaded } = this.state;
-    
     if (!isLoggedIn) {
       return (
         <div>
           <Router>
             <Redirect noThrow from="/" to="/login" />
-            <LoadingPage path="/" load={this.setLoadedState}  />
+            <LoadingPage path="/" load={this.setLoadedState} />
             <Login path="/login" login={this.setLoginState} />
           </Router>
         </div>
@@ -216,7 +219,6 @@ class App extends React.Component {
       latitude,
       longitude,
       category,
-      timeStamp,
       EventId,
       isLoggedIn,
       isLoaded,
@@ -226,6 +228,7 @@ class App extends React.Component {
       range,
       filter,
     } = this.state;
+    console.log(name, picture, email);
     return (!isLoggedIn || !isLoaded)
       ? (
         this.handleInitialStartup()
