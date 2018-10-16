@@ -1,5 +1,5 @@
 const express = require('express');
-var expressStaticGzip = require("express-static-gzip");
+const expressStaticGzip = require('express-static-gzip');
 const bodyparser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const iconv = require('iconv-lite');
