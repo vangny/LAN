@@ -46,6 +46,46 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
       }
     }
     `;
+  
+  // const insertIcon = (category) => {
+  //   if (category === 'hurricane') {
+  //     return <img 
+  //   }
+  //   if (category === 'flood') {
+      
+  //   }
+  //   if (category === 'forest fire') {
+      
+  //   }
+  //   if (category === 'house fire') {
+      
+  //   }
+  //   if (category === 'earthquake') {
+      
+  //   }
+  //   if (category === 'landslide') {
+      
+  //   }
+  //   if (category === 'traffic accident') {
+      
+  //   }
+  //   if (category === 'volcano eruption') {
+
+  //   }
+  //   if (category === 'tsunami') {
+
+  //   }
+  //   if (category === 'criminal activity') {
+
+  //   }
+  //   if (category === 'toxic waste') {
+
+  //   }
+  //   if (category === 'blizzard') {
+
+  //   }
+  // }
+
   let unsubscribe = null;
   return (
     <div className="feed">
@@ -103,7 +143,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                 )
               )))}
             </div>
-          ) ; 
+          ); 
         }}
       </Query>
     </div>

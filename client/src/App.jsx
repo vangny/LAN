@@ -179,39 +179,40 @@ class App extends React.Component {
 
   handleAlertOptions(category) {
     const { latitude, longitude } = this.state;
-    this.setState({
-      category,
-      timeStamp: moment().format(),
-    }, () => {
-      const { timeStamp } = this.state;
-
-      const query = `
-      mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
-        findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
-          id
-          category
-        }
-      }`;
-      fetch('/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          query,
-          variables: {
-            latitude, longitude, category, timeStamp,
+    if (confirm(`Please confirm that you want to create a(n) ${category.toUpperCase()} alert`)) {
+      this.setState({
+        category,
+        timeStamp: moment().format(),
+      }, () => {
+        const { timeStamp } = this.state;
+        const query = `
+        mutation FindOrCreateEvent($category: String, $timeStamp: Date, $latitude: Float, $longitude: Float) {
+          findOrCreateEvent(category: $category, latitude: $latitude, longitude: $longitude, timeStamp: $timeStamp) {
+            id
+            category
+          }
+        }`;
+        fetch('/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
           },
-        }),
-      })
-        .then(response => response.json())
-        .then((event) => {
-          console.log('Alert will be attached to this event: ', event.data.findOrCreateEvent);
-          this.setState({ EventId: Number(event.data.findOrCreateEvent.id) });
-          navigate('/alert');
-        });
-    });
+          body: JSON.stringify({
+            query,
+            variables: {
+              latitude, longitude, category, timeStamp,
+            },
+          }),
+        })
+          .then(response => response.json())
+          .then((event) => {
+            console.log('Alert will be attached to this event: ', event.data.findOrCreateEvent);
+            this.setState({ EventId: Number(event.data.findOrCreateEvent.id) });
+            navigate('/alert');
+          });
+      });
+    }
   }
 
   handleSettings() {
