@@ -192,7 +192,7 @@ class Alert extends Component {
         <Dropzone
           className="dropzone"
           name="file"
-          type="file"
+          // type="file"
           onDrop={this.handleDrop}
           multiple
           accept="image/*"

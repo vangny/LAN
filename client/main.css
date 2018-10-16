@@ -986,39 +986,151 @@ Alert Options Page
 ==================== 
 */
 .lat-long-container {
-  text-align:center;
-  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  padding: 5%;
-  border:solid;
-  border-radius:10px;
-  margin: 5%;
-  background-color:white;
+  text-align:right;
+  vertical-align:text-top;
+  /* font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; */
+  font-size:10px;
+  /* padding: 5%; */
+  /* border:solid; */
+  /* border-width: 1px;
+  border-radius:10px; */
+  margin: 2%;
+  /* background-color:white; */
 }
 
 .category-buttons-container {
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-gap: 1em;
-  padding: 5%
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  /* grid-auto-rows: minmax(65px, 100px); */
+  padding: 5%;
+  grid-gap: 10px;
 }
 
 .category-button {
-  height: 95px;
-  width: 95px;
-  /* height: 75%;
-  width: 75%; */
+  /* height: 95px;
+  width: 95px; */
+  height: 100%;
+  width: 85%;
   position: relative;
+  text-align:center;
   border-radius:10px;
-  background-color:#b75d5d
+  /* border:solid;
+  border-width: 1px; */
+  background-color:#b75d5d;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.cat-icon {
-  position: relative;
+.category-button::before {
+  content:'';
+  display: block;
+  padding-top:100%;
+}
+
+.button-content {
+  position:absolute;
+  top:0; left:0;
+  height:100%;
+  width:100%;
+}
+/* .cat-icon {
+  text-align:center;
+  position: absolute;
   height:75%;
   width:75%;
+} */
+
+#hurricane-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/013-hurricane.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
 }
 
-.scale-down {
-  object-fit: scale-down;
+#flood-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/016-flood.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#forest-fire-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/015-fire.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#house-fire-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/014-house.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#earthquake-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/017-earthquake-1.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#landslide-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/006-landslide-2.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#traffic-accident-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/car-collision\ \(1\).png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#volcano-eruption-button{
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/001-volcano-1.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#tsunami-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/003-tsunami.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#thief-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/thief.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#blizzard-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/blizzard.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+#toxic-button {
+  /* background-image:url(/../button-icons/013-hurricane.png); */
+  background-image:url(../../icons/button-icons/004-waste.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
 }
