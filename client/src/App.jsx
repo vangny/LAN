@@ -82,7 +82,7 @@ class App extends React.Component {
       name: sessionStorage.getItem('user'),
       picture: sessionStorage.getItem('picture'),
       email: sessionStorage.getItem('email'),
-      userId: Number(JSON.parse(sessionStorage.getItem('userData')).data.findOrCreateUser.id),
+      userId: '',
       isLoaded: false,
       showSettings: false,
       filter: localStorage.getItem('filter') ||'none',
@@ -104,7 +104,6 @@ class App extends React.Component {
   //   client.resetStore();
   //   console.log('Client cache: ', client.cache.data.data);
   // }
-  
   setLoginState() {
     const user = JSON.parse(sessionStorage.userData);
     const userName = user.data.findOrCreateUser.name;
@@ -256,6 +255,7 @@ class App extends React.Component {
       userId
     } = this.state;
     console.log(name, picture, email);
+    /* eslint-disable */
     return (!isLoggedIn || !isLoaded)
       ? (
         this.handleInitialStartup()
@@ -331,7 +331,7 @@ class App extends React.Component {
       );
   }
 }
-
+/* eslint-enable */
 // ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(
   <ApolloProvider client={client}>
