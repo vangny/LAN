@@ -172,41 +172,15 @@ const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
 const sendToNotofications = (id) => {
   console.log('DATA in DB', id);
   const userTable = User.findAll({ where: { id: id } });
-  let friends = [];
-  let output = [];
-  const friendsTable = (
-    Friendships.findAll({ where: { user1: id } })
-      .then((data) => {
-        // Extract friend unique id values
-        JSON.stringify(data, (key, value) => {
-          if (key === 'user2') friends.push(value);
-          return value;
-        });
-      })
-      .then(() => {
-        if (friends.length > 0) {
-          console.log('what am I', friends);
-          for (let i = 0; i < friends.length; ++i) {
-            let tempFriend = Number(friends[i]);
-            User.findAll({ where: { id: tempFriend } })
-              .then((result) => {
-                console.log('huh', result);
-                return output.push(result);
-              });
-          }
-          console.log('output is', output);
-          return output;
-        }
-        return ['User has no friends'];
-      })
-  );
+
+  const friendsTable = getFriends(id);
 
   const alerts = Alert.findAll({
     limit: 1,
     order: [['createdAt', 'DESC']],
   });
 
-  return Promise.all([userTable, friendsTable, alerts])
+  return Promise.all([userTable, alerts, friendsTable])
     .then((values) => {
       return values;
     })
