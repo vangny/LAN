@@ -916,28 +916,26 @@ Profile Page
 */
 .profile-layout {
   display: grid;
-  grid-gap: 5px;
+  grid-gap: 1px;
   /* background-image: linear-gradient(130deg, #537895 , #09203f
   ); */
   background-color: #f0f0f1;
-  height: 100%;
-  width: 100%;
+  height: minmax(100px, 1fr);
   margin: auto;
-  grid-template-rows: 10% 30% 25% 25% 10%;
+  grid-template-rows: 10% 20% 60% 10%;
   grid-template-areas: 'header'
                        'avatar'
-                       'feed'
                        'friends'
                        'footer' 
 }
 
 .avatar-card {
   grid-area: avatar;
-  max-width: 300px;
-  max-height: 400px;
+  max-width: 200px;
+  max-height: 100px;
   min-height: 100%;
-  margin: 25px;
-  padding: 50px;
+  margin: 10px;
+  padding: 10px;
   text-align: center;
   font-family: arial;
   display: flex;
@@ -962,21 +960,12 @@ Profile Page
   margin: 20px;
 }
 
-.friend-feed {
-  grid-area: feed;
+.friends {
+  grid-area: friends;
   display: flex;
-  align-items: center;
   justify-self: center;
+  align-items: flex-start;
   flex-direction: column;
-  max-width: 300px;
-  min-height: 100px;
-  margin: 35px;
-  border: 1px solid #77777769;
-  background-color: white;
-  padding: 30px 50px 30px 50px;
-  box-shadow: 0 0 1em #80808066;
-  overflow: scroll;
-  order: 2;
 }
 
 .friend-list {
@@ -985,10 +974,9 @@ Profile Page
   align-items: center;
   justify-self: center;
   flex-direction: column;
-  max-height: 400px;
-  max-width: 300px;
+  max-height: 200px;
+  max-width: 200px;
   order: 3;
-  
 }
 
 .friend-avatar {
@@ -1012,15 +1000,14 @@ Profile Page
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px;
+  padding: 1px;
 
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-  font-size: 72px;
-  padding: 80px 50px;
+  font-size: 42px;
+  /* padding: 40px 20px; */
   text-align: center;
   text-transform: uppercase;
   /* text-rendering: optimizeLegibility; */
-
   color: #f0f0f1;
   background-color: #333;
   letter-spacing: .1em;
