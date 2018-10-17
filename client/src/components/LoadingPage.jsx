@@ -18,7 +18,7 @@ class LoadingPage extends Component {
     return (
       <div className="loading-container">
         <div className="logo">
-          <img src={require('../../../icons/icon-384x384.png')} alt="" />
+          <img src={require('../../../icons/logo/icon-384x384.png')} alt="" />
         </div>
         <div className="loading-page-loading">
           <span className="loading-dot">.</span>
@@ -30,7 +30,7 @@ class LoadingPage extends Component {
       </div>
     );
   }
-  
-};
+
+}
 
 export default LoadingPage;

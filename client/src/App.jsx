@@ -293,7 +293,7 @@ class App extends React.Component {
           {this.renderSettings()}
           <div to="/" className="header nav-cell">
             <div className="header-icon" >
-              <img src={require('../../icons/icon-72x72.png')} alt="" />
+              <img src={require('../../icons/logo/icon-72x72.png')} alt="" />
             </div>
             <div className="header-title">
               <span>Local Alert Network</span>
@@ -335,7 +335,7 @@ class App extends React.Component {
 // ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App client={client}/>
+    <App client={client} />
   </ApolloProvider>,
   document.getElementById('app'),
 );

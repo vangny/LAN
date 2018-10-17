@@ -102,7 +102,7 @@ class Login extends Component {
       <div className="login-container">
         <div className="logo-title-container">
           <div className="login-logo">
-            <img src={require('../../icons/icon-152x152.png')} alt="" />
+            <img src={require('../../icons/logo/icon-152x152.png')} alt="" />
           </div>
           <div className="login-title">
             <span>Local Alert Network</span>
