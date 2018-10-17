@@ -94,14 +94,14 @@ class Profile extends Component {
           <h2 className="ava-name">{name}</h2>
           <button type="button" className="location-button" onClick={() => this.setHome()}>Set Home</button>
           <button type="button" className="logOut-button" onClick={logOut}>
-          Log Out of Account
+          Log Out
           </button>
         </div>
         {/* <div className="friend-feed">
           <AlertFeed latitude={latitude} longitude={longitude} />
         </div> */}
         <div className="friends">
-          <h1>Friends</h1>
+          <h1 className="friend-title">Friends</h1>
           <div className="friend-search">
             <Mutation mutation={findOrCreateFriendship} variables={{ userId, userEmail, friendEmail }}>
               {(mutate, { loading, error }) => {
@@ -110,8 +110,9 @@ class Profile extends Component {
                   return (
                     <div className="friend-search">
                       <p>Error: Email address not found</p>
-                      <input className="friend-search" placeholder="Search for friend by email address" onChange={e => this.friendSearchHandler(e)} />
+                      <input className="friend-search" placeholder="Search by email" onChange={e => this.friendSearchHandler(e)} />
                       <button
+                        className="friend-button"
                         type="button" 
                         onClick={() => {
                           mutate();
@@ -124,8 +125,8 @@ class Profile extends Component {
                 }
                 return (
                   <div>
-                    <input className="friend-search" placeholder="Search for friend by email address" onChange={e => this.friendSearchHandler(e)} />
-                    <button type="button" onClick={mutate}>Add Friend</button>
+                    <input className="friend-search" placeholder="Search by email" onChange={e => this.friendSearchHandler(e)} />
+                    <button className="friend-button" type="button" onClick={mutate}>Add Friend</button>
                   </div>
                 );
               }}
@@ -137,9 +138,9 @@ class Profile extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error getting friend list</p>;
                 return (data.friends.map(friend => (
-                  <div key={Math.random() * 1000000000000}className="friend">
-                    <img src={friend.picture} />
-                    <span>{friend.name}</span>
+                  <div key={Math.random() * 1000000000000} className="friend">
+                    <img className="friend-avatar" alt="friend avatar" src={friend.picture} />
+                    <span className="friend-text">{friend.name}</span>
                   </div>
                 )));
               }}
