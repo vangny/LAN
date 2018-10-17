@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
-const AlertCamera = () => {
+const AlertCamera = ({ changeModal }) => {
   // Stream conversion code based on react-html5-camera-photo library
   const dataURItoConvert = (dataURI) => {
     let byteString = atob(dataURI.split(',')[1]);
@@ -79,21 +79,27 @@ const AlertCamera = () => {
   };
 
   return (
-    <Camera
-      onTakePhoto={(dataUri) => { onTakePhoto(dataUri); }}
-      onCameraError={(error) => { onCameraError(error); }}
-      idealFacingMode={FACING_MODES.ENVIRONMENT}
-      idealResolution={{ width: 2500, height: 3000 }}
-      imageType={IMAGE_TYPES.JPG}
-      imageCompression={0.97}
-      isMaxResolution={false}
-      isImageMirror={false}
-      isDisplayStartCameraError={true}
-      sizeFactor={1}
-      onCameraStart={(stream) => { onCameraStart(stream); }}
-      onCameraStop={() => { onCameraStop(); }}
-      autoPlay={true}
-    />
+
+    <div className="photo-modal-container">
+      <div className="camera-view">
+        <Camera
+          onTakePhoto={(dataUri) => { onTakePhoto(dataUri); }}
+          onCameraError={(error) => { onCameraError(error); }}
+          idealFacingMode={FACING_MODES.ENVIRONMENT}
+          idealResolution={{ width: 2500, height: 3000 }}
+          imageType={IMAGE_TYPES.JPG}
+          imageCompression={0.97}
+          isMaxResolution={false}
+          isImageMirror={false}
+          isDisplayStartCameraError={true}
+          sizeFactor={1}
+          onCameraStart={(stream) => { onCameraStart(stream); }}
+          onCameraStop={() => { onCameraStop(); }}
+          autoPlay={true}
+        />
+        <button className="exit-camera-button" type="button" onClick={() => changeModal('')}>Close Camera</button>
+      </div>
+    </div>
 
   );
 };

@@ -50,40 +50,41 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
   const insertIcon = (category) => {
     return null;
     // console.log('inserting icon!');
-    // if (category === 'hurricane') {
-    //   return <img className="cat-icon" src={require('../../../icons/button-icons/013-hurricane.png')} value="hurricane" alt="hurricane" />;
+    // if (category === 'Hurricane') {
+    //   console.log('running hurricane icon insertion!')
+    //   return <img className="alert-icon" src={require('../../../icons/button-icons/013-hurricane.png')} value="Hurricane" alt="hurricane" />;
     // }
-    // if (category === 'flood') {
+    // if (category === 'Flood') {
       
     // }
-    // if (category === 'forest fire') {
+    // if (category === 'Forest Fire') {
       
     // }
-    // if (category === 'house fire') {
+    // if (category === 'Fouse Fire') {
       
     // }
-    // if (category === 'earthquake') {
+    // if (category === 'Earthquake') {
       
     // }
-    // if (category === 'landslide') {
+    // if (category === 'Landslide') {
       
     // }
-    // if (category === 'traffic accident') {
+    // if (category === 'Traffic Accident') {
       
     // }
-    // if (category === 'volcano eruption') {
+    // if (category === 'Volcano Eruption') {
 
     // }
-    // if (category === 'tsunami') {
+    // if (category === 'Tsunami') {
 
     // }
-    // if (category === 'criminal activity') {
+    // if (category === 'Criminal Activity') {
 
     // }
-    // if (category === 'toxic waste') {
+    // if (category === 'Toxic Waste') {
 
     // }
-    // if (category === 'blizzard') {
+    // if (category === 'Blizzard') {
 
     // }
   }

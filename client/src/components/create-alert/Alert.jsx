@@ -68,10 +68,14 @@ class Alert extends Component {
 
   showUploaded() {
     const { photo } = this.state;
-    return photo === null ? <p>{' '}</p>
+    return photo === null ? (
+      <div className="empty">
+      Uploaded photo preview will be shown here
+      </div>
+    )
       : (
-        <div className="user-photo">
-          <img src={photo} alt="uploaded" width="200" height="150" />
+        <div className="uploaded-photo-container">
+          <img className="uploaded-photo" src={photo} alt="uploaded" />
           <p>
             Photo successfully uploaded!
           </p>
@@ -86,22 +90,30 @@ class Alert extends Component {
 
   renderModal() {
     const { modal } = this.state;
-    if (modal === 'camera') {
-      return (
-        <Modal>
-          <div className="modal-container">
-            <AlertCamera
-              changeModal={this.changeModal.bind(this)}
-            />
-            <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
-          </div>
-        </Modal>
-      );
-    }
+    return modal === 'camera' ? (
+      <Modal>
+        <AlertCamera
+          changeModal={this.changeModal.bind(this)}
+        />
+      </Modal>
+    ) : null;
+
+    // if (modal === 'camera') {
+    //   return (
+    //     <Modal>
+    //       <div className="modal-container">
+    //         <AlertCamera
+    //           changeModal={this.changeModal.bind(this)}
+    //         />
+    //         <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
+    //       </div>
+    //     </Modal>
+    //   );
+    // }
   }
 
   render() {
-    const { photo, notes, photoTag } = this.state;
+    const { modal, photo, notes, photoTag } = this.state;
     const { category, latitude, longitude } = this.props;
     const userId = Number(this.props.userId);
     console.log('alert userId', userId);
@@ -126,25 +138,23 @@ class Alert extends Component {
             {category}
           </h2>
         </div>
-        <div className="photo">
+        <div className="photo-button-container">
           {this.renderModal()}
-          <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
-          <br />
-          <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
+          <button className="photo-button" type="button" onClick={() => this.changeModal('camera')} />
+          <Dropzone
+            className="dropzone"
+            name="file"
+            type="file"
+            onDrop={this.handleDrop}
+            multiple
+            accept="image/*"
+          />
         </div>
-        <Dropzone
-          className="dropzone"
-          name="file"
-          type="file"
-          onDrop={this.handleDrop}
-          multiple
-          accept="image/*"
-        >
-          <p>Drop files</p>
-        </Dropzone>
         <div className="photo-preview">
-          <span>Photo preview</span>
           {this.showUploaded()}
+        </div>
+        <div className="photo-tag-container">
+          <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
         </div>
         <div className="notes">
           <textarea cols="30" rows="3" type="text" name="notes" placeholder="Enter any additional notes here" onChange={this.handleChange} value={notes} />
@@ -163,7 +173,7 @@ class Alert extends Component {
                     navigate('/');
                   }}
                 >
-                Submit
+                Create Alert
                 </button>
               );
             }}
