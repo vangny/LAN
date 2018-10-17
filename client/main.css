@@ -736,21 +736,19 @@ CSS for Desktops - Dashboard
 ALERT COMPONENTS
 ==================== 
 */
-/* .button-alerts {
-    cursor: pointer;
-    border: none;
-    border-radius: 3px;
-    font-family: 'PT Serif', sans-serif;
-    color: #ECF0F1;
-    background-color: #E74C3C;
-    display: block;
-    padding: 30px 50px 0px 50px;
-    margin: 40px;
-    font-style: bold;
-    font-size: 35px;
-    text-align: center;
+
+  .alert-layout {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    align-content: space-between;
+    grid-template-rows: repeat(5, 1fr);
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    
   }
-*/
+  
 .photo-modal-container {
   position: fixed;
   top: 0;
@@ -779,37 +777,6 @@ ALERT COMPONENTS
   border-radius:5px;
 }
 
-
-/*mine*/
-/* .photo-modal-container {
-  background-color: white;
-  min-width: 350px;
-  padding: 15px;
-  border-radius: 5px;
-  text-align: center;
-  overflow: scroll;
-  overflow-x: hide;
-  max-height: 100%;
-  font-size:9px;
-} */
-
-/*
-*/
-.alert-layout {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  align-content: space-between;
-  grid-template-rows: repeat(5, 1fr);
-  max-height: 100%;
-  
-}
-/*
-.photo {
-  grid-row: 1;
-  order: 1;
-}
-*/
 .photo-button-container {
   display:flex;
 }
