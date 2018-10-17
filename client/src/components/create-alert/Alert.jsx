@@ -97,19 +97,6 @@ class Alert extends Component {
         />
       </Modal>
     ) : null;
-
-    // if (modal === 'camera') {
-    //   return (
-    //     <Modal>
-    //       <div className="modal-container">
-    //         <AlertCamera
-    //           changeModal={this.changeModal.bind(this)}
-    //         />
-    //         <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
-    //       </div>
-    //     </Modal>
-    //   );
-    // }
   }
 
   render() {
@@ -121,10 +108,6 @@ class Alert extends Component {
     mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String, $userId: Int) {
       createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag, userId: $userId ) {
         id
-        category
-        createdAt
-        url
-        userId
       }
     }
     `;
@@ -161,7 +144,7 @@ class Alert extends Component {
         </div>
         <div className="submit">
           <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag, userId }}>
-            {(mutate, { loading, error }) => {
+            {(mutate, { loading, error, data }) => {
               if (loading) return <p>Loading...</p>;
               if (error) return <p>Error creating alert</p>;
               return (
@@ -171,6 +154,7 @@ class Alert extends Component {
                   onClick={() => {
                     mutate();
                     navigate('/');
+                    console.log('Mutation data: ', data);
                   }}
                 >
                 Create Alert

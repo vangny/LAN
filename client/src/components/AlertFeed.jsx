@@ -114,7 +114,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
             <div>
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
                 <div className="alert" key={Number(alert.id)}>
-                  {`Category: ${alert.category}`}
+                  {`Alert: ${alert.category}`}
                   <br />
                   {moment(alert.createdAt).fromNow()}
                   <br />
@@ -127,7 +127,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                     <img src={alert.url} width='200' height='145' />
                   </div>
                   <div className="alert-info-container">
-                    {`Category: ${alert.category}`}
+                    {`Alert: ${alert.category}`}
                     <br />
                     {moment(alert.createdAt).fromNow()}
                     <br />
@@ -138,7 +138,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                 ) : (
                 <div className="alert" key={Number(alert.id)}>
                   <div className="alert-info-container">
-                    {`Category: ${alert.category}`}
+                    {`Alert: ${alert.category}`}
                     <br />
                     {moment(alert.createdAt).fromNow()}
                     <br />
