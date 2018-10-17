@@ -44,10 +44,18 @@ export default class Settings extends Component {
                 onChange={event => this.setOption('filter', event.target.value)}
               >
                 <option value="none">None</option>
-                <option value="earthquake">Earthquakes</option>
-                <option value="flood">Floods</option>
-                <option value="hurricane">Hurricanes</option>
-                <option value="wildfire">Wildfires</option>
+                <option value="Blizzard">Blizzard</option>
+                <option value="Criminal Activity">Criminal Activity</option>
+                <option value="Earthquake">Earthquakes</option>
+                <option value="Flood">Floods</option>
+                <option value="Forest Fire">Forest Fire</option>
+                <option value="House Fire">Wildfires</option>
+                <option value="Hurricane">Hurricanes</option>
+                <option value="Landslide">Landslide</option>
+                <option value="Toxic Waste">Toxic Waste</option>
+                <option value="Tsunami">Tsunami</option>
+                <option value="Traffic Accident">Traffic Accident</option>
+                <option value="Volcano Eruption">Volcano Eruption</option>
               </select>
             </div>
             <div className="settings-buttons">
