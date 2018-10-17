@@ -957,8 +957,10 @@ Profile Page
 }
 
 .avatar {
-  width: 125px;
-  height: 125px;
+  width: auto;
+  max-width: 83%;
+  height: auto;
+  max-height: 100%;
   border-radius: 50%;
   border: #eaecf3 solid 5px;
   height: 100%;
@@ -972,7 +974,7 @@ Profile Page
   padding: 3px;
   margin: 5px;
   background-image:url(../icons/button-icons/home.png);
-  background-size:70% 70%;
+  background-size: 55% 70%;
   background-repeat:no-repeat;
   background-position:center;
   width: 85%;
@@ -1067,8 +1069,10 @@ Profile Page
 }
 
 .friend-avatar {
-  width: 125px;
-  height: 125px;
+  width: auto;
+  max-width: 54%;
+  height: auto;
+  max-height: 44%;
   border-radius: 50%;
   border: #eaecf3 solid 5px;
   display: flex;
@@ -1105,7 +1109,6 @@ Alert Options Page
 .alert-options-container {
   grid-template-rows: 5% 75% 20%;
   max-height: 100%;
-  overflow-y: hidden;
 }
 
 .lat-long-container {
