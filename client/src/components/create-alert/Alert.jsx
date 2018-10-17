@@ -97,19 +97,6 @@ class Alert extends Component {
         />
       </Modal>
     ) : null;
-
-    // if (modal === 'camera') {
-    //   return (
-    //     <Modal>
-    //       <div className="modal-container">
-    //         <AlertCamera
-    //           changeModal={this.changeModal.bind(this)}
-    //         />
-    //         <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
-    //       </div>
-    //     </Modal>
-    //   );
-    // }
   }
 
   render() {
