@@ -335,7 +335,7 @@ class App extends React.Component {
 // ReactDOM.render(<App />, document.getElementById('app'));
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App client={client}/>
+    <App client={client} />
   </ApolloProvider>,
   document.getElementById('app'),
 );
