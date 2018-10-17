@@ -92,7 +92,7 @@ class Profile extends Component {
         <div className="avatar-card">
           <img className="avatar" src={picture} alt="avatar pic" />
           <h2 className="ava-name">{name}</h2>
-          <button type="button" className="location-button" onClick={() => this.setHome()}>Set Home</button>
+          <button type="button" className="location-button" onClick={() => this.setHome()} />
           <button type="button" className="logOut-button" onClick={logOut}>
           Log Out
           </button>
@@ -101,8 +101,8 @@ class Profile extends Component {
           <AlertFeed latitude={latitude} longitude={longitude} />
         </div> */}
         <div className="friends">
-          <h1 className="friend-title">Friends</h1>
-          <div className="friend-search">
+          
+          <div>
             <Mutation mutation={findOrCreateFriendship} variables={{ userId, userEmail, friendEmail }}>
               {(mutate, { loading, error }) => {
                 if (loading) return <p>Loading...</p>;
@@ -125,8 +125,11 @@ class Profile extends Component {
                 }
                 return (
                   <div>
-                    <input className="friend-search" placeholder="Search by email" onChange={e => this.friendSearchHandler(e)} />
-                    <button className="friend-button" type="button" onClick={mutate}>Add Friend</button>
+                    <div className="search-div">
+                      <input className="friend-search" placeholder="Search by email" onChange={e => this.friendSearchHandler(e)} />
+                      <button className="friend-button" type="button" onClick={mutate}>Add Friend</button>
+                    </div>
+                    <h1 className="friend-title">Friends</h1>
                   </div>
                 );
               }}
@@ -138,9 +141,11 @@ class Profile extends Component {
                 if (loading) return <p>Loading...</p>;
                 if (error) return <p>Error getting friend list</p>;
                 return (data.friends.map(friend => (
-                  <div key={Math.random() * 1000000000000} className="friend">
-                    <img className="friend-avatar" alt="friend avatar" src={friend.picture} />
-                    <span className="friend-text">{friend.name}</span>
+                  <div>
+                    <div key={Math.random() * 1000000000000} className="friend">
+                      <img className="friend-avatar" alt="friend avatar" src={friend.picture} />
+                      <span className="friend-text">{friend.name}</span>
+                    </div>
                   </div>
                 )));
               }}

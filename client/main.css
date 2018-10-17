@@ -446,13 +446,6 @@ CSS for Mobile
       vertical-align:text-bottom;
     }
 
-    /* .alert-icon {
-      position: relative;
-      max-height:40px;
-      max-width:40px;
-      float: right;
-    } */
-
     .alert:focus {
       outline: 0;
       background-color: #FFF;
@@ -921,7 +914,7 @@ Profile Page
   height: 100%;
   width: 100%;
   margin: auto;
-  grid-template-rows: 15% 35% 45% 5%;
+  grid-template-rows: 15% 45% 35% 5%;
   grid-template-areas: 'header'
                        'avatar'
                        'friends'
@@ -951,8 +944,8 @@ Profile Page
   max-width: 200px;
   max-height: 50px;
   min-height: 100%;
-  margin: 10px 5px 10px 5px;
-  padding: 1px 5px 10px 5px;
+  margin: 10px 5px 15px 5px;
+  padding: 1px 5px 15px 5px;
   text-align: center;
   font-family: arial;
   display: flex;
@@ -968,6 +961,7 @@ Profile Page
   height: 125px;
   border-radius: 50%;
   border: #eaecf3 solid 5px;
+  height: 100%;
 }
 
 .ava-name {
@@ -976,30 +970,26 @@ Profile Page
 
 .location-button {
   padding: 3px;
-  margin: 3px;
-  max-width: 160px;
-  /* margin: 10px; */
-  width: 135px;
-  height: 45px; 
-  border-radius: 4px;
-  background: #2643e6;
+  margin: 5px;
+  background-image:url(../icons/button-icons/home.png);
+  background-size:70% 70%;
+  background-repeat:no-repeat;
+  background-position:center;
+  width: 85%;
+  height: 375px;
+  border-radius: 10px;
+  background-color: #455eeb;
   color:white;
   border:0px transparent;  
-  text-align: center;
+  vertical-align: text-bottom;
   display: inline-block;
   font-size: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.location-button:hover {
-  background: #db3236;
-  opacity: 0.6;
-  cursor: pointer;
 }
 
 .logOut-button {
-  padding: 3px;
-  margin: 3px;
+  padding: 3px 3px 10px 3px;
+  margin: 5px;
   max-width: 160px;
   /* margin: 10px; */
   width: 135px;
@@ -1013,36 +1003,45 @@ Profile Page
   font-size: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
-}
-
-.logOut-button:hover {
-  background: #db3236;
-  opacity: 0.6;
-  cursor: pointer;
 }
 
 .friends {
   grid-area: friends;
   display: flex;
   justify-self: center;
-  /* align-items: flex-start; */
   flex-direction: column;
   order: 2;
   margin: 10px;
 }
 
 .friend-title {
-  margin: 10px;
+  margin: 10px 10px 5px 10px;
   display: flex;
   align-items: center;
   justify-self: center;
   flex-direction: column;
+  letter-spacing: .1em;
+  font-size: 32px;
+  text-transform: uppercase;
+}
+
+.search-div {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
 }
 
 .friend-search {
-  /* float: left; */
-  padding: 1px;
-  margin-top: 1px;
+  max-height: 80px;
+  height: 40px;
+  width: 180px;
+  padding: 0px 1px 0px 1px;
+  margin: 5px;
   background: #ddd;
   font-size: 18px;
   border: none;
@@ -1064,6 +1063,7 @@ Profile Page
   max-width: 200px;
   order: 3;
   text-align: center;
+  margin: 20px;
 }
 
 .friend-avatar {
@@ -1072,16 +1072,14 @@ Profile Page
   border-radius: 50%;
   border: #eaecf3 solid 5px;
   display: flex;
-  /* justify-self: center; */
-  /* align-items: center; */
   flex-direction: column;
-  /* padding: 10px;
-  margin: 10px; */
-
 }
 
 .friend-text {
   font-style: bold;
+  font-size: 20px;
+  margin: 5px;
+  text-transform: capitalize;
 }
 
 .friend-button {
