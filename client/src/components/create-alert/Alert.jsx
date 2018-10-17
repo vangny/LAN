@@ -33,6 +33,7 @@ class Alert extends Component {
 
 /* eslint-disable */
   handleDrop(files) {
+    console.log(files);
     const { photoTag } = this.state;
     const upload = files.map((file) => {
       const formData = new FormData();
@@ -67,74 +68,19 @@ class Alert extends Component {
 
   showUploaded() {
     const { photo } = this.state;
-    return photo === null ? <p>{' '}</p>
+    return photo === null ? (
+      <div className="empty">
+      Uploaded photo preview will be shown here
+      </div>
+    )
       : (
-        <div className="user-photo">
-          <img src={photo} alt="uploaded" width="200" height="150" />
+        <div className="uploaded-photo-container">
+          <img className="uploaded-photo" src={photo} alt="uploaded" />
           <p>
             Photo successfully uploaded!
           </p>
         </div>);
   }
-
-  // handleSubmit() {
-  //   const {
-  //     category,
-  //     EventId,
-  //     latitude,
-  //     longitude,
-  //   } = this.props;
-  //   const { notes, photo, photoTag } = this.state;
-  //   // const alertData = {
-  //   //   category,
-  //   //   EventId,
-  //   //   latitude,
-  //   //   longitude,
-  //   //   notes,
-  //   //   photo,
-  //   //   photoTag,
-  //   // };
-    
-  //   const query = gql`
-  //   mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String) {
-  //     createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag ) {
-  //       id
-  //       category
-  //       createdAt
-  //       url
-  //     }
-  //   }
-  //   `;
-  //   fetch('/graphql', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       query,
-  //       variables: {
-  //         category, latitude, longitude, notes, photo, photoTag,
-  //       },
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then((newAlert) => {
-  //       console.log('Data returned after mutation ', newAlert.data);
-  //       navigate('/');
-  //     });
-  // }
-
-  // waitForData() {
-  //   const { latitude } = this.props;
-  //   return latitude !== 'Loading...' ? (
-  //     <button type="button" onClick={this.handleSubmit}>Submit</button>
-  //   ) : (
-  //     <p>
-  //       Still grabbing your location... Please wait
-  //     </p>
-  //   );
-  // }
 
   changeModal(view) {
     this.setState({
@@ -144,22 +90,30 @@ class Alert extends Component {
 
   renderModal() {
     const { modal } = this.state;
-    if (modal === 'camera') {
-      return (
-        <Modal>
-          <div className="modal-container">
-            <AlertCamera
-              changeModal={this.changeModal.bind(this)}
-            />
-            <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
-          </div>
-        </Modal>
-      );
-    }
+    return modal === 'camera' ? (
+      <Modal>
+        <AlertCamera
+          changeModal={this.changeModal.bind(this)}
+        />
+      </Modal>
+    ) : null;
+
+    // if (modal === 'camera') {
+    //   return (
+    //     <Modal>
+    //       <div className="modal-container">
+    //         <AlertCamera
+    //           changeModal={this.changeModal.bind(this)}
+    //         />
+    //         <button type="button" onClick={() => this.changeModal('')}>Exit camera mode</button>
+    //       </div>
+    //     </Modal>
+    //   );
+    // }
   }
 
   render() {
-    const { photo, notes, photoTag } = this.state;
+    const { modal, photo, notes, photoTag } = this.state;
     const { category, latitude, longitude } = this.props;
     const userId = Number(this.props.userId);
     console.log('alert userId', userId);
@@ -178,32 +132,32 @@ class Alert extends Component {
     return (
       <div className="alert-layout">
         <div className="location-info">
-          <h1>
+          <h2>
             Disaster Type:
             {' '}
-            {category.split(/\s+/).map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}
-          </h1>
+            {category}
+          </h2>
         </div>
-        <div className="photo">
+        <div className="photo-button-container">
           {this.renderModal()}
-          <button className="photo-button" type="button" onClick={() => this.changeModal('camera')}>Capture Photo</button>
+          <button className="photo-button" type="button" onClick={() => this.changeModal('camera')} />
+          <Dropzone
+            className="dropzone"
+            name="file"
+            type="file"
+            onDrop={this.handleDrop}
+            multiple
+            accept="image/*"
+          />
+        </div>
+        <div className="photo-preview">
+          {this.showUploaded()}
+        </div>
+        <div className="photo-tag-container">
           <input type="text" name="photoTag" placeholder="Add tags for your photos here" onChange={this.handleChange} value={photoTag} />
         </div>
         <div className="notes">
-          <input size="" type="text" name="notes" placeholder="Enter text here" onChange={this.handleChange} value={notes} />
-        </div>
-        <Dropzone
-          className="dropzone"
-          name="file"
-          // type="file"
-          onDrop={this.handleDrop}
-          multiple
-          accept="image/*"
-        >
-          <p>Drop files or click here to upload</p>
-        </Dropzone>
-        <div>
-          {this.showUploaded()}
+          <textarea cols="30" rows="3" type="text" name="notes" placeholder="Enter any additional notes here" onChange={this.handleChange} value={notes} />
         </div>
         <div className="submit">
           <Mutation mutation={createAlert} variables={{ category, latitude, longitude, notes, photo, photoTag, userId }}>
@@ -212,13 +166,14 @@ class Alert extends Component {
               if (error) return <p>Error creating alert</p>;
               return (
                 <button
+                  id="submit-alert-button"
                   type="button"
                   onClick={() => {
                     mutate();
                     navigate('/');
                   }}
                 >
-                Submit
+                Create Alert
                 </button>
               );
             }}
