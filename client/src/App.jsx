@@ -314,17 +314,17 @@ class App extends React.Component {
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId} />
           </Router>
           <div className="nav-bar">
-            <Link to="/" className="home-grid nav-cell">
-              <span className="home-button">Home</span>
+            <Link to="/" className="home-container nav-cell">
+              <span className="home-button"><i class="fas fa-home"></i></span>
             </Link>
-            <Link to="/alertOptions" className="alert-grid nav-cell">
-              <span className="alert-button">Add Alert</span>
+            <Link to="/alertOptions" className="alert-container nav-cell">
+              <span className="alert-button"><i class="fas fa-edit"></i></span>
             </Link>
-            <Link to="/profile" className="search-grid nav-cell">
-              <span className="profile-button">Profile</span>
+            <Link to="/map" className="map-container nav-cell">
+              <span className="map-button"><i class="fas fa-map-marked-alt"></i></span>
             </Link>
-            <Link to="/map" className="dash-grid nav-cell">
-              <span className="settings-button">Map</span>
+            <Link to="/profile" className="profile-container nav-cell">
+              <span className="profile-button"><i class="fas fa-user-alt"></i></span>
             </Link>
           </div>
         </div>

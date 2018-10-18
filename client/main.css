@@ -208,7 +208,7 @@ CSS for Mobile
       grid-area: navbar;
       display: grid;
       grid-template-columns: 25% 25% 25% 25%;
-      grid-template-areas: 'home search alert dashboard';
+      grid-template-areas: 'home alert map profile';
       box-shadow: 0 -1px 3px rgba(0,0,0,0.12), 0 -1px 2px rgba(0,0,0,0.24);
     }
     
@@ -219,32 +219,36 @@ CSS for Mobile
       background-color: #ffffff;
     }
     
-    .home-grid {
+    .home-container {
       grid-area: home;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     
-    .search-grid {
-      grid-area: search;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .alert-grid {
+    .alert-container {
       grid-area: alert;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     
-    .dash-grid {
-      grid-area: dashboard;
+    .map-container {
+      grid-area: map;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .profile-container {
+      grid-area: profile;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    span > i {
+      font-size: 1.5em;
     }
 
     /**************
@@ -395,116 +399,6 @@ CSS for Mobile
       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
 
-    /**************
-    Dashboard Styling
-    **************/
-    .dashboard {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      /* grid-template-columns: 50% 50%; */
-      grid-template-rows: 8% 47% 45%;
-      grid-template-areas: 'search-alerts'
-                           'map'
-                           'feed';
-    }
-
-    .search-alerts {
-      grid-area: search-alerts;
-      align-content: center;
-    }
-
-    .search-bar {
-      outline: 0;
-      height: 42px;
-      width: 85%;
-      line-height: 42px;
-      padding: 0 16px;
-      background-color: rgba(255, 255, 255, 0.8);
-      color: #212121;
-      border: 1px solid gray;
-      float: left;
-      -webkit-border-radius: 4px 0 0 4px;
-      border-radius: 4px 0 0 4px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
-
-    .search-bar:focus {
-      outline: 0;
-      background-color: #FFF;
-    }
-
-    .search-button {
-      outline: 0;
-      background: none;
-      background-color: rgba(38, 50, 56, 0.8);
-      float: left;
-      height: 42px;
-      width: 42px;
-      text-align: center;
-      line-height: 42px;
-      border: 0;
-      color: #FFF;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: 16px;
-      text-rendering: auto;
-      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-      -webkit-transition: background-color .4s ease;
-      transition: background-color .4s ease;
-      -webkit-border-radius: 0 4px 4px 0;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
-    
-    .map-container {
-      grid-area: map;
-    }
-    
-    .alerts-container {
-      height: 100%;
-      width: 100%;
-      grid-area: feed;
-      overflow: scroll;
-    }
-
-    .alert-info-container {
-      display:grid;
-      grid-template-columns:15% 85%;
-      grid-gap: 1em;
-    }
-
-    .alert-icon-container {
-      display:grid;
-      grid-template-rows:1fr;
-      place-items:start end;
-    }
-
-    .alert-icon {
-      height: 52px;
-      width: 52px;
-      margin-top: 9px;
-      padding: 3px;
-      border-radius: 4px;
-      background-color: #b75d5d;
-    }
-    .alert:focus {
-      outline: 0;
-      background-color: #FFF;
-    }
-
-    .media-container {
-      height: 100%;
-      width: 100%;
-      grid-area: media;
-    }
-    .media-feed {
-      height: 100%;
-      overflow-x: scroll;
-      white-space: nowrap;
-    }
-    .media-feed > img {
-      display: inline-block;
-    }
     /**************
     Map Styling
     **************/

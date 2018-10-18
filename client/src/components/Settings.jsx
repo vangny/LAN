@@ -5,7 +5,7 @@ export default class Settings extends Component {
     super(props);
     const { currentRange } = this.props;
     this.state = {
-      filter: '',
+      filter: 'None',
       range: currentRange,
     };
 
