@@ -992,6 +992,7 @@ Profile Page
 
 .ava-name {
   text-align: center;
+  margin-left: 25px;
   text-transform: capitalize;
 }
 
@@ -1003,7 +1004,7 @@ Profile Page
 
 .location-button {
   padding: 3px;
-  margin: 3px 5px 5px 15px;
+  margin: 3px 5px 5px 25px;
   background-image:url(../icons/button-icons/home.png);
   background-size: 55% 70%;
   background-repeat:no-repeat;
