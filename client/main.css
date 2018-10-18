@@ -400,28 +400,40 @@ CSS for Mobile
     }
 
     /**************
-    Map Styling
-    **************/
-    
-    
-    /* .layer-controls {
-      border-radius: 3;
-      box-shadow: 10px 10px 8px 10px rgba(0, 0, 0, 0.1);
-      font-family: ff-clan-web-pro, Helvetica Neue, Helvetica, sans-serif !important;
-      font-size: 12px;
-      line-height: 1.833;
-      width: 125;
-      position: absolute;
-      top: 0;
-      left: 0;
-      padding: 20px;
-      z-index: 100;
-      background: #ffffff;
-    } */
-
-    /**************
     Alert Styling
     **************/
+    .alerts-container {
+      height: 100%;
+      width: 100%;
+      grid-area: feed;
+      overflow: scroll;
+    }
+
+    .alert-info-container {
+      display:grid;
+      grid-template-columns:15% 85%;
+      grid-gap: 1em;
+    }
+
+    .alert-icon-container {
+      display:grid;
+      grid-template-rows:1fr;
+      place-items:start end;
+    }
+
+    .alert-icon {
+      height: 52px;
+      width: 52px;
+      margin-top: 9px;
+      padding: 3px;
+      border-radius: 4px;
+      background-color: #b75d5d;
+    }
+    .alert:focus {
+      outline: 0;
+      background-color: #FFF;
+    }
+
     .feed {
       overflow: scroll;
     }
@@ -429,21 +441,8 @@ CSS for Mobile
     .alert {
       display: grid;
       grid-template-columns: 15% 85%;
-      
-      /* grid-template-rows: 80% 20%;
-      grid-template-areas: 'alert-image'
-                           'alert-info';
-      grid-row-gap: 5px; 
-      background-color: rgba(255, 255, 255, 0.8);
-      color: #212121;
-      
-      -webkit-border-radius: 4px 0 0 4px;
-      border-radius: 4px 4px 4px 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-      margin: 2%;
-      padding: 1%;*/
     }
-    /* added to test different look*/
+
     .image-info-container {
       display: grid;
       grid-template-rows: 80% 20%;

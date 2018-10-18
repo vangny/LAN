@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Query, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
-import Geocode from 'react-geocode';
 
 const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert }) => {
   // const range = 10;
