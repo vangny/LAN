@@ -431,19 +431,6 @@ CSS for Mobile
       grid-area: feed;
       overflow: scroll;
     }
-    /* .dashboard .feed {
-      overflow: scroll;
-    } */
-    /* .alert {
-      background-color: rgba(255, 255, 255, 0.8);
-      color: #212121;
-      -webkit-border-radius: 4px 0 0 4px;
-      border-radius: 4px 4px 4px 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-      margin: 1%;
-      padding: 1%;
-      vertical-align:text-bottom;
-    } */
 
     .alert-info-container {
       display:grid;
@@ -454,12 +441,16 @@ CSS for Mobile
     .alert-icon-container {
       display:grid;
       grid-template-rows:1fr;
-      place-items:center center;
+      place-items:start end;
     }
 
     .alert-icon {
-      height: 40px;
-      width: 40px;
+      height: 45px;
+      width: 45px;
+      margin-top: 9px;
+      padding: 3px;
+      border-radius: 4px;
+      background-color: #b75d5d;
     }
     .alert:focus {
       outline: 0;
@@ -508,15 +499,31 @@ CSS for Mobile
 
     .alert {
       display: grid;
+      grid-template-columns: 15% 85%;
+      
+      /* grid-template-rows: 80% 20%;
+      grid-template-areas: 'alert-image'
+                           'alert-info';
+      grid-row-gap: 5px; 
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #212121;
+      
+      -webkit-border-radius: 4px 0 0 4px;
+      border-radius: 4px 4px 4px 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      margin: 2%;
+      padding: 1%;*/
+    }
+    /* added to test different look*/
+    .image-info-container {
+      display: grid;
       grid-template-rows: 80% 20%;
       grid-template-areas: 'alert-image'
                            'alert-info';
-      grid-row-gap: 5px;
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
-      border-radius: 4px 4px 4px 4px;
+      border-radius: 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
       margin: 2%;
       padding: 1%;

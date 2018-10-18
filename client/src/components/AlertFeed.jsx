@@ -96,15 +96,14 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
     console.log('run this is running');
     Geocode.setApiKey('AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q');
 
-    Geocode.fromLatLng("37.72235900000000000000", "-122.15841540000000000000").then(
-      response => {
-        const address = response.results[6].formatted_address.split(', ').slice(0,2);
-        console.log(response);
+    Geocode.fromLatLng(37.72235900000000000000, -122.15841540000000000000).then(
+      (response) => {
+        const address = response.results[6].formatted_address.split(', ').slice(0, 2); // returns an array [city, state]
         console.log(address);
       },
-      error => {
+      (error) => {
         console.error(error);
-      }
+      },
     );
   };
 
@@ -135,64 +134,116 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
               },
             });
           }
+          // return (
+          //   <div>
+          //     {runThis()}
+          //     {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
+          //       <div className="alert" key={Number(alert.id)}>
+          //         <div className="alert-info-container">
+          //          <div className="alert-icon-container">
+          //           {insertIcon(alert.category)}
+          //          </div>
+          //          <div className="alert-info">
+          //             {`Alert: ${alert.category}`}
+          //             <br />
+          //             {moment(alert.createdAt).fromNow()}
+          //             <br />
+          //             {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+          //             {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
+          //          </div>
+          //         </div>
+          //       </div>
+          //       ): (alert.url !== null ? (
+          //       <div className="alert" key={Number(alert.id)}>
+          //         <div className="image-container">
+          //           <img src={alert.url} width='200' height='145' />
+          //         </div>
+          //         <div className="alert-info-container">
+          //          <div className="alert-icon-container">
+          //           {insertIcon(alert.category)}
+          //          </div>
+          //          <div className="alert-info">
+          //             {`Alert: ${alert.category}`}
+          //             <br />
+          //             {moment(alert.createdAt).fromNow()}
+          //             <br />
+          //             {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+          //             {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
+          //          </div>
+          //         </div>
+          //       </div>
+          //       ) : (
+          //       <div className="alert" key={Number(alert.id)}>
+          //         <div className="alert-info-container">
+          //          <div className="alert-icon-container">
+          //           {insertIcon(alert.category)}
+          //          </div>
+          //          <div className="alert-info">
+          //             {`Alert: ${alert.category}`}
+          //             <br />
+          //             {moment(alert.createdAt).fromNow()}
+          //             <br />
+          //             {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+          //             {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
+          //          </div>
+          //         </div>
+          //       </div>
+          //       )
+          //     )))}
+          //   </div>
+          // ); 
+
           return (
             <div>
               {runThis()}
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
                 <div className="alert" key={Number(alert.id)}>
-                  <div className="alert-info-container">
                    <div className="alert-icon-container">
                     {insertIcon(alert.category)}
                    </div>
-                   <div className="alert-info">
+                   <div className="image-info-container">
                       {`Alert: ${alert.category}`}
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
                       {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
-                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
                    </div>
-                  </div>
                 </div>
                 ): (alert.url !== null ? (
                 <div className="alert" key={Number(alert.id)}>
-                  <div className="image-container">
-                    <img src={alert.url} width='200' height='145' />
-                  </div>
-                  <div className="alert-info-container">
-                   <div className="alert-icon-container">
+                  <div className="alert-icon-container">
                     {insertIcon(alert.category)}
-                   </div>
-                   <div className="alert-info">
+                  </div>
+                  <div className="image-info-container">
+                    <div className="image-container">
+                      <img src={alert.url} width='200' height='145' />
+                    </div>
+                    <div className="alert-info">
                       {`Alert: ${alert.category}`}
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
                       {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
-                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
-                   </div>
+                    </div>
                   </div>
                 </div>
                 ) : (
-                <div className="alert" key={Number(alert.id)}>
-                  <div className="alert-info-container">
-                   <div className="alert-icon-container">
+                  <div className="alert" key={Number(alert.id)}>
+                    <div className="alert-icon-container">
                     {insertIcon(alert.category)}
-                   </div>
-                   <div className="alert-info">
+                    </div>
+                    <div className="image-info-container">
                       {`Alert: ${alert.category}`}
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
                       {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
-                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
-                   </div>
-                  </div>
+                    </div>
                 </div>
                 )
               )))}
             </div>
-          ); 
+          );
         }}
       </Query>
     </div>

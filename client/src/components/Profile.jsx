@@ -72,6 +72,8 @@ class Profile extends Component {
       friends(userId: $userId) {
         name
         picture
+        homeLat
+        homeLong
       }
     }
     `;
