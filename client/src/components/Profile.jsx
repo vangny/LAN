@@ -92,7 +92,9 @@ class Profile extends Component {
         <div className="avatar-card">
           <img className="avatar" src={picture} alt="avatar pic" />
           <h2 className="ava-name">{name}</h2>
+          
           <button type="button" className="location-button" onClick={() => this.setHome()} />
+          <h3 className="ava-city">City: Seattle</h3>
           <button type="button" className="logOut-button" onClick={logOut}>
           Log Out
           </button>
