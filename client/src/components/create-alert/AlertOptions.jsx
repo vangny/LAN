@@ -69,9 +69,9 @@ class AlertOptions extends React.Component {
           <br />
           {`${latitude}, ${longitude}`}
         </div>
-        <h2 className="category-header">
-          {categoryClicked}
-        </h2>
+        <div className="category-header">
+          <span className="header-text">{categoryClicked}</span>
+        </div>
         <div className="category-buttons-container">
 
           <button id="hurricane-button" className="category-button" type="button" value="Hurricane" onClick={e => this.clickHandler(e)} />
