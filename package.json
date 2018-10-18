@@ -6,7 +6,9 @@
   "jest": {
     "bail": true,
     "verbose": true,
-    "setupFiles": ["./test/settings.js"]
+    "setupFiles": [
+      "./test/settings.js"
+    ]
   },
   "scripts": {
     "react-dev": "HTTPS=true webpack -d --watch",
@@ -79,6 +81,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "cypress": "^3.1.0",
     "deck.gl": "^6.1.1",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
