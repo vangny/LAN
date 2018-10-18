@@ -6,6 +6,7 @@ const iconv = require('iconv-lite');
 const encodings = require('iconv-lite/encodings');
 const axios = require('axios');
 const cors = require('cors');
+const Geocode = require('react-geocode');
 const db = require('../db/index');
 
 iconv.encodings = encodings;
@@ -39,6 +40,25 @@ app.post('api/tracker', (req, res) => {
   //     res.send(err.message);
   //   });
 });
+
+// app.get('/cityData', (req, res) => {
+//   console.log('*********PINGING cityData request********')
+//   console.log('*********request body from resolver: ', req.body);
+//   res.send(axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+//     params: {
+//       latlng: `${req.body.latitude} ${req.body.longitude}`,
+//       key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
+//     },
+//   }).then((response) => {
+//     const address = response.data.results[4].formatted_address;
+//     // const addressOutput = `
+//     // <span className="city-state">${address}</span>
+//     // `;
+//     console.log(address);
+//     return address;
+//   })
+//     .catch(error => console.log(error)))
+// });
 
 app.use('/graphql', bodyparser.json(), graphqlExpress({
   schema,

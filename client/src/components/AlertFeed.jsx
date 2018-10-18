@@ -92,20 +92,19 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
     }
   };
 
-  const runThis = () => {
-    console.log('run this is running');
-    Geocode.setApiKey('AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q');
-
-    Geocode.fromLatLng(37.72235900000000000000, -122.15841540000000000000).then(
-      (response) => {
-        const address = response.results[6].formatted_address.split(', ').slice(0, 2); // returns an array [city, state]
-        console.log(address);
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
-  };
+  // const runThis = () => {
+  //   Geocode.setApiKey('AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q');
+  //   Geocode.fromLatLng(37.722359, -122.1584154).then(
+  //     (response) => {
+  //       const address = response.results[6].formatted_address.split(', ').slice(0, 2); 
+  //       console.log(address);
+  //       return address; // returns an array [city, state]
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     },
+  //   );
+  // };
 
   const convertDistance = (num) => {
     return num < 1
@@ -195,7 +194,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
 
           return (
             <div>
-              {runThis()}
+              {/* {runThis()} */}
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
                 <div className="alert" key={Number(alert.id)}>
                    <div className="alert-icon-container">
