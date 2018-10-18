@@ -446,6 +446,22 @@ CSS for Mobile
       vertical-align:text-bottom;
     }
 
+    .alert-info-container {
+      display:grid;
+      grid-template-columns:15% 85%;
+      grid-gap: 1em;
+    }
+
+    .alert-icon-container {
+      display:grid;
+      grid-template-rows:1fr;
+      place-items:center center;
+    }
+
+    .alert-icon {
+      height: 40px;
+      width: 40px;
+    }
     .alert:focus {
       outline: 0;
       background-color: #FFF;
@@ -1117,6 +1133,7 @@ Alert Options Page
 ==================== 
 */
 .alert-options-container {
+  display:grid;
   grid-template-rows: 5% 75% 20%;
   max-height: 100%;
 }
@@ -1126,6 +1143,10 @@ Alert Options Page
   vertical-align:text-top;
   font-size:10px;
   margin: 2%;
+}
+
+.category-header {
+  text-align:center;
 }
 
 .category-buttons-container {

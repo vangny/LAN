@@ -48,46 +48,48 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
     `;
   
   const insertIcon = (category) => {
-    return null;
+    // return null;
     // console.log('inserting icon!');
-    // if (category === 'Hurricane') {
-    //   console.log('running hurricane icon insertion!')
-    //   return <img className="alert-icon" src={require('../../../icons/button-icons/013-hurricane.png')} value="Hurricane" alt="hurricane" />;
-    // }
-    // if (category === 'Flood') {
-      
-    // }
-    // if (category === 'Forest Fire') {
-      
-    // }
-    // if (category === 'Fouse Fire') {
-      
-    // }
-    // if (category === 'Earthquake') {
-      
-    // }
-    // if (category === 'Landslide') {
-      
-    // }
-    // if (category === 'Traffic Accident') {
-      
-    // }
-    // if (category === 'Volcano Eruption') {
-
-    // }
-    // if (category === 'Tsunami') {
-
-    // }
-    // if (category === 'Criminal Activity') {
-
-    // }
-    // if (category === 'Toxic Waste') {
-
-    // }
-    // if (category === 'Blizzard') {
-
-    // }
-  }
+    if (!category) {
+      return null;
+    }
+    if (category.toUpperCase() === 'HURRICANE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/013-hurricane.png')} alt="hurricane" />;
+    }
+    if (category.toUpperCase() === 'FLOOD') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/016-flood.png')} alt="flood" />;
+    }
+    if (category.toUpperCase() === 'FOREST FIRE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/015-fire.png')} alt="forest fire" />;
+    }
+    if (category.toUpperCase() === 'HOUSE FIRE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/014-house.png')} alt="house fire" />;
+    }
+    if (category.toUpperCase() === 'EARTHQUAKE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/017-earthquake-1.png')} alt="earthquake" />;
+    }
+    if (category.toUpperCase() === 'LANDSLIDE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/006-landslide-2.png')} alt="landslide" />;
+    }
+    if (category.toUpperCase() === 'TRAFFIC ACCIDENT') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/car-collision (1).png')} alt="traffic accident" />;
+    }
+    if (category.toUpperCase() === 'VOLCANO ERUPTION') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/001-volcano-1.png')} alt="volcano eruption" />;
+    }
+    if (category.toUpperCase() === 'TSUNAMI') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/003-tsunami.png')} alt="tsunami" />;
+    }
+    if (category.toUpperCase() === 'CRIMINAL ACTIVITY') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/thief.png')} alt="criminal activity" />;
+    }
+    if (category.toUpperCase() === 'TOXIC WASTE') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/004-waste.png')} alt="toxic waste" />;
+    }
+    if (category.toUpperCase() === 'BLIZZARD') {
+      return <img className="alert-icon" src={require('../../../icons/button-icons/blizzard.png')} alt="blizzard" />;
+    }
+  };
 
   let unsubscribe = null;
   return (
@@ -114,12 +116,18 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
             <div>
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
                 <div className="alert" key={Number(alert.id)}>
-                  {`Alert: ${alert.category}`}
-                  <br />
-                  {moment(alert.createdAt).fromNow()}
-                  <br />
-                  {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
-                  {insertIcon(alert.category)}
+                  <div className="alert-info-container">
+                   <div className="alert-icon-container">
+                    {insertIcon(alert.category)}
+                   </div>
+                   <div className="alert-info">
+                      {`Alert: ${alert.category}`}
+                      <br />
+                      {moment(alert.createdAt).fromNow()}
+                      <br />
+                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                   </div>
+                  </div>
                 </div>
                 ): (alert.url !== null ? (
                 <div className="alert" key={Number(alert.id)}>
@@ -127,23 +135,31 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                     <img src={alert.url} width='200' height='145' />
                   </div>
                   <div className="alert-info-container">
-                    {`Alert: ${alert.category}`}
-                    <br />
-                    {moment(alert.createdAt).fromNow()}
-                    <br />
-                    {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                   <div className="alert-icon-container">
                     {insertIcon(alert.category)}
+                   </div>
+                   <div className="alert-info">
+                      {`Alert: ${alert.category}`}
+                      <br />
+                      {moment(alert.createdAt).fromNow()}
+                      <br />
+                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                   </div>
                   </div>
                 </div>
                 ) : (
                 <div className="alert" key={Number(alert.id)}>
                   <div className="alert-info-container">
-                    {`Alert: ${alert.category}`}
-                    <br />
-                    {moment(alert.createdAt).fromNow()}
-                    <br />
-                    {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                   <div className="alert-icon-container">
                     {insertIcon(alert.category)}
+                   </div>
+                   <div className="alert-info">
+                      {`Alert: ${alert.category}`}
+                      <br />
+                      {moment(alert.createdAt).fromNow()}
+                      <br />
+                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                   </div>
                   </div>
                 </div>
                 )
