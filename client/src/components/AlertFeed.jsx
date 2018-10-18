@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Query, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
+import Geocode from 'react-geocode';
 
 const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
   // const range = 10;
@@ -66,7 +67,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
       return <img className="alert-icon" src={require('../../../icons/button-icons/014-house.png')} alt="house fire" />;
     }
     if (category.toUpperCase() === 'EARTHQUAKE') {
-      return <img className="alert-icon" src={require('../../../icons/button-icons/017-earthquake-1.png')} alt="earthquake" />;
+      return <img className="alert-icon" src={require('../../../icons/button-icons/018-earthquake.png')} alt="earthquake" />;
     }
     if (category.toUpperCase() === 'LANDSLIDE') {
       return <img className="alert-icon" src={require('../../../icons/button-icons/006-landslide-2.png')} alt="landslide" />;
@@ -91,6 +92,28 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
     }
   };
 
+  const runThis = () => {
+    console.log('run this is running');
+    Geocode.setApiKey('AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q');
+
+    Geocode.fromLatLng("37.72235900000000000000", "-122.15841540000000000000").then(
+      response => {
+        const address = response.results[6].formatted_address.split(', ').slice(0,2);
+        console.log(response);
+        console.log(address);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  };
+
+  const convertDistance = (num) => {
+    return num < 1
+      ? 'Less than a mile away'
+      : `${Math.ceil(num)} miles away`;
+  }
+
   let unsubscribe = null;
   return (
     <div className="feed">
@@ -114,6 +137,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
           }
           return (
             <div>
+              {runThis()}
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
                 <div className="alert" key={Number(alert.id)}>
                   <div className="alert-info-container">
@@ -125,7 +149,8 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
-                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                      {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
                    </div>
                   </div>
                 </div>
@@ -143,7 +168,8 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
-                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                      {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
                    </div>
                   </div>
                 </div>
@@ -158,7 +184,8 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                       <br />
                       {moment(alert.createdAt).fromNow()}
                       <br />
-                      {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`}
+                      {convertDistance(distance(alert.latitude, alert.longitude, latitude, longitude))}
+                      {/* {`${Math.max(Math.round(distance(alert.latitude, alert.longitude, latitude, longitude) * 10) / 10).toFixed(2)} miles away`} */}
                    </div>
                   </div>
                 </div>

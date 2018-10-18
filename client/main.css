@@ -434,17 +434,16 @@ CSS for Mobile
     /* .dashboard .feed {
       overflow: scroll;
     } */
-    .alert {
+    /* .alert {
       background-color: rgba(255, 255, 255, 0.8);
       color: #212121;
-      /* border: 1px solid gray; */
       -webkit-border-radius: 4px 0 0 4px;
       border-radius: 4px 4px 4px 4px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
       margin: 1%;
       padding: 1%;
       vertical-align:text-bottom;
-    }
+    } */
 
     .alert-info-container {
       display:grid;
