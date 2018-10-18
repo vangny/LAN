@@ -914,11 +914,11 @@ Profile Page
   height: 100%;
   width: 100%;
   margin: auto;
-  grid-template-rows: 15% 45% 35% 5%;
+  grid-template-rows: 15% 55% 30%;
   grid-template-areas: 'header'
                        'avatar'
                        'friends'
-                       'footer' 
+                       /* 'footer'  */
 }
 
 .ava-header {
@@ -964,21 +964,29 @@ Profile Page
   border-radius: 50%;
   border: #eaecf3 solid 5px;
   height: 100%;
+  image-rendering: crisp-edges;
 }
 
 .ava-name {
   text-align: center;
+  text-transform: capitalize;
+}
+
+.ava-city {
+  text-align: center;
+  text-transform: capitalize;
+  margin: 3px 3px 3px 15px;
 }
 
 .location-button {
   padding: 3px;
-  margin: 5px;
+  margin: 3px 5px 5px 5px;
   background-image:url(../icons/button-icons/home.png);
   background-size: 55% 70%;
   background-repeat:no-repeat;
   background-position:center;
-  width: 85%;
-  height: 375px;
+  width: 135px;
+  height: 330px;
   border-radius: 10px;
   background-color: #455eeb;
   color:white;
@@ -1017,7 +1025,7 @@ Profile Page
 }
 
 .friend-title {
-  margin: 10px 10px 5px 10px;
+  margin: 10px 10px 1px 10px;
   display: flex;
   align-items: center;
   justify-self: center;
