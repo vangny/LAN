@@ -499,22 +499,22 @@ CSS for Mobile
                            'alert-content'
                            'back-button';
     }
-      .alert-popup > .img-container {
+      .alert-popup > .popup-img-container {
         grid-area: alert-image;
       }
-        .alert-popup > .img-container > img {
+        .alert-popup > .popup-img-container > img {
           height: 100%;
           width: 100%;
         }
     
-    .alert-info-container {
+    .alert-popup-info-container {
       padding: .6em;
       overflow: scroll;
     }
-      .alert-info-container > div {
+      .alert-popup-info-container > div {
         padding: .3em;
       }
-    .alert-notes > span {
+    .alert-popup-notes > span {
         margin-bottom: .15em;
       }
     .back-button-container {

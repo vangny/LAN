@@ -61,10 +61,10 @@ const AlertPopup = ({ alert, exitAlert, latitude, longitude }) => {
     <div className="alert-popup-modal-container">
       <div className="alert-popup-container">
         <div className="alert-popup">
-          <div className="img-container">
+          <div className="popup-img-container">
             {alertImg(alert.url)}
           </div>
-          <div className="alert-info-container">
+          <div className="alert-popup-info-container">
             <div className="alert-category">
               <span className="category-head">Alert Category:&nbsp;</span>
               {/* <br /> */}
