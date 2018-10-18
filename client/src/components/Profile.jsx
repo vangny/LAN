@@ -83,12 +83,14 @@ class Profile extends Component {
     // let location = [];
     axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
       params: {
+        // result_type: 'street_address',
+        // latlng: '47.72154880000000000000 -122.19219839999998000000', //Nick
         latlng: `${lat} ${long}`,
         key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
       },
     }).then((response) => {
       console.log(response);
-      const address = response.data.results[0].formatted_address;
+      const address = response.data.results[0].formatted_address.split(', ').slice(1,3);
       console.log(address);
       // const city = address[3].adress_components[0];
       // JSON.stringify(response, (key, value) => {
