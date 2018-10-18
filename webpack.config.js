@@ -15,7 +15,7 @@ module.exports = (env) => {
   const DIST_DIR = path.join(__dirname, './client/dist');
 
   const AnalyzerPlugin = new BundleAnalyzerPlugin({
-    analyzerMode: 'static', // turn on use 'static' - turn off use 'none'
+    analyzerMode: 'none', // turn on use 'static' - turn off use 'none'
   });
 
   const CleanPLugin = new CleanWebpackPlugin(['dist'], {
