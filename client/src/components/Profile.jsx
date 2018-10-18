@@ -113,7 +113,7 @@ class Profile extends Component {
                       <input className="friend-search" placeholder="Search by email" onChange={e => this.friendSearchHandler(e)} />
                       <button
                         className="friend-button"
-                        type="button" 
+                        type="button"
                         onClick={() => {
                           mutate();
                         }}
