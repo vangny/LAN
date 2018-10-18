@@ -23,6 +23,7 @@ import LoadingPage from './components/LoadingPage';
 // import Map from './components/map/Map';
 import Modal from './components/create-alert/modal';
 import Settings from './components/Settings';
+import AlertPopup from './components/AlertPopup';
 import '../main.css';
 
 const httpLink = new HttpLink({ uri: '/graphql' });
@@ -87,6 +88,8 @@ class App extends React.Component {
       showSettings: false,
       filter: localStorage.getItem('filter') ||'none',
       range: Number(localStorage.getItem('range')) || 10,
+      alert: null,
+      selectAlert: false,
     };
     // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
@@ -98,6 +101,8 @@ class App extends React.Component {
     this.renderSettings = this.renderSettings.bind(this);
     this.changeSettings = this.changeSettings.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.handleSelectAlert = this.handleSelectAlert.bind(this);
+    this.renderSelectedAlert = this.renderSelectedAlert.bind(this);
   }
 
   // componentDidMount() {
@@ -226,6 +231,22 @@ class App extends React.Component {
     });
   }
 
+  handleSelectAlert(selectedAlert) {
+    const { selectAlert, alert } = this.state;
+
+    if (alert === null && selectAlert === false) {
+      this.setState({
+        selectAlert: true,
+        alert: selectedAlert,
+      });
+    } else {
+      this.setState({
+        selectAlert: false,
+        alert: null,
+      });
+    }
+  }
+
   renderSettings() {
     const { showSettings, range } = this.state;
     return showSettings ? (
@@ -236,6 +257,13 @@ class App extends React.Component {
           changeSettings={this.changeSettings}
         />
       </Modal>
+    ) : null;
+  }
+
+  renderSelectedAlert() {
+    const { alert, selectAlert } = this.state;
+    return selectAlert ? (
+      <AlertPopup alert={alert} exitAlert={this.handleSelectAlert} />
     ) : null;
   }
 
@@ -291,6 +319,7 @@ class App extends React.Component {
       ) : (
         <div className="container">
           {this.renderSettings()}
+          {this.renderSelectedAlert()}
           <div to="/" className="header nav-cell">
             <div className="header-icon" >
               <img src={require('../../icons/logo/icon-72x72.png')} alt="" />
@@ -307,7 +336,7 @@ class App extends React.Component {
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
-            <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
+            <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} selectAlert={this.handleSelectAlert}/>
             <Map path="/map" latitude={latitude} longitude={longitude} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} />

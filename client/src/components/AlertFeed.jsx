@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import moment from 'moment';
 import Geocode from 'react-geocode';
 
-const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
+const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert }) => {
   // const range = 10;
   const distance = (lat1, lon1, lat2, lon2) => {
     const radlat1 = Math.PI * lat1 / 180;
@@ -123,7 +123,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
           return (
             <div>
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (
-                <div className="alert" key={Number(alert.id)}>
+                <div className="alert" key={Number(alert.id)} onClick={() => selectAlert(alert)} >
                    <div className="alert-icon-container">
                     {insertIcon(alert.category)}
                    </div>
@@ -136,7 +136,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                    </div>
                 </div>
                 ): (alert.url !== null ? (
-                <div className="alert" key={Number(alert.id)}>
+                <div className="alert" key={Number(alert.id)} onClick={() => selectAlert(alert)} >
                   <div className="alert-icon-container">
                     {insertIcon(alert.category)}
                   </div>
@@ -154,7 +154,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client }) => {
                   </div>
                 </div>
                 ) : (
-                  <div className="alert" key={Number(alert.id)}>
+                  <div className="alert" key={Number(alert.id)} onClick={() => selectAlert(alert)}>
                     <div className="alert-icon-container">
                     {insertIcon(alert.category)}
                     </div>
