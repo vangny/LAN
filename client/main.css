@@ -944,7 +944,7 @@ Profile Page
   max-width: 200px;
   max-height: 50px;
   min-height: 100%;
-  margin: 10px 5px 15px 5px;
+  margin: 10px 10px 15px 5px;
   padding: 1px 5px 15px 5px;
   text-align: center;
   font-family: arial;
@@ -965,6 +965,7 @@ Profile Page
   border: #eaecf3 solid 5px;
   height: 100%;
   image-rendering: crisp-edges;
+  margin: 0px 0px 0px 15px;
 }
 
 .ava-name {
@@ -980,7 +981,7 @@ Profile Page
 
 .location-button {
   padding: 3px;
-  margin: 3px 5px 5px 5px;
+  margin: 3px 5px 5px 15px;
   background-image:url(../icons/button-icons/home.png);
   background-size: 55% 70%;
   background-repeat:no-repeat;
@@ -1012,6 +1013,7 @@ Profile Page
   display: inline-block;
   font-size: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin: 0px 0px 0px 15px;
 
 }
 
