@@ -498,7 +498,7 @@ CSS for Mobile
       grid-template-rows: 50% 45% 5%;
       grid-template-areas: 'alert-image'
                            'alert-content'
-                           'exit-button';
+                           'back-button';
     }
       .alert-popup > .img-container {
         grid-area: alert-image;
@@ -507,6 +507,23 @@ CSS for Mobile
           height: 100%;
           width: 100%;
         }
+    
+    .alert-info-container {
+      padding: .6em;
+      overflow: scroll;
+    }
+      .alert-info-container > div {
+        padding: .3em;
+      }
+    .alert-notes > span {
+        marign-bottom: .15em;
+      }
+    .back-button-container {
+      grid-area: back-button;
+    }
+      .back-button-container > button > i {
+        font-size: 16px;
+      }
 
 }
 

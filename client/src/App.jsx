@@ -261,9 +261,20 @@ class App extends React.Component {
   }
 
   renderSelectedAlert() {
-    const { alert, selectAlert } = this.state;
+    const {
+      alert,
+      selectAlert,
+      longitude,
+      latitude,
+    } = this.state;
+
     return selectAlert ? (
-      <AlertPopup alert={alert} exitAlert={this.handleSelectAlert} />
+      <AlertPopup
+        alert={alert}
+        exitAlert={this.handleSelectAlert}
+        latitude={latitude}
+        longitude={longitude}
+      />
     ) : null;
   }
 
@@ -344,16 +355,16 @@ class App extends React.Component {
           </Router>
           <div className="nav-bar">
             <Link to="/" className="home-container nav-cell">
-              <span className="home-button"><i class="fas fa-home"></i></span>
+              <span className="home-button"><i className="fas fa-home"></i></span>
             </Link>
             <Link to="/alertOptions" className="alert-container nav-cell">
-              <span className="alert-button"><i class="fas fa-edit"></i></span>
+              <span className="alert-button"><i className="fas fa-edit"></i></span>
             </Link>
             <Link to="/map" className="map-container nav-cell">
-              <span className="map-button"><i class="fas fa-map-marked-alt"></i></span>
+              <span className="map-button"><i className="fas fa-map-marked-alt"></i></span>
             </Link>
             <Link to="/profile" className="profile-container nav-cell">
-              <span className="profile-button"><i class="fas fa-user-alt"></i></span>
+              <span className="profile-button"><i className="fas fa-user-alt"></i></span>
             </Link>
           </div>
         </div>
