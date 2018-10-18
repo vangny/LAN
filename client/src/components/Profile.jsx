@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Mutation, Query} from 'react-apollo';
 import gql from 'graphql-tag';
-import Geocode from 'react-geocode';
 // import AlertFeed from './AlertFeed';
 
 class Profile extends Component {

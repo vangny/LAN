@@ -76,6 +76,7 @@ const typeDefs = `
     latitude: Float
     longitude: Float
     EventId: Int
+    notes: String
     url: String
     photoTag: String
     createdAt: Date
