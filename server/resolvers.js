@@ -90,6 +90,23 @@ const resolvers = {
       const selector = {
         where: { email: args.email },
       };
+      // axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+      //   params: {
+      //     latlng: `${args.latitude} ${args.longitude}`,
+      //     key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
+      //   }
+      // }).then(response => console.log('googlemaps api response: ', response.data.results[4].formatted_address))
+      //   .catch(error => console.log(error));
+
+      // axios({
+      //   url: 'http://localhost:9000/cityData',
+      //   method: 'get',
+      //   data: {
+      //     latitude: args.latitude,
+      //     longitude: args.longitude
+      //   },
+      // }).then(response => console.log('resolver: ', response));
+     
       return db.User.update(values, selector)
         .then(result => console.log('User location updated, Success!', result))
         .catch(err => console.log(err));
