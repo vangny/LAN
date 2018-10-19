@@ -115,8 +115,11 @@ const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert })
                 console.log('newAlert: ', newAlert);
                 console.log('updateQuery returns', { ...prev, getAlerts: [newAlert, ...prev.getAlerts] });
                 console.log('prev: ', prev);
+                console.log('current latlong: ', latitude, longitude);
+                console.log('range: ', range);
+                console.log('newAlert.lat/long: ', newAlert.latitude, newAlert.longitude);
                 if (!prev.getAlerts.find(alert => alert.id === newAlert.id)
-                && distance(latitude, longitude, newAlert.latitude, newAlert.longitude) < filter) {
+                && distance(latitude, longitude, newAlert.latitude, newAlert.longitude) <= range) {
                   return {
                     ...prev,
                     getAlerts: [newAlert, ...prev.getAlerts],
