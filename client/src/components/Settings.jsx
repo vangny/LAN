@@ -65,7 +65,7 @@ export default class Settings extends Component {
                   <label htmlFor="flood-button">Floods</label>
                 </div>
                 <div>
-                  <input type="radio" id="wildfire-button" name="radio-category" value="House Fire" />
+                  <input type="radio" id="wildfire-button" name="radio-category" value="Forest Fire" />
                   <label htmlFor="wildfire-button">Wildfires</label>
                 </div>
                 <div>
