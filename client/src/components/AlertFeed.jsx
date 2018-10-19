@@ -42,6 +42,7 @@ const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert })
         latitude
         longitude
         category
+        notes
         url
         notes
         createdAt
