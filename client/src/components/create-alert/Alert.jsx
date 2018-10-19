@@ -154,6 +154,7 @@ class Alert extends Component {
                   onClick={() => {
                     mutate();
                     navigate('/');
+                    console.log('category: ', category, 'latitude: ', latitude, 'longitude: ', longitude, 'notes: ', notes, 'photo: ', photo, 'photoTag: ', photoTag, 'userId: ', userId );
                     console.log('Mutation data: ', data);
                   }}
                 >
