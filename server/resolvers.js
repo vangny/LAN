@@ -59,9 +59,8 @@ const resolvers = {
         })
         .then((userTables) => {
           console.log('Data packaged for server', userTables);
-          // axios.post('https://local-alert-network-tracker.herokuapp.com/', userTables)
-          axios.post('http://ec2-54-149-141-115.us-west-2.compute.amazonaws.com/', userTables)
-          // axios.post('http://localhost:5000', userTables)
+          axios.post('https://local-alert-network-tracker.herokuapp.com/', userTables)
+          // axios.post('http://ec2-54-149-141-115.us-west-2.compute.amazonaws.com/', userTables)
             .then((res => console.log('Data sent to microservice', res)))
             .catch((err => console.log(err)));
         });
