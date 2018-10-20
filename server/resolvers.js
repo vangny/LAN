@@ -26,20 +26,14 @@ const resolvers = {
       return db.getCoordinates()
         .then(data => data.map(coordinate => coordinate.dataValues));
     },
+    getMapBox: () => {
+      console.log('grabbing mapbox api key...');
+      return { key: process.env.MAPBOX_API_KEY };
+    },
     friends: (root, args) => (
       db.getFriends(args.userId)
         .then(friends => friends.map(friend => friend.dataValues))
     ),
-    // getMedia: () => {
-    //   console.log('grabbing media files...');
-    //   return db.getMedia()
-    //     .then(data => data.map(file => file.dataValues));
-    // },
-    
-    // Revise
-    // getUser: () => {
-    //   console.log('Searching for user...');
-    // },
   },
   Mutation: {
     findOrCreateEvent: (root, args, context) => {
@@ -90,22 +84,6 @@ const resolvers = {
       const selector = {
         where: { email: args.email },
       };
-      // axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
-      //   params: {
-      //     latlng: `${args.latitude} ${args.longitude}`,
-      //     key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
-      //   }
-      // }).then(response => console.log('googlemaps api response: ', response.data.results[4].formatted_address))
-      //   .catch(error => console.log(error));
-
-      // axios({
-      //   url: 'http://localhost:9000/cityData',
-      //   method: 'get',
-      //   data: {
-      //     latitude: args.latitude,
-      //     longitude: args.longitude
-      //   },
-      // }).then(response => console.log('resolver: ', response));
      
       return db.User.update(values, selector)
         .then(result => console.log('User location updated, Success!', result))
@@ -119,19 +97,11 @@ const resolvers = {
           user2: friendships[0].dataValues.user2,
           new: friendships[1],
         }))
-        // .then(friendship => console.log(friendship)) // friendship[1] is a boolean that is true if a row was created.
         .catch((err) => {
           console.log('Cannot find email address: ', err);
           return err;
         });
     },
-    // addFriend: (root, args, context) => {
-    //   console.log('User requests to add a new friend...');
-     
-    //   return db.User.newFriends(args.userEmail, args.friendEmail)
-    //     .then(result => console.log('New friend added... Success!', result))
-    //     .catch(err => console.log(err));
-    // },
   },
   Subscription: {
     newAlert: {

@@ -19,7 +19,6 @@ return (
       <Map latitude={latitude} longitude={longitude} />
     </div>
     <div className="alerts-container">
-      {/* <GetAlerts latitude={latitude} longitude={longitude} /> */}
       <AlertFeed latitude={latitude} longitude={longitude} client={client} filter={filter} range={range}/>
     </div>
     <div className="media-container">

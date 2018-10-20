@@ -8,6 +8,7 @@ const typeDefs = `
       range: Int,
       filter: String): [Alert]
     getCoords: [Coordinates]
+    getMapBox: Key
     friends(userId: Int): [User]
   }
   type Mutation {
@@ -86,6 +87,10 @@ const typeDefs = `
   type Coordinates {
     latitude: String
     longitude: String
+  }
+
+  type Key {
+    key: String
   }
 
   type User {

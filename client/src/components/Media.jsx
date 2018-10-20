@@ -16,13 +16,6 @@ export default class Media extends Component {
   }
 
   getMedia() {
-    // axios.get('/api/media')
-    //   .then((res) => {
-    //     // console.log(res.data);
-    //     this.setState({
-    //       media: res.data,
-    //     });
-    //   });
     const { latitude, longitude } = this.props;
     const range = 10;
     const query = `
@@ -50,7 +43,6 @@ export default class Media extends Component {
     })
       .then(response => response.json())
       .then((data) => {
-        console.log('Alert feed: ', data);
         this.setState({
           media: data.data.getAlerts,
         });
@@ -64,7 +56,6 @@ export default class Media extends Component {
       <div>
         {media.map((file) => {
           if (file.url) {
-            // console.log(file.url);
             return <img src={file.url} hspace="5" width='200' height='145' />;
           }
         }

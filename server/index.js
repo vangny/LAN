@@ -9,7 +9,6 @@ const app = require('./app');
 
 const server = createServer(app);
 server.listen(PORT, (err) => {
-  // console.log(`Apollo Server is now running on http://localhost:${PORT}`);
   if (err) throw err;
 
   new SubscriptionServer.create({

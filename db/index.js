@@ -140,18 +140,6 @@ const getCoordinates = () => (
   Alert.findAll({ attributes: ['latitude', 'longitude'] })
 );
 
-// 
-// const newFriends = (userEmail, friendEmail) => {
-//   User.findAll({ where: { userEmail, friendEmail } })
-//     .then(results => {
-//       console.log('Adding users to Friendships...')
-//       results.filter((user) => {
-//         if (user.id) {
-//           Friendships.create(results.id);
-//         }
-//       })
-//     });
-// };
 const getFriends = userId => (
   Friendships.findAll({ where: { user1: userId } })
     .then(friends => friends.map(friend => friend.dataValues.user2)))
@@ -165,8 +153,6 @@ const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
         user2: friend.dataValues.id,
       }});
     })
-    // .then(friendship => {friendship})
-    // .catch(err => err);
 }
 
 const sendToNotofications = (id) => {

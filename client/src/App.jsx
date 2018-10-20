@@ -90,8 +90,8 @@ class App extends React.Component {
       range: Number(localStorage.getItem('range')) || 10,
       alert: null,
       selectAlert: false,
+      mapBoxToken: null,
     };
-    // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
     this.setCoordinates = this.setCoordinates.bind(this);
@@ -103,12 +103,13 @@ class App extends React.Component {
     this.logOut = this.logOut.bind(this);
     this.handleSelectAlert = this.handleSelectAlert.bind(this);
     this.renderSelectedAlert = this.renderSelectedAlert.bind(this);
+    this.getMapBoxKey = this.getMapBoxKey.bind(this);
   }
 
-  // componentDidMount() {
-  //   client.resetStore();
-  //   console.log('Client cache: ', client.cache.data.data);
-  // }
+  componentDidMount() {
+    this.getMapBoxKey();
+  }
+
   setLoginState() {
     const user = JSON.parse(sessionStorage.userData);
     const userName = user.data.findOrCreateUser.name;
@@ -119,7 +120,6 @@ class App extends React.Component {
     sessionStorage.setItem('picture', userPic);
     sessionStorage.setItem('email', userEmail);
     sessionStorage.setItem('id', userId);
-    console.log('app userId', userId);
     this.setState({
       isLoggedIn: true,
       name: userName,
@@ -149,6 +149,29 @@ class App extends React.Component {
     sessionStorage.removeItem('email');
     this.setState({ isLoggedIn: false });
     navigate('/');
+  }
+
+  getMapBoxKey() {
+    const query = `
+    {
+      getMapBox {
+        key
+      }
+    }`;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    })
+      .then(response => response.json())
+      .then((key) => {
+        this.setState({
+          mapBoxToken: key.data.getMapBox.key,
+        });
+      });
   }
 
   changeSettings(filter, range) {
@@ -216,7 +239,6 @@ class App extends React.Component {
       })
         .then(response => response.json())
         .then((event) => {
-          console.log('Alert will be attached to this event: ', event.data.findOrCreateEvent);
           this.setState({ EventId: Number(event.data.findOrCreateEvent.id) });
           navigate('/alert');
         });
@@ -291,10 +313,11 @@ class App extends React.Component {
       email,
       range,
       filter,
-      userId
+      userId,
+      mapBoxToken,
     } = this.state;
-    console.log(name, picture, email);
     /* eslint-disable */
+    
     return (!isLoggedIn || !isLoaded)
       ? (
         this.handleInitialStartup()
@@ -307,7 +330,7 @@ class App extends React.Component {
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
             <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
-            <Map path="/map" latitude={latitude} longitude={longitude} />
+            <Map path="/map" latitude={latitude} longitude={longitude} mapBoxToken={mapBoxToken} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" logOut={this.logOut} latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId}/>
@@ -346,9 +369,8 @@ class App extends React.Component {
           </div>
           <Router className="content" id="content">
             <Redirect noThrow from="/login" to="/" />
-            {/* <GetAlerts exact path="/" latitude={latitude} longitude={longitude} /> */}
             <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} selectAlert={this.handleSelectAlert}/>
-            <Map path="/map" latitude={latitude} longitude={longitude} />
+            <Map path="/map" latitude={latitude} longitude={longitude} mapBoxToken={mapBoxToken} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
             <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId} />

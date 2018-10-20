@@ -52,8 +52,6 @@ const AlertPopup = ({ alert, exitAlert, latitude, longitude }) => {
     return !!alert.notes ? `${alert.notes}` : 'N/A';
   }
 
-  console.log(alert);
-
   const dist = distance(alert.latitude, alert.longitude, latitude, longitude);
   const dir = direction(alert.latitude, alert.longitude, latitude, longitude);
 
