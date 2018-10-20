@@ -2,20 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Mutation, Query} from 'react-apollo';
 import gql from 'graphql-tag';
-// import AlertFeed from './AlertFeed';
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // homeLocation: null,
       userEmail: JSON.parse(sessionStorage.getItem('userData')).data.findOrCreateUser.email,
       userId: Number(JSON.parse(sessionStorage.getItem('userData')).data.findOrCreateUser.id),
       friendEmail: null,
       locationData: '',
     };
     this.setHome = this.setHome.bind(this);
-    // this.addFriend = this.addFriend.bind(this);
     this.friendSearchHandler = this.friendSearchHandler.bind(this);
     this.findCity = this.findCity.bind(this);
   }
@@ -61,67 +58,28 @@ class Profile extends Component {
     });
   }
 
-  
-  // addFriend() {
-    //   console.log('Checking if user exists...');
-    
-    // }
-    
   findCity(lat, long) {
-    // Geocode.setApiKey('AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q');
-    // Geocode.fromLatLng(lat, long).then(
-    //   (response) => {
-    //     const address = response.results[6].formatted_address.split(', ').slice(0, 2);
-    //     console.log(address);
-    //     return address; // returns an array [city, state]
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //   },
-    // );
-    // let location = [];
+    const { googleToken } = this.props;
+
     axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
       params: {
-        // result_type: 'street_address',
-        // latlng: '47.72154880000000000000 -122.19219839999998000000', //Nick
         latlng: `${lat} ${long}`,
-        key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
+        key: googleToken,
       },
     }).then((response) => {
-      console.log(response);
       const address = response.data.results[0].formatted_address.split(', ').slice(1,3);
       console.log(address);
-      // const city = address[3].adress_components[0];
-      // JSON.stringify(response, (key, value) => {
-      //   if (key === 'formatted_address') {
-      //     location.push(value);
-      //   }
-      // });
-
       this.setState({ locationData: address });
-      // const state = address[5].short_name;
-      // const country = address[6].short_name;
-      // const zipCode= address[7].long_name;
-      // const addressOutput = `
-      // <span className="city-state">${address}</span>
-      // `;
-      // location = city;
-      // console.log('City: ', city);
-
-      // location = address;
       return address;
     })
       .catch(error => console.log(error));
-    // return location;
   };
 
-    render() {
-      const { name, picture, logOut } = this.props;
-      const { userEmail, friendEmail, userId, locationData } = this.state;
-    
-    // console.log(name, picture, latitude, longitude);
+  render() {
+    const { name, picture, logOut } = this.props;
+    const { userEmail, friendEmail, userId, locationData } = this.state;
 
-      const friends = gql`
+    const friends = gql`
     query friends( $userId: Int) {
       friends(userId: $userId) {
         name
@@ -132,7 +90,7 @@ class Profile extends Component {
     }
     `;
 
-      const findOrCreateFriendship = gql`
+    const findOrCreateFriendship = gql`
       mutation findOrCreateFriendship($userId: Int, $userEmail: String!, $friendEmail: String!) {
         findOrCreateFriendship(userId: $userId, userEmail: $userEmail, friendEmail: $friendEmail) {
           user1
@@ -141,7 +99,7 @@ class Profile extends Component {
         }
       }
       `;
-    // const userEmail = JSON.parse(sessionStorage.getItem('userData')).email;
+
     return (
       <div className="profile-layout">
         <h1 className="ava-header">My Alert Network</h1>
@@ -155,13 +113,12 @@ class Profile extends Component {
           Log Out
           </button>
         </div>
-        {/* <div className="friend-feed">
-          <AlertFeed latitude={latitude} longitude={longitude} />
-        </div> */}
         <div className="friends">
-          
           <div>
-            <Mutation mutation={findOrCreateFriendship} variables={{ userId, userEmail, friendEmail }}>
+            <Mutation
+              mutation={findOrCreateFriendship}
+              variables={{ userId, userEmail, friendEmail }}
+            >
               {(mutate, { loading, error }) => {
                 if (loading) return <p>Loading...</p>;
                 if (error) {

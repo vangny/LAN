@@ -122,7 +122,6 @@ export class LayerControls extends Component {
 
   render() {
     const { title, settings, propTypes = {} } = this.props;
-    console.log(settings);
     return (
       <div className='layer-controls'>
         {title && <h4>{title}</h4>}

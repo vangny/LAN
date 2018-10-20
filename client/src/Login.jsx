@@ -77,8 +77,6 @@ class Login extends Component {
       })
         .then(res => res.json())
         .then((userData) => {
-          console.log('User data received from server!', userData);
-          // console.log('local', userData);
           sessionStorage.setItem('loggedIn', true);
           sessionStorage.setItem('userData', JSON.stringify(userData));
           this.setState({ newLogin: true });
@@ -88,12 +86,10 @@ class Login extends Component {
   }
 
   responseFacebook(res) {
-    console.log(res);
     this.loginUser(res, 'facebook');
   }
 
   responseGoogle(res) {
-    console.log(res);
     this.loginUser(res, 'google');
   }
 

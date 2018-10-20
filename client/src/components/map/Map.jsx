@@ -6,8 +6,6 @@ import { LayerControls, HEXAGON_CONTROLS, SCATTERPLOT_CONTROLS } from './LayerCo
 import DeckGLOverlay from './DeckGLOverlay';
 
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
-// will need to do a get request in the future so the token isn't vulnerable
-const MAPBOX_TOKEN = 'pk.eyJ1IjoidmFuZ255IiwiYSI6ImNqbWltMncxbTA2ZHgzcHF6bzBjYmxqbHkifQ.iTJHeAl1MKNibdVNZU0MJQ';
 
 export default class Map extends Component {
   constructor(props) {
@@ -40,10 +38,13 @@ export default class Map extends Component {
     this.resizeMap = this.resizeMap.bind(this);
   }
 
+  componentWillMount() {
+    this.getData();
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.resizeMap);
     this.resizeMap();
-    this.getData();
   }
 
   componentWillUnmount() {
@@ -58,13 +59,6 @@ export default class Map extends Component {
   }
 
   getData() {
-    // axios.get('/api/coordinates')
-    //   .then((res) => {
-    //     // console.log(res.data);
-    //     this.setState({
-    //       points: res.data,
-    //     });
-    //   });
     const query = `
     {
       getCoords {
@@ -78,11 +72,10 @@ export default class Map extends Component {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({ query })
+      body: JSON.stringify({ query }),
     })
       .then(response => response.json())
       .then((coordinates) => {
-        console.log('returning coordinates: ', coordinates);
         this.setState({
           points: coordinates.data.getCoords,
         });
@@ -108,19 +101,27 @@ export default class Map extends Component {
   }
 
   render() {
+    const {
+      viewport,
+      points,
+      settings,
+    } = this.state;
+
+    const { mapBoxToken } = this.props;
+
     return (
       <div>
         <MapGL
-          {...this.state.viewport}
+          {...viewport}
           mapStyle={MAPBOX_STYLE}
-          onViewportChange={viewport => this.onWindowChange(viewport)}
-          mapboxApiAccessToken={MAPBOX_TOKEN}
+          onViewportChange={view => this.onWindowChange(view)}
+          mapboxApiAccessToken={mapBoxToken}
         >
           <DeckGLOverlay
-            viewport={this.state.viewport}
-            data={this.state.points}
+            viewport={viewport}
+            data={points}
             onHover={hover => this.onHover(hover)}
-            {...this.state.settings}
+            {...settings}
           />
           {/* <LayerControls
           settings={this.state.settings}

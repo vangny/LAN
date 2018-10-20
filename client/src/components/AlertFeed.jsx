@@ -51,8 +51,6 @@ const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert })
     `;
   
   const insertIcon = (category) => {
-    // return null;
-    // console.log('inserting icon!');
     if (!category) {
       return null;
     }
@@ -113,12 +111,6 @@ const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert })
               updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev;
                 const { newAlert } = subscriptionData.data;
-                console.log('newAlert: ', newAlert);
-                console.log('updateQuery returns', { ...prev, getAlerts: [newAlert, ...prev.getAlerts] });
-                console.log('prev: ', prev);
-                console.log('current latlong: ', latitude, longitude);
-                console.log('range: ', range);
-                console.log('newAlert.lat/long: ', newAlert.latitude, newAlert.longitude);
                 if (!prev.getAlerts.find(alert => alert.id === newAlert.id)
                 && distance(latitude, longitude, newAlert.latitude, newAlert.longitude) <= range) {
                   return {

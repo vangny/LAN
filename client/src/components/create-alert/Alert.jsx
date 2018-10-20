@@ -33,7 +33,6 @@ class Alert extends Component {
 
 /* eslint-disable */
   handleDrop(files) {
-    console.log(files);
     const { photoTag } = this.state;
     const upload = files.map((file) => {
       const formData = new FormData();
@@ -54,9 +53,7 @@ class Alert extends Component {
         this.setState({
           photo: `${photoURL}`,
         }, () => {
-          console.log('photo url updated', photo);
         });
-        console.log(data);
       });
     });
       // After all files uploaded
@@ -103,7 +100,6 @@ class Alert extends Component {
     const { modal, photo, notes, photoTag } = this.state;
     const { category, latitude, longitude } = this.props;
     const userId = Number(this.props.userId);
-    console.log('alert userId', userId);
     const createAlert = gql`
     mutation CreateAlert($category: String!, $EventId: Int, $latitude: Float!, $longitude: Float!, $notes: String, $photo: String, $photoTag: String, $userId: Int) {
       createAlert(EventId: $EventId, category: $category, latitude: $latitude, longitude: $longitude, notes: $notes, url: $photo, photoTag: $photoTag, userId: $userId ) {
@@ -111,7 +107,6 @@ class Alert extends Component {
       }
     }
     `;
-    // console.log(`category: ${category}\nlatitude: ${latitude}\nlongitude: ${longitude}`);
     return (
       <div className="alert-layout">
         <div className="location-info">
@@ -154,8 +149,6 @@ class Alert extends Component {
                   onClick={() => {
                     mutate();
                     navigate('/');
-                    console.log('category: ', category, 'latitude: ', latitude, 'longitude: ', longitude, 'notes: ', notes, 'photo: ', photo, 'photoTag: ', photoTag, 'userId: ', userId );
-                    console.log('Mutation data: ', data);
                   }}
                 >
                 Create Alert
