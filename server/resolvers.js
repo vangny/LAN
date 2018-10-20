@@ -30,6 +30,10 @@ const resolvers = {
       console.log('grabbing mapbox api key...');
       return { key: process.env.MAPBOX_API_KEY };
     },
+    getGoogle: () => {
+      console.log('grabbing google api key...');
+      return { key: process.env.GOOGLE_API_KEY };
+    },
     friends: (root, args) => (
       db.getFriends(args.userId)
         .then(friends => friends.map(friend => friend.dataValues))

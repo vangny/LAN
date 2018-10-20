@@ -59,10 +59,12 @@ class Profile extends Component {
   }
 
   findCity(lat, long) {
+    const { googleToken } = this.props;
+
     axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
       params: {
         latlng: `${lat} ${long}`,
-        key: 'AIzaSyBw40_vEv6NHYs-KuIa0vIdBskirlviY-Q',
+        key: googleToken,
       },
     }).then((response) => {
       const address = response.data.results[0].formatted_address.split(', ').slice(1,3);

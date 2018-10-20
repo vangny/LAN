@@ -9,6 +9,7 @@ const typeDefs = `
       filter: String): [Alert]
     getCoords: [Coordinates]
     getMapBox: Key
+    getGoogle: Key
     friends(userId: Int): [User]
   }
   type Mutation {

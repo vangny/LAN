@@ -91,6 +91,7 @@ class App extends React.Component {
       alert: null,
       selectAlert: false,
       mapBoxToken: null,
+      googleToken: null,
     };
     this.handleAlertOptions = this.handleAlertOptions.bind(this);
     this.setLoginState = this.setLoginState.bind(this);
@@ -104,10 +105,12 @@ class App extends React.Component {
     this.handleSelectAlert = this.handleSelectAlert.bind(this);
     this.renderSelectedAlert = this.renderSelectedAlert.bind(this);
     this.getMapBoxKey = this.getMapBoxKey.bind(this);
+    this.getGoogleKey = this.getGoogleKey.bind(this);
   }
 
   componentDidMount() {
     this.getMapBoxKey();
+    this.getGoogleKey();
   }
 
   setLoginState() {
@@ -142,14 +145,7 @@ class App extends React.Component {
     });
   }
 
-  logOut() {
-    sessionStorage.removeItem('loggedIn');
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('picture');
-    sessionStorage.removeItem('email');
-    this.setState({ isLoggedIn: false });
-    navigate('/');
-  }
+  
 
   getMapBoxKey() {
     const query = `
@@ -172,6 +168,38 @@ class App extends React.Component {
           mapBoxToken: key.data.getMapBox.key,
         });
       });
+  }
+
+  getGoogleKey() {
+    const query = `
+    {
+      getGoogle {
+        key
+      }
+    }`;
+    fetch('/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    })
+      .then(response => response.json())
+      .then((key) => {
+        this.setState({
+          googleToken: key.data.getGoogle.key,
+        });
+      });
+  }
+
+  logOut() {
+    sessionStorage.removeItem('loggedIn');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('picture');
+    sessionStorage.removeItem('email');
+    this.setState({ isLoggedIn: false });
+    navigate('/');
   }
 
   changeSettings(filter, range) {
@@ -315,6 +343,7 @@ class App extends React.Component {
       filter,
       userId,
       mapBoxToken,
+      googleToken,
     } = this.state;
     /* eslint-disable */
     
@@ -332,7 +361,7 @@ class App extends React.Component {
             <Dashboard path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} />
             <Map path="/map" latitude={latitude} longitude={longitude} mapBoxToken={mapBoxToken} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" logOut={this.logOut} latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} />
+            <Profile path="/profile" logOut={this.logOut} latitude={latitude} longitude={longitude} name={name} picture={picture} email={email} googleToken={googleToken} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId}/>
           </Router>
           <div className="nav-bar">
@@ -372,7 +401,7 @@ class App extends React.Component {
             <AlertFeed exact path="/" client={client} latitude={latitude} longitude={longitude} range={range} filter={filter} selectAlert={this.handleSelectAlert}/>
             <Map path="/map" latitude={latitude} longitude={longitude} mapBoxToken={mapBoxToken} />
             <AlertOptions path="alertOptions" latitude={latitude} longitude={longitude} appContext={this} handleAlertOptions={this.handleAlertOptions} />
-            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} />
+            <Profile path="/profile" name={name} picture={picture}latitude={latitude} longitude={longitude} email={email} logOut={this.logOut} googleToken={googleToken} />
             <Alert path="/alert" category={category} latitude={latitude} longitude={longitude} name={name} EventId={Number(EventId)} userId={userId} />
           </Router>
           <div className="nav-bar">
