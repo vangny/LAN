@@ -25,7 +25,6 @@ app.use(bodyparser.json());
 
 // note change back to app.use after tests
 app.post('api/tracker', (req, res) => {
-  console.log('DATA RECEIVED 555 in the pipe', req.body);
 });
 
 app.use('/graphql', bodyparser.json(), graphqlExpress({

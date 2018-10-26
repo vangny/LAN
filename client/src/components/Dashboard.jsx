@@ -4,7 +4,7 @@ import AlertFeed from './AlertFeed';
 import Media from './Media';
 
 
-const Dashboard = ({ latitude, longitude, client, filter, range }) => {console.log('dashboard client: ', client)
+const Dashboard = ({ latitude, longitude, client, filter, range }) => {
 return (
   <div className="dashboard">
     <div className="search-alerts">

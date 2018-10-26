@@ -58,7 +58,6 @@ class Alert extends Component {
     });
       // After all files uploaded
     axios.all(upload).then(() => {
-      console.log('All photos successfully uploaded');
     });
   }
   /* eslint-enable */

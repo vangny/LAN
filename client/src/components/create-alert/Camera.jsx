@@ -61,22 +61,22 @@ const AlertCamera = ({ changeModal }) => {
   let imageNumber = 0;
 
   const onTakePhoto = (dataUri) => {
-    console.log('photo snapped!');
+
     downloadImageFile(dataUri, imageNumber);
     imageNumber += 1;
   };
 
-  const onCameraError = (error) => {
-    console.error('onCameraError', error);
-  };
+  // const onCameraError = (error) => {
+  //   console.error('onCameraError', error);
+  // };
 
-  const onCameraStart = (stream) => {
-    console.log('onCameraStart', stream);
-  };
+  // const onCameraStart = (stream) => {
+  //   console.log('onCameraStart', stream);
+  // };
 
-  const onCameraStop = () => {
-    console.log('Camera stream has ended');
-  };
+  // const onCameraStop = () => {
+  //   console.log('Camera stream has ended');
+  // };
 
   return (
 

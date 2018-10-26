@@ -7,8 +7,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = (env) => {
-  console.log(`WEBPACK ENV: ${env}`);
-
   const isProd = env === 'production';
   const isDev = env === 'development';
   const CLI_DIR = path.join(__dirname, './client');

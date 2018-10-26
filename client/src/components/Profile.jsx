@@ -48,7 +48,7 @@ class Profile extends Component {
     })
       .then(res => res.json())
       .then((homeSet) => {
-        console.log('Home location has been set!', homeSet);
+
       });
   }
 
@@ -68,7 +68,7 @@ class Profile extends Component {
       },
     }).then((response) => {
       const address = response.data.results[0].formatted_address.split(', ').slice(1,3);
-      console.log(address);
+
       this.setState({ locationData: address });
       return address;
     })

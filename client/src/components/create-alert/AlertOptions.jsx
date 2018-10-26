@@ -34,7 +34,6 @@ class AlertOptions extends React.Component {
 
   renderConfirmationHandler() {
     const { isClicked, categoryClicked } = this.state;
-    console.log('renderConfirmationHandler: ', categoryClicked);
     const { handleAlertOptions } = this.props;
     return isClicked
       ? (

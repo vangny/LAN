@@ -122,7 +122,6 @@ const AlertFeed = ({ latitude, longitude , filter, range, client, selectAlert })
               },
             });
           }
-          console.log('Query data: ', data);
           return (
             <div>
               {data.getAlerts.map(alert => (window.innerWidth >= 1200 ? (

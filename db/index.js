@@ -7,7 +7,7 @@ const sequelize = new Sequelize(`${process.env.DB_URL}`);
 
 sequelize.authenticate()
   .then(() => {
-    console.log('DB successfully established');
+
   });
 
 /* =======User Authentication=========== */
@@ -95,19 +95,16 @@ const findOrCreateEvent = (category, latitude, longitude, timeStamp) => {
   return (
     Event.findAll({ where: { category } })
       .then((results) => {
-        console.log('checking category...');
         if (results.length > 0) {
           for (let i = 0; i < results.length; i += 1) {
             const event = results[i].dataValues;
-            console.log('checking time difference & distance...');
             if (moment(timeStamp).subtract(24, 'hours') < moment(event.updatedAt) // event within 24 hrs
             && distance(event.latitude, event.longitude, latitude, longitude) < 10) { // coordinate distance < 10 mi
-              console.log('****Event within time frame and radius already exists!*******');
+
               return event;
             }
           }
         }
-        console.log('******adding new event!********');
         return (addEvent()
           .then(result => result.dataValues));
       })
@@ -156,7 +153,6 @@ const findOrCreateFriendship = (userId, userEmail, friendEmail) => {
 }
 
 const sendToNotofications = (id) => {
-  console.log('DATA in DB', id);
   const userTable = User.findAll({ where: { id: id } });
 
   const friendsTable = getFriends(id);
